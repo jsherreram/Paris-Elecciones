@@ -1,0 +1,43 @@
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="hpanel" ng-repeat="reg in misviaticos ">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Viáticos Consignados de la Prueba</h5>
+                        </div>
+                        <div class="hpanel">
+                            <div class="panel-body">
+                                <button  class="btn btn-primary btn-sm"  ng-click="atras()">Volver</button>
+                            </div>
+                        </div>
+
+                        <div class="ibox-content">
+                            <section >
+                            <div class="panel-body">
+                                <strong>Nombre de la Prueba:</strong> {{reg.nombreprueba}}<br/>
+                                <strong>Cargo:</strong> {{reg.nombrecargo}}<br/>                    
+                                <strong>Nombres:</strong> {{reg.nombres}}<br/>
+                                <strong>Número de Identificación:</strong> {{reg.nrodoc | number}}<br/>
+                                <strong>Tipo de Documento:</strong> {{reg.documento}}<br/>
+                            </div>
+                            </section>
+                            <div class="ibox-title">
+                                <h5>Resumen Viáticos</h5>
+                            </div>
+                                <strong>Transporte Intermunicipal:</strong> {{reg.vr_municipal | number:2}}<br/>
+                                <strong>Transporte rural:</strong> {{reg.vr_rural | number:2}}<br/>                    
+                                <strong>Transporte urbano:</strong> {{reg.vr_interno | number:2}}<br/>
+                                <strong>Total Transporte:</strong> {{reg.total | number:2}}<br/>
+                                <strong>Número de Días de Viáticos:</strong> {{reg.ndias | number:2}}<br/>
+                                <strong>Pernocta:</strong> {{reg.pernocta}}<br/>
+                                <strong>Total Viáticos:</strong> {{reg.total_viaticos | number:2}}<br/>
+                                <strong>Total a pagar por Viáticos:</strong> {{reg.total_pagarviatico | number:2}}<br/>
+                                <strong>Estado:</strong> {{reg.estadopago}}<br/>
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>

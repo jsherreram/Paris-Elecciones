@@ -1,0 +1,38 @@
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hpanel">
+            <div class="panel-body">   
+
+                <div class="col-lg-2"></div>
+                <div class="table-responsive col-lg-8" >
+                    <h2 class="font-light m-b-xs">
+                        Monitoreo de Gestión por Estados - Nodo
+                    </h2> 
+                    <br>
+                    Seleccione una prueba
+                    <br><br>
+                    <label for="pruebaSelect"> Pruebas: </label><br>
+                    <select name="pruebaSelect" ng-model="pruebaSelect"  ng-change='pruebaSelected()' multiple>
+                        <option  ng-repeat="prueba in pruebas" value="{{prueba.idprueba}}" >{{prueba.nombre}}</option>                                                    
+                    </select> 
+                    
+                    <br><br>
+                    <label for="tipoReporte">Tipo Consulta</label><br>
+                    <SELECT name="tipoReporte" ng-model="tipoReporte" multiple> 
+                        <OPTION VALUE="MonitoreoEventoNacional">Monitoreo Nacional</OPTION>
+                        <OPTION VALUE="MonitoreoEvento">Monitoreo Por Nodo</OPTION>
+                    </SELECT>
+                    <br><br>
+                    
+                   
+                    <div class="aligncenter"> 
+                        <a href="#/{{tipoReporte[0]}}/{{pruebaSelect[0]}}" class="btn btn-sm btn-primary">Consultar</a>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

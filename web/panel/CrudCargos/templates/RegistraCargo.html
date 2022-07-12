@@ -1,0 +1,106 @@
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+    <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <div class="row">
+                <h2 class="font-light m-b-xs">Registrar Nuevo Cargo</h2>
+                <div class="col-md-4"><button class="btn btn-primary btn-sm"  ng-click="Insert(cargo)">Guardar</button></div>
+                <div class="col-md-4"><button class="btn btn-primary btn-sm"  ng-click="atras()">Cancelar/Atras</button></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-2" for="descripcion">Código</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model="cargo.codigoCargo" title="Código del Cargo" required name="codigoCargo" id="nombre" class="form-control" maxlength="2">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-2" for="descripcion">Nombre</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model="cargo.descripcion" title="Descripción de la Cargo" required name="nombre" id="nombre" class="form-control" maxlength="100">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-2" for="codigoLogisys">Logisys</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model="cargo.codigoLogisys" title="Descripción de la Cargo" required name="nombre" id="nombre" class="form-control" maxlength="4">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-2" for="nombrecarne">Nombre Carne</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model="cargo.nombrecarne" title="Descripción de la Cargo" required name="nombre" id="nombre" class="form-control" maxlength="100">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <label class="control-label col-md-2" for="viaticos">Viatica ?</label>
+                            <form name="viaticos">
+                                <label>
+                                  <input type="radio" ng-model="cargo.viaticos" value="1">Sí</label>
+                                <label>
+                                  <input type="radio" ng-model="cargo.viaticos" ng-value="0">No</label>
+                            </form>
+                            <label class="control-label col-md-2" for="consalon">Salon Fijo ?</label>
+                            <form name="consalon">
+                                <label>
+                                  <input type="radio" ng-model="cargo.consalon" value="1">Sí</label>
+                                <label>
+                                  <input type="radio" ng-model="cargo.consalon" ng-value="0">No</label>
+                            </form>
+                            <label class="control-label col-md-2" for="capacitacion">Requiere Capacitación ?</label>
+                            <form name="capacitacion">
+                                <label>
+                                  <input type="radio" ng-model="cargo.capacitacion" value="1">Sí</label>
+                                <label>
+                                  <input type="radio" ng-model="cargo.capacitacion" ng-value="0">No</label>
+                            </form>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-2" for="tprueba">Nivel de Cargo</label>
+                        <div class="col-md-4">
+                            <select name="nivelSelect" ng-model="cargo.nivel_cargo" >
+                                <option ng-repeat="reg1 in nivelcargo" value="{{reg1.nivel_cargo}}" >{{reg1.nivel_descripcion}}</option>                                                    
+                            </select>
+                        </div>
+                        <label class="control-label col-md-2" for="esSuplente">Es Suplente ?</label>
+                        <form name="esSuplente">
+                            <label>
+                              <input type="radio" ng-model="cargo.esSuplente" value="1">Sí</label>
+                            <label>
+                              <input type="radio" ng-model="cargo.esSuplente" ng-value="0">No</label>
+                        </form>
+                        <label class="control-label col-md-2" for="esicfes">Cargo ICFES ?</label>
+                        <form name="esicfes">
+                            <label>
+                              <input type="radio" ng-model="cargo.esicfes" value="1">Sí</label>
+                            <label>
+                              <input type="radio" ng-model="cargo.esicfes" ng-value="0">No</label>
+                        </form>
+                    </div>
+                    <!--<div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-3" for="descripcion">Funciones</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model="cargo.funciones" title="Descripción de la Cargo" required name="funciones" id="funciones" class="form-control" maxlength="12000">
+                        </div>
+                        </div>
+                    </div>-->
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>

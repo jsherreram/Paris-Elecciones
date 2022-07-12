@@ -1,0 +1,168 @@
+<div class="content animate-panel" ng-init="controller.buscarEmpleado()">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>
+                        Validar Persona
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <form class="wizard-big" id="form" name="formEditarEmpleado"  ng-submit="controller.save()" method="POST" >
+                        <div class="col-md-3">
+                            <div class="form-group" ng-show="controller.persona.tipodoc != undefined">
+                                <label for="tipoDoc">Tipo Identificación *</label>
+                                <select ng-model="controller.tipoDoc"  class="form-control"  disabled>
+                                    <option ng-repeat="tipoIden in controller.tipoIdentificacion" value="{{tipoIden.codigo}}">{{tipoIden.descripcion}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group"  ng-show="controller.persona.idEmpleado != undefined">
+                                <label   for="nrodoc">Número Identificación *</label>
+                                <input type="text" ng-model="controller.persona.nrodoc" readonly="readonly" name="nrodoc" id="nrodoc" class="form-control" maxlength="10">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label  for="apellido1">Primer Apellido *</label>
+                                <input type="text" ng-model="controller.persona.apellido1" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" required="required" name="apellido1"  class="form-control" maxlength="50" ng-disabled="mostrar">
+                                <span ng-show="!formCrear.$pristine && formCrear.apellido1.$error.required">El Apellido es requerido.</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label  for="apellido2">Segundo Apellido</label>
+                                <input type="text" ng-model="controller.persona.apellido2" name="apellido2" id="apellido2" class="form-control" maxlength="50" ng-disabled="mostrar">
+                            </div>
+
+                            <label>Estado Actual:</label> <input class="form-control" value="{{controller.persona.estado.descripcion}}" disabled>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="nombre1">Primer Nombre *</label>
+                                <input type="text" ng-model="controller.persona.nombre1" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" required="required" name="nombre1"  class="form-control" maxlength="50" ng-disabled="mostrar">
+                                <span ng-show="!formCrear.$pristine && formCrear.nombre1.$error.required">El Nombre es requerido.</span>                                               
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nombre2">Segundo Nombre</label>
+                                <input type="text" ng-model="controller.persona.nombre2" name="nombre2" id="nombre2" class="form-control" maxlength="50" ng-disabled="mostrar === true">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label" for="sexo">Género  M ó F </label>
+                                <input type="text" ng-model="controller.persona.genero" title="sexo M ó F" name="sexo" pattern="^[M|F]{1}$" id="sexo" class="form-control" maxlength="1" ng-disabled="mostrar">
+                                <span ng-show="!formCrear.$pristine && formCrear.sexo.$invalid">No válido.</span>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="fechanacimiento">Fecha Nacimiento AAAA-MM-DD</label>
+                                <input type="text" ng-model="controller.persona.fechaNacimiento" name="fechanacimiento"  class="form-control datepicker" data-date-end-date="-216m"   ng-blur="controller.validarFecha()" data-date-format="yyyy-mm-dd" id="datepicker" ng-disabled="mostrar">
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label  for="codigoActividad" >Código Actividad Económica</label>
+                                <select-actividad-economica actividadeconomica="controller.actividadEconomica"></select-actividad-economica>
+                            </div>
+                            <div class="form-group">
+                                <label  for="codigoDpto">Departamento de Residencia *</label>
+                                <select  class="form-control" name="departamento" title="El departamento obligatorio" ng-model="controller.departamento" required="required" ng-disabled="mostrar">
+                                    <option value="">Seleccione</option>
+                                    <option  ng-repeat="dpto in controller.departamentos" value="{{dpto.codigo}}" >{{dpto.nombre}}</option> 
+                                </select> 
+                                <span ng-show="!formCrear.$pristine && formCrear.departamento.$error.required">El Departamento es requerido.</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label >Municipio de Residencia *</label>
+                                <select-municipio-dane municipio="controller.municipio" departamentocodigo="controller.departamento"></select-municipio-dane>
+                            </div>
+                            <div class="form-group">
+                                <label for="celular">Celular *</label>
+                                <input type="text" ng-model="controller.persona.celular" title="Número de 10 dígitos. " required pattern="^[3]{1}[0|1|2|5]{1}[0-9]{8}$" name="celular"  class="form-control" maxlength="10" ng-disabled="mostrar">
+                                <span ng-show="!formCrear.$pristine && formCrear.celular.$error.required">El Celular es requerido.</span>
+                                <span ng-show="!formCrear.$pristine && formCrear.celular.$invalid">Número de celular no válido.</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label  for="direccion">Dirección registrada en el RUT *</label>
+                                <input type="text" ng-model="controller.persona.direccion" title="direccion" required="required" name="direccion" id="direccion" class="form-control" maxlength="50" ng-disabled="mostrar">
+                                <span ng-show="!formCrear.$pristine && formCrear.direccion.$error.required">La Dirección es requerida.</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label  for="telefono">Teléfono registrado en el RUT *</label>
+                                <input type="text" ng-model="controller.persona.telefono" title="Número de 7 ó 10 dígitos"  value="" name="telefono"  class="form-control" maxlength="10" required="required" ng-disabled="mostrar">
+                            </div>
+                            <div class="form-group">
+                                <label  for="email">Email *</label>
+                                <input type="email" ng-model="controller.persona.email" required title="mail@ejemplo.com" name="email"  class="form-control" maxlength="50" ng-disabled="mostrar">
+                                <span ng-show="!formCrear.$pristine && formCrear.email.$error.required">El email es requerido.</span>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Medio de Pago </label>
+                                <select ng-model="controller.pago" class="form-control" ng-disabled="mostrar">
+                                    <option value="0">BBVA</option>
+                                    <option value="1">Ahorro a la Mano</option>
+                                    <option value="2">Efecty</option>
+                                </select>
+                            </div>
+                            <div ng-show="controller.pago === '1'" class="form-group">
+                                <label  for="email">Número de Cuenta: </label>
+                                <input type="text" ng-model="controller.persona.idpuesto"  name="cuenta"  class="form-control" maxlength="11" minlength="11">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group" ng-show="mostrar==true">
+                                <label>Observaciones:</label>
+                                <textarea ng-model="controller.persona.observacion" class="form-control" placeholder=""></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="margin-top: 5%">
+                                    <input ng-hide="mostrar==true" type="submit" value="Guardar" class="btn btn-primary">
+                                    <a ng-show="mostrar===true" class="btn btn-success" ng-click="controller.actualizarEstado(3)">Validado</a>
+                                    <a ng-show="mostrar==true" class="btn btn-danger"  ng-click="controller.rechazarPerfil(2)">Inconsistente</a>
+                                    <a ng-show="mostrar==true" class="btn btn-primary"  ng-click="controller.habilitarEdicion()">Editar</a>
+                                    <a  ng-hide="mostrar==true" class="btn btn-default" ng-click="controller.volver()">Volver </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Documento de Identificación y RUT </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            <div class="col-md-12" ng-if="pdfcedulas.length !== 0">
+                                <iframe class="embed-responsive-item" width="100%" height="600"  frameborder="0" allowfullscreen ng-src="{{content}}"></iframe>
+                            </div>
+                            <div ng-if="pdfcedulas.length === 0"><h4>No se encontraron archivos</h4></div>
+                        </div>
+                    </div>
+                </div>                  
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalImage" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <img class="modal-content" id="imgModal">
+        </div>
+    </div>
+    <script type="text/ng-template" id="myModalVerDocumento.html">       
+        <ver-documento></ver-documento>
+    </script>
+

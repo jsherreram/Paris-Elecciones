@@ -1,0 +1,67 @@
+<div class="content animate-panel">
+    <div class="row ">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="panel-title">Usuario</h3></div>
+                <div class="content">
+                    <div class="row"> 
+                        <div class="col-md-12 ">
+                            <div class="panel panel-primary no-border ">
+                                <div class="panel-body">
+
+                                    <div class="panel panel-primary  ">
+                                        <div class="panel-body">
+                                            <div class="">
+                                                <button class="btn btn-default bnt-GestionarPersona" type="submit" ng-click="controller.save()">Guardar</button>
+                                                <button class="btn btn-default bnt-GestionarPersona" type="submit">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary  ">
+                                        <div class="panel-body">
+                                            <form class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-5 control-label">Nombre de usuario</label>
+                                                    <div class="col-sm-5">
+                                                        <input type="text" class="form-control" disabled="disabled" id="txtnrdoc" placeholder="Usuario" ng-model="controller.empleado.nrodoc"/>
+                                                    </div>
+                                                    <button class="btn btn-default bnt-GestionarPersona" disabled="disabled">Generar</button>
+                                                </div>       
+                                                <div class="form-group">
+                                                    <label for="inputPassword3" class="col-sm-5 control-label">¿Enviar correo electrónico de recuperación de contraseña al usuario?</label>
+                                                    <div class="col-sm-7">
+                                                        <div class="radio radio-inline">
+                                                            <input type="radio"  value="true" id="rdbRecPass1" name="rdbRecPass" ng-model="controller.rdbRecPass"/>
+                                                            <label for="rdbRecPass1">SI</label>
+                                                        </div>
+                                                        <div class="radio radio-inline">
+                                                            <input type="radio" value="false" id="rdbRecPass2" name="rdbRecPass" ng-model="controller.rdbRecPass" />
+                                                            <label for="rdbRecPass2">NO</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputPassword3" class="col-sm-5 control-label">¿Bloquear al usuario el acceso al sistema??</label>
+                                                    <div class="col-sm-7">
+                                                        <div class="radio radio-inline">
+                                                            <input type="radio" value="true" id="rdbBlkUsr1" name="rdbBlkUsr" ng-model="controller.rdbBlkUsr"/>
+                                                            <label for="rdbBlkUsr1">SI</label>
+                                                        </div>
+                                                        <div class="radio radio-inline">
+                                                            <input type="radio" value="false" id="rdbBlkUsr2" name="rdbBlkUsr" ng-model="controller.rdbBlkUsr"/>
+                                                            <label for="rdbBlkUsr2">NO</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

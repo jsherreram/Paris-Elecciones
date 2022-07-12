@@ -1,0 +1,157 @@
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+    <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <div class="row">
+                <div class="col-md-2"><h5>Edición Prueba</h5></div>
+                <div class="col-md-4"><button class="btn btn-primary btn-sm"  ng-click="Save(prueba)">Guardar</button></div>
+                <div class="col-md-4"><a class="btn btn-primary btn-sm"  href="#/">Atras</a></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-3" for="nombre">Nombre</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model="prueba.nombre" title="Descripción de la Prueba" required name="nombre" id="nombre" class="form-control" maxlength="100">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-3" for="tprueba">Tipo Prueba</label>
+                        <div class="col-md-8">
+                            <select name="tipoSelect" ng-model="prueba.tprueba">
+                                <option ng-repeat="reg in tipopruebaesp" value="{{reg.tprueba}}" >{{reg.tipo}}</option>                                                    
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-3" for="estadoprueba">Estado de la Prueba</label>
+                        <div class="col-md-8">
+                            <select name="estadoSelect" ng-model="prueba.codigoEstadoPrueba" >
+                                <option ng-repeat="reg1 in estadoprueba" value="{{reg1.codigoEstadoPrueba}}" >{{reg1.descripcion}}</option>                                                    
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-3" for="dias">Días de Aplicación (AAAA-MM-DD)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-horizontal">
+                        <label class="control-label col-md-3" for="fechaaplicacion">Fecha de Inicio de Aplicación</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.fechaaplicacion" class="form-control datepicker" title="Fecha de Inicio de Aplicación" data-date-format="yyyy-mm-dd" id="fechaaplicacion">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3" for="fecha_final_aplicacion">Fecha Final de Aplicación</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.fecha_final_aplicacion" class="form-control datepicker" title="Fecha Final de Aplicación" data-date-format="yyyy-mm-dd" id="fecha_final_aplicacion">
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <div class="row">
+                        <label class="control-label col-md-3" for="dias">Días de Convocatoría</label>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3" for="fecha_inicio_convocatoria">Fecha de Inicio de Convocatoría</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.fecha_inicio_convocatoria" class="form-control datepicker" title="Fecha de Inicio de Convocatoria" data-date-format="yyyy-mm-dd" id="fecha_inicio_convocatoria">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3" for="fecha_final_convocatoria">Fecha Final de Convocatoría</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.fecha_final_convocatoria" class="form-control datepicker" title="Fecha Final de Convocatoria" data-date-format="yyyy-mm-dd" id="fecha_final_convocatoria">
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <div class="row">
+                        <label class="control-label col-md-3" for="dias">Vtiger</label>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3" for="vtiger_campo_cargo">Código Campo Cargo</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.vtiger_campo_cargo" title="Código de Campo en Vtiger" name="vtiger_campo_cargo" id="vtiger_campo_cargo" class="form-control" maxlength="50">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3" for="vtiger_campo_estado">Código Campo Estado</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.vtiger_campo_estado" title="Código de Estado en Vtiger" name="vtiger_campo_estado" id="vtiger_campo_estado" class="form-control" maxlength="50">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3" for="vtiger_campo_texto">Código Campo Texto Comunicación</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.vtiger_campo_texto" title="Código de Texto en Vtiger" name="vtiger_campo_texto" id="vtiger_campo_texto" class="form-control" maxlength="50">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3" for="vtiger_campo_nodo">Código Campo Nodo</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.vtiger_campo_nodo" title="Código de Nodo en Vtiger" name="vtiger_campo_nodo" id="vtiger_campo_nodo" class="form-control" maxlength="50">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="control-label col-md-3" for="vtiger_campo_municipio">Código Campo Municipio</label>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="prueba.vtiger_campo_municipio" title="Código de Municipio en Vtiger" name="vtiger_campo_municipio" id="vtiger_campo_municipio" class="form-control" maxlength="50">
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <div class="row">
+                        <label class="control-label col-md-2" for="textoconv">Texto Convocatoría</label>
+                        <div class="col-md-10">
+                            <input type="text" ng-model="prueba.texto_convocatoria" title="Texto Largo " name="texto_convocatoria" id="texto_convocatoria" class="form-control" maxlength="1024">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    $('#fechaaplicacion').datepicker({
+        orientation: "bottom",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: false
+    });
+    $('#fecha_final_aplicacion').datepicker({
+        orientation: "bottom",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: false
+    });
+    $('#fecha_final_convocatoria').datepicker({
+        orientation: "bottom",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: false
+    });
+    $('#fecha_inicio_convocatoria').datepicker({
+        orientation: "bottom",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: false
+    });
+</script>

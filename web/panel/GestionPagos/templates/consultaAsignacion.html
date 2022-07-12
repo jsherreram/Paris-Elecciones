@@ -1,0 +1,47 @@
+    <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>Consulta de Pagos</h5>
+                            </div>
+                            <div class="hpanel">
+                                <div class="panel-body">
+                                    <button  class="btn btn-primary btn-sm"  ng-click="atras()">Volver</button>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                              <div class="panel-body"> 
+                                <div class=""ng-repeat="reg in mipruebacargo | orderBy:'-fechanumero'">
+                                     <strong>Nombre de la Prueba:</strong>{{reg.idprueba}} {{reg.nombre_prueba}}<br/>
+                                     <strong>Cargo:</strong> {{reg.cargonombre}}<br/>
+                                <div class="ibox-title">
+                                    <h5>Mis Asignaciones</h5>
+                                </div>
+
+                                <div class="hpanel"    ng-repeat="reg in miasignacion | orderBy:'-fechanumero'">  
+                                    <div  class="panel-body">
+                                        <strong>Nombre de Sesión</strong> {{reg.nombresesion}}<br/>
+                                        <strong>Fecha:</strong> {{reg.fecha}}<br/>
+                                        <strong>Hora Inicial:</strong> {{reg.hora_inicial}}<br/>
+                                        <strong>Hora Final:</strong> {{reg.hora_final}}<br/>
+                                        <strong>Municipio:</strong> {{reg.municipio}}<br/>
+                                        <strong>Código de Sitio:</strong> {{reg.codigoPuesto}}<br/>
+                                        <strong>Nombre Sitio:</strong> {{reg.nombrePuesto }}<br/>
+                                        <strong>Direccón:</strong>{{reg.direccionPuesto}}<br/>
+                                        <strong>Inst. Llegada</strong>{{reg.instllegada}}<br/>
+                                        <strong>Salón </strong>{{reg.salon}}<br/>
+                                        <strong>Nodo:</strong>{{reg.nombredepartamento}}<br/>
+                                        <strong>Coordinador ASD:</strong>{{reg.nodnombres}}<br/>
+                                        <strong>Correo Electronico:</strong>{{reg.mail}}<br/>
+                                        <strong>Número Celular:</strong>{{reg.celular}}
+                                    </div>
+                                </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+

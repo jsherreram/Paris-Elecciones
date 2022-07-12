@@ -1,0 +1,69 @@
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-body">
+                    <div class="pull-right m-t-lg">
+                        <strong>Filtro:</strong> 
+                        <a ng-click="onclickFiltroHoy()" class="btn btn-xs" ng-class='{"btn-default": filtro!=1, "btn-info":filtro==1}'> Hoy </a> 
+                        <a ng-click="onclickFiltroSemana()" class="btn btn-xs" ng-class='{"btn-default": filtro!=2, "btn-info":filtro==2}'>Semana </a>
+                        <a ng-click="onclickFiltroMes()" class="btn btn-xs" ng-class='{"btn-default": filtro!=3, "btn-info":filtro==3}'>Mes </a>
+                        <a ng-click="onclickFiltroAnio()" class="btn btn-xs" ng-class='{"btn-default": filtro!=4, "btn-info":filtro==4}'>A&ntilde;o </a>
+                    </div>
+                    <h2 class="font-light m-b-xs">
+                        Reporte de producci&oacute;n
+                    </h2>
+                    <small>
+                        <strong>Fecha inicial:</strong> {{fechaInicial}} <br/>
+                        <strong>Fecha final&nbsp;&nbsp;:</strong> {{fechaFinal}} <br/>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div ng-show="!reporte.length" class="panel-body">
+                    No existen registros disponibles
+                </div>
+                <div ng-show="reporte.length" class="panel-body">
+                    <div class="table-responsive">
+                        <table cellpadding="1" cellspacing="1" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Asesor</th>
+                                    <th>En captura</th>
+                                    <th>Radicado</th>
+                                    <th>Mesa de control</th>
+                                    <th>Inconsis. anexos</th>
+                                    <th>Aprobado mesa</th>                                    
+                                    <th>Inconsis. grave</th>
+                                    <th>Afiliado</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in reporte">
+                                    <td><strong>{{item.descripcion}}</strong></td>
+                                    <td>{{item.captura}}</td>
+                                    <td>{{item.radicado}}</td>
+                                    <td>{{item.mesa}}</td>
+                                    <td>{{item.inconsistenciaAnexos}}</td>
+                                    <td>{{item.aprobadoMesa}}</td>
+                                    <td>{{item.inconsistenciaGrave}}</td>
+                                    <td>{{item.afiliado}}</td>
+                                    <td><strong>{{item.total}}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

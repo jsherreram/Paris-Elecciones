@@ -1,0 +1,3 @@
+<select ng-model="tipodocumento" class="form-control has-error" required
+        ng-options="tipoDocumentoObj.descripcion for tipoDocumentoObj in tiposdocumento track by tipoDocumentoObj.codigo">
+</select>      

@@ -1,0 +1,83 @@
+<div class="content animate-panel ng-scope">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="hpanel">
+                <div class="panel-body">  
+                    <form class="form-inline ng-pristine ng-invalid ng-invalid-required" ng-submit="buscar(idPrueba)">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="evento">Seleccione Prueba:</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control"  ng-model="idPrueba">
+                                <option  ng-repeat="prueba in pruebas" value="{{prueba.idprueba}}" >{{prueba.nombre}}</option>   
+
+                            </select> 
+                        </div>
+                        <div class="form-group">
+                            <button type="button" ng-click="buscar(idPrueba)" class="btn btn-primary">Consultar Empleados</button>
+
+                        </div>
+                    </form>   
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Buscar" ng-model="filtrar">
+                    </div>
+                </div>                
+
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>No. Documento</th>
+                            <th>Cargo</th>
+                            <th>Celular</th>
+                            <th><center>Salón Asignado</center></th>
+                        <th>¿Enrolado?</th>
+                        <th><center>¿Firmó Contrato?</center></th>
+                        <th>¿Firmó Cuenta de Cobro?</th>
+                        </tr>
+                        <tr ng-repeat="pe in personas|orderBy:'nombre1' | filter:filtrar">
+                            <td> {{pe.nombre1}} {{pe.nombre2}}</td>
+                            <td>{{pe.apellido1}} {{pe.apellido2}}</td>
+                            <td>{{pe.nrodoc}}</td>
+                            <td>{{pe.descripcion}}</td>
+                            <td>{{pe.celular}}</td>
+                            <td><center>{{pe.salon}}</center></td>
+                        <td ng-show="{{pe.huella === undefined}}">
+                        <center><a ng-click="enrolar(pe.idEmpleado)"> <img src="../../images/xroja.jpg"  width="30" height="30" class="img-circle"> </a></center>
+                        </td>
+                        <td ng-show="{{pe.huella != undefined}}">
+                        <center>  <img src="../../images/okazul.png"  width="30" height="30" class="img-circle"></center>
+                        </td>
+                        <td ng-show="{{pe.firmo_contrato === 'No'}}">
+                        <center><a ng-href="../../panel/GestionPagos/main.jsp#/FirmarContrato/{{pe.idEmpleado}}/{{pe.idprueba}}/huella/{{pe.codigoCargo}}"> <img src="../../images/xroja.jpg"  width="30" height="30" class="img-circle"> </a></center>
+                        </td>
+                        <td ng-show="{{pe.firmo_contrato === 'Si'}}">
+                        <center>  <img src="../../images/okazul.png"  width="30" height="30" class="img-circle"></center>
+                        </td>
+                        <td ng-show="{{pe.firmo_cobro === 'No'}}">
+                        <center><a ng-href="../../panel/GestionPagos/main.jsp#/CuentaCobro/{{pe.idEmpleado}}/{{pe.idprueba}}/{{pe.codigoCargo}}/{{pe.descripcion}}/huella"> <img src="../../images/xroja.jpg"  width="30" height="30" class="img-circle"> </a></center>
+                        </td>
+                        <td ng-show="{{pe.firmo_cobro === 'Si'}}">
+                        <center>  <img src="../../images/okazul.png" width="30" height="30"  class="img-circle"></center>
+                        </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

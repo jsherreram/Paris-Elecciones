@@ -1,0 +1,112 @@
+
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-body">    
+                    <form name="reviewForm" class="form-inline" ng-controller="eventosController" >
+                        <div class="col-lg-2"></div>
+                        <div class="table-responsive col-lg-8" >
+                            <h2 class="font-light m-b-xs">Seleccionar Medio de Pago para su Sitio</h2> 
+                            <br>
+                            <!--seccion usada para mostrar la información del Empleado-->
+                            <section >
+                                <div>
+                                    {{empleadoSession.prueba.tipoPrueba}} - {{empleadoSession.prueba.nombrePrueba}}
+                                    <br><br>
+                                    <a class="control-label col-md-2">Cargo</a>:  {{empleadoSession.nombreCargo}}
+                                    <br>
+                                    <a class="control-label col-md-2"> Nombres</a>:  {{empleadoSession.nombre1 + ' ' + empleadoSession.nombre2 + ' ' + empleadoSession.apellido1 + ' ' + empleadoSession.apellido2}}
+                                    <br>
+                                    <a class="control-label col-md-2"> Identificación</a> :  {{empleadoSession.nrodoc}}
+                                    <br>
+                                    <a class="control-label col-md-2"> Tipo de documento</a>:  {{empleadoSession.nombreDocumento}}
+                                    <br>
+                                </div>
+                                <br><br>
+                            </section>
+
+                            <div class="aligncenter"> 
+                                <input  type="button"  class="btn btn-primary"  ng-click="reviewForm.$valid && validarForm() && aceptar()" value="Guardar" name="Aceptar"/>
+                                <button  class="btn btn-primary"  ng-click="atras()">Volver</button>
+                                
+                                <br><br>
+                            </div>
+                            <!--seccion usada para mostrar las opciones de pago-->
+                            <section>
+                                <div ng-repeat="medios in mediosPago">
+                                    <table class="table table-striped table-bordered table-hover" >                                                                        
+                                        <tbody >
+                                            <tr>
+                                                <td> 
+                                                    <input ng-click="selectTab(medios.nombre)"  ng-model="empleadoSession.prueba.idMedioPago" id="question"  type="radio" name="question" ng-value="{{medios.id_medio}}">
+                                                    <label>{{medios.nombre}}</label>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr  ng-show="isSelected(medios.nombre) && isSelected(medios.nombre)">
+                                                <td>
+                                                    <label>Auxilio de trasporte reclamación pago: {{medios.auxilioTransporte| currency:'$':0}}</label> 
+                                                </td>
+                                            </tr>
+
+                                            <tr ng-show="isSelected(medios.nombre) && isSelected(medios.nombre)">
+                                                <td>
+                                                    <label>{{medios.descripcion}}</label>
+                                                </td>
+                                            </tr>
+                                            <!--Aquí se empieza a construir la sección de bancos-->
+
+                                            <tr ng-show="{{medios.solicitarEntidadBancaria}} && isSelected(medios.nombre)">
+                                                <td>
+                                                    <label ng-model="entidadBancaria">Banco: </label>
+                                                    <select ng-model="empleadoSession.prueba.idBanco">
+                                                        <option  ng-repeat="banco in bancos" value="{{banco.idBanco}}" >{{banco.nombre}}</option>                                                    
+                                                    </select>  
+                                                </td>                                    
+                                            </tr>
+
+                                            <tr ng-show="{{medios.solicitarNumeroCuenta}} && isSelected(medios.nombre)">
+                                                <td>
+                                                    <label >Número de cuenta: </label>                                               
+                                                    <input  type="text"  ng-model="empleadoSession.prueba.numeroCuenta"  
+                                                            ng-minlength="3" ng-maxlength="10"
+                                                            name="A{{medios.id_medio}}"
+                                                            ng-required="{{medios.solicitarNumeroCuenta}} && isSelected(medios.nombre)"/>
+                                                    Mínimo 3 caracteres y Máximo 50
+                                                    <div role="alert">
+                                                        <span style="color:#ff0000;" class="error" ng-show="reviewForm.A{{medios.id_medio}}.$error.minlength">
+                                                            Mínimo 3 caracteres!</span>
+                                                        <span class="error" ng-show="reviewForm.cuenta.$error.maxlength">
+                                                            Máximo 50 caracteres!</span>
+                                                    </div>
+                                                </td>    
+
+                                            </tr>
+
+
+                                            <tr ng-show="{{medios.solicitarTipoCuenta}} && isSelected(medios.nombre)">
+                                                <td>
+                                                    <label>Tipo de cuenta:</label> 
+                                                    <div ng-repeat="tipo in tiposCta" > 
+                                                        <input type="radio" ng-model="empleadoSession.prueba.tipoCuenta" ng-value="{{tipo.idTipoCuenta}}">{{tipo.nombre}}
+                                                    </div>
+                                                </td>                                          
+                                            </tr> 
+                                            <!--Aquí finaliza la construir la sección de bancos-->                                    
+                                        </tbody>                                
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-lg-2"></div>
+                        <div class="form-group">
+                            <p class="text-danger">{{error}}</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

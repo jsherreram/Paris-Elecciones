@@ -1,0 +1,47 @@
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-body">                   
+                    <h2 class="font-light m-b-xs">Consulta de Pruebas</h2>
+                    <!--<a class="btn btn-default btn-lg btn-block" href="#/AutorizaViaticos/">Viaticos</a>
+                    <a class="btn btn-default btn-lg btn-block" href="#/ArchivoViaticos/0">Generar Plano</a>
+                    <a class="btn btn-default btn-lg btn-block" href="../../panel/CargaPagos/main.jsp#/">Planos</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hpanel" ng-repeat="reg in mispruebas| orderBy:'-fechanumero'">
+        <div class="panel-heading hbuilt" >
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-8">
+
+                            <p> <strong>Nombre de la Prueba: {{reg.nombre_prueba}}</strong></p>
+                            <p><strong>Aplicación:</strong>{{reg.fechaaplicacion}}</p>
+                            <p><strong>Código de la Prueba:</strong>{{reg.idtipo_prueba}}</p>
+                            <p><strong>Tipo de Prueba:</strong>{{reg.tipo_rueba}}</p>   
+                            <p><strong>Su estado en la Prueba:</strong>{{reg.estpersona_codigo}}</p>
+                            <p><strong>Cargo:</strong>{{reg.cargonombre}}<br/></p>
+                        </div>
+
+                       	<div ng-if="reg.puedecancelar >= 0" class="col-md-4">
+                            <a class="btn btn-default btn-lg btn-block" href="#/Asignacion/{{reg.idprueba}}/{{reg.cargonombre}}/{{idPersona}}">Ver Asignación</a>
+                            <a class="btn btn-primary btn-lg btn-block" href="#/FirmarContrato/{{persona.idEmpleado}}/{{reg.idprueba}}/clic/{{reg.codigocargo}}">Contrato</a>
+                            <!--<a class="btn btn-primary btn-lg btn-block" ng-click="cancelar(reg)">Cancelar Participación</a> Wcv Cancelado-Solicitado por Pedro Feb 26 2016 -->
+                            <a class="btn btn-default btn-lg btn-block" href="#/Pagos/{{reg.idprueba}}/{{reg.cargonombre}}/{{idPersona}}">Pagos</a>                     
+                        </div>
+                        <div ng-if="reg.puedecancelar < 0" class="col-md-4">
+                            <a class="btn btn-default btn-lg btn-block" href="#/Asignacion/{{reg.idprueba}}/{{reg.cargonombre}}/{{idPersona}}">Ver Asignación</a>
+                            <a class="btn btn-primary btn-lg btn-block" href="#/FirmarContrato/{{persona.idEmpleado}}/{{reg.idprueba}}/clic/{{reg.codigocargo}}">Contrato</a>
+                            <a class="btn btn-default btn-lg btn-block" href="#/Pagos/{{reg.idprueba}}/{{reg.cargonombre}}/{{idPersona}}">Pagos</a>             
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

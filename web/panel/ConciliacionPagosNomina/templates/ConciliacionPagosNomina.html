@@ -1,0 +1,114 @@
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+    <a ng-show="opcion.mostrar" href="{{'#/'+opcion.operacion+'/'+opcion.id}}" >{{opcion.name}}</a>   
+    </li>
+    </ul>
+</script>
+<ul ng class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+        <a ng-show="opcion.mostrar" href="{{'#/' + opcion.operacion + '/' + opcion.id}}" >{{opcion.name}}</a>
+        <a ng-hide="opcion.mostrar"  ng-click="controller.show()">{{opcion.name}}h</a>
+    </li>
+</ul>
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h3>Conciliacion Pagos Nomina</h3></center>
+                </div>
+                <div class="panel-body"> 
+                    <form name="formBarras" method="POST">
+                        <div class="form-view-data col-md-12">
+                            
+                            <div class="form-group col-md-6">
+                                <label>Número Documento: </label>
+                                <input class="form-control" type="text" numeric min="0" decimals="0" formatting="false" name="nroDocumento" ng-model="nroDocumento" ng-keydown="controller.key($event)" />
+                                <span ng-show="error.nroDocumento === true" class="text-danger">El número de documento es requerido.</span>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">                                      
+                                            <table ng-init="items.totales = {}" WIDTH="600" class="table table-bordered table-hover" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>NODO</th>
+                                                        <th>SITIO</th>
+                                                        <th>NOMBRE SITIO</th>
+                                                        <th>CEDULA</th>
+                                                        <th>NOMBRE</th>
+                                                        <th>CELULAR</th>
+                                                        <th>CARGO</th>
+                                                        <th>SESION</th>
+                                                        <th>VALOR SESION</th>
+                                                        <th>ASISTIO</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr style="color:#111" ng-style="pago.asistio === true ? {'background-color': '#FFFFFF'} : {'background-color': '#F2DEDE'}" ng-repeat="pago in pagos.eventos">
+                                                        
+                                                        <td >{{pago.nombrenodo}}</td>
+                                                        <td >{{pago.codigositio}}</td>
+                                                        <td >{{pago.nombresitio}}</td>
+                                                        <td >{{pago.cedula}}</td>
+                                                        <td >{{pago.nombres}}</td>
+                                                        <td >{{pago.celular}}</td>
+                                                        <td >{{pago.cargo}}</td>
+                                                        <td >{{pago.sesion}}</td>
+                                                        
+                                                        <td>
+                                                            <div ng-init="items.totales.total = items.totales.total + pago.valorSesion ">
+                                                              {{pago.valorSesion}}
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td >{{pago.asistio}}</td>
+                                                    </tr>
+
+                                                    <tr style="color:#111">
+                                                        <td colspan="7" ></td>
+                                                        <td >Total</td>
+                                                        <td >{{items.totales.total}}</td>
+                                                        <td ></td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <input class="btn btn-primary" value="Guardar" style="float: right; margin-right: 5px;">
+                                <input class="btn btn-primary" value="Limpiar" ng-click="controller.limpiar()" style="float: right; margin-right: 5px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalLoading" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Paris - Elecciones
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-info active" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

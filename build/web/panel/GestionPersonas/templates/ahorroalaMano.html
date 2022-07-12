@@ -1,0 +1,63 @@
+<style>
+    .dropzone {
+        min-height: 180px;
+    } 
+    .dropzone .dz-default.dz-message{
+        background-image: none;
+        opacity: 0.3;
+        width: 428px;
+        height: 123px;
+        text-align: center;
+    }
+    .dropzone .dz-default.dz-message span {
+        margin: auto;
+        display: table;
+        font-size: 35px;
+        font-style: italic;
+        width: 428px;
+        height: 123px;
+        margin: 0 auto;
+
+    }
+    .modal-backdrop.in{
+        opacity: 0.8;
+    }
+
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <center><h3 class="modal-title">Subir Archivo Ahorro a la Mano</h3></center>
+</div>
+
+<div class="modal-body col-md-12">
+    <div class="panel panel-default">
+        <div
+            <div class="dropzone" style="min-height: 150px;" options="controller.dzOptions" callbacks="controller.dzCallbacks" methods="controller.dzMethods" ng-dropzone>
+            </div><br>
+            <a class="btn btn-primary" style=' margin-bottom: 4%' data-placement="buttom" title="Cargar Fotos" ng-click="controller.uploadFiles()">Cargar Archivo</a>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-10 col-md-offset-1">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Fecha de Registro</th>
+                        <th>Opciones</th>
+                    </tr>
+                    <tr dir-paginate="pe in controller.archivos| orderBy:'-fecha' | itemsPerPage: pageSize" current-page="currentPage">
+
+                        <td> {{pe.fecha|date:'dd/MM/yyyy  h:mma'}}</td>
+                        <td><a nombre ="vercertest" href="templates/descargarArchivoHistorial.jsp?idEmpleado={{controller.idEmpleado}}&archivo={{pe.nombre}}&tipoDocumental={{controller.tipoDocumento}}"  target="_blank" class="btn btn-default">Ver</a></td>
+                    </tr>
+                </table>
+                <center>
+                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+                </center>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="cancel()">Regresar</button>
+</div>
+

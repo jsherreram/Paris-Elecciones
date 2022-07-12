@@ -1,0 +1,136 @@
+<div class="col-lg-12">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">        
+        <table class="table table-striped table-bordered table-hover" >                                                                        
+            <tbody >
+                <tr>
+                    <td>
+                        <label>Codigo de la prueba:</label>{{controller.evento.codigoPrueba}}<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Nombre de la prueba:</label>{{controller.evento.nombrePrueba}}<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Tipo de la prueba:</label>{{controller.evento.tipoPrueba}}<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Fecha de aplicacion:</label>{{controller.evento.fechaAplicacion}}<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Dias de la aplicacion:</label>{{controller.evento.dias}}<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Cargo a aplicar:</label>{{controller.evento.cargo}}<br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-3"></div>
+</div>
+<div class="col-lg-12">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        <form class="form-horizontal" ng-submit="guardar(1)"  method="" id="formAcepta">
+            <table class="table table-striped table-bordered table-hover">                                                                        
+                <tbody>
+                    <tr>
+                        <td>
+                            <label>Disponibilidad desde: </label> <input type="date" ng-model="fecha1"/>
+                        </td>
+                        <td>
+                            <label> hasta: </label> <input type="date" ng-model="fecha2"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>    
+            <table class="table table-striped table-bordered table-hover">                                                                        
+                <tbody>                    
+                    <tr>
+                        <td>
+                            <label>¿Tiene disponibilidad para viajar? </label>
+                        </td>
+                        <td>
+                            <input type="radio" name="d1" value="1" checked ng-model="d1">Si<br>
+                            <input type="radio" name="d1" value="0" ng-model="d1">No<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>¿Tiene disponibilidad para realizar aplicaciones en zonas rurales?</label>
+                        </td>
+                        <td>
+                            <input type="radio" name="d2" value="1" checked ng-model="d2">Si<br>
+                            <input type="radio" name="d2" value="0" ng-model="d2">No<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>¿Tiene disponibilidad para realizar aplicaciones en zonas urbanas?</label>
+                        </td>
+                        <td>
+                            <input type="radio" name="d3" value="1" checked ng-model="d3">Si<br>
+                            <input type="radio" name="d3" value="0" ng-model="d3">No<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>¿Actualmente trabaja?</label>
+                        </td>
+                        <td>
+                            <input type="radio" name="d4" value="1" checked ng-model="d4">Si<br>
+                            <input type="radio" name="d4" value="0" ng-model="d4">No<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>¿Tiene disponibilidad para asistir a las capacitaciones presenciales según las fechas de capacitacion?</label>
+                        </td>
+                        <td>
+                            <input type="radio" name="d5" value="1" checked ng-model="d5">Si<br>
+                            <input type="radio" name="d5" value="0" ng-model="d5">No<br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-striped table-bordered table-hover">                                                                        
+                <tbody>
+                    <tr>
+                        <td>
+                            <label>Observaciones: </label>
+                        </td>
+                        <td>
+                            <input type="text" size="98" maxlength="300" ng-model="observaciones"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-striped table-bordered table-hover">
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="submit" value="Aplicar"/>
+                        </td>
+                        <td>
+                            <input type="button" value="No participar en esta prueba" ng-click="guardar(2)"/>
+                        </td>
+                        <td>
+                            <input type="button" value="Volver" ng-click="volver()"/>
+                        </td>
+                </tbody>
+            </table>
+        </form>           
+    </div>
+    <div class="col-lg-1"></div>
+</div>
+

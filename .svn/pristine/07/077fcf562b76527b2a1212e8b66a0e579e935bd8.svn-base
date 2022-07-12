@@ -1,0 +1,32 @@
+<div class="inmodal">
+    <div class="color-line"></div>
+    <div class="modal-header text-center">
+        <!--<i class="fa fa-sliders color-success h-modal-icon"></i>-->
+        <h4 class="modal-title">Suscripci&oacute;n de afiliaci&oacute;n</h4>        
+    </div>
+    <div class="modal-body">
+        <p><strong>Afiliado(a): </strong>Por favor antes de suscribir la afiliaci&oacute;n es necesario que haya verificado que toda su informaci&oacute;n 
+        personal y de beneficiarios se encuentre correctamente diligenciada.</p>
+        <p><strong>Asesor(a): </strong>Recuerde que es responsable de verificar la correcta identidad del afiliado y del correcto diligenciamiento de la 
+            informaci&oacute;n en la afiliaci&oacute;n electr&oacute;nica. </p>        
+        <p>
+            <input type="checkbox" ng-model="afiliadoAcepta" /> Confirmo que como <strong>afiliado</strong> estoy conforme con los datos diligenciados y acepto que sea realizada 
+            la afiliaci&oacute;n.
+        </p>
+        <p>
+            <input type="checkbox" ng-model="asesorAcepta" /> Confirmo que como <strong>asesor</strong> he verificado la identidad del afiliado y que los datos diligenciados 
+        tienen la calidad necesaria para realizar la afiliaci&oacute;n.
+        </p>
+        <br />
+        <p><strong>Importante: Luego de suscribir la afiliaci&oacute;n, esta no podr&aacute; ser modificada.</strong></p>
+        <div ng-show="aceptarError">
+            <br />
+            <p class="text-danger"><strong>{{messageError}}</strong></p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancelar y seguir editando</button>
+        <button type="button" class="btn btn-primary" ng-click="ok()">Suscribir y continuar</button>
+    </div>
+</div>
+

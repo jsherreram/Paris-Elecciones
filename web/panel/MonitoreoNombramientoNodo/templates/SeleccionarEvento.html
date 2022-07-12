@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hpanel">
+            <div class="panel-body">   
+
+                <div class="col-lg-2"></div>
+                <div class="table-responsive col-lg-8" >
+                    
+                    <div ng-if="tipoReporte=='N' || tipoReporte=='A'">
+                        <h2 class="font-light m-b-xs">
+                                {{tipoReporte==='N'?'Monitoreo de Nombramiento Por Cargo y Sitio':'Monitoreo de Asistencia por Cargo y Sitio'}}
+                        </h2>
+                    </div>
+
+                    <div ng-if="tipoReporte=='NT' || tipoReporte=='AT'">
+                        <h2 class="font-light m-b-xs">
+                                {{tipoReporte==='N'?'Monitoreo de Nombramiento Por Sitio':'Monitoreo de Asistencia por Sitio'}}
+                        </h2>
+                    </div>
+                    
+                    <br>
+                    Seleccione una prueba y posterior un evento
+                    <br><br>
+                    <label for="pruebaSelect"> Pruebas: </label><br>
+                    <select name="pruebaSelect" ng-model="pruebaSelect"  ng-change='pruebaSelected()' multiple>
+                        <option  ng-repeat="prueba in pruebas" value="{{prueba.idprueba}}" >{{prueba.nombre}}</option>                                                    
+                    </select> 
+                   
+                    <br><br>
+                    <label for="pruebaSelect"> Eventos: </label><br>
+                    <select ng-model="somethingHere"                             
+                            ng-options="evento.codigoEvento as evento.nombre for evento in eventos" >
+                    </select>
+                    <br><br>
+                    
+                    <div ng-if="tipoReporte == 'N' || tipoReporte == 'A'" class="aligncenter"> 
+                        <a href="#/ConsolidadoCargosNodo/{{tipoReporte}}/1/{{somethingHere}}" class="btn btn-sm btn-primary">Consultar</a>
+                        <br><br>
+                    </div>
+
+                    <div ng-if="tipoReporte == 'NT' || tipoReporte == 'AT'" class="aligncenter"> 
+                        <a href="#/Departamental/{{tipoReporte}}/3/{{somethingHere}}/TODOS" class="btn btn-sm btn-primary">Consultar</a>
+                        <br><br>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

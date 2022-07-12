@@ -1,0 +1,80 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <center><h3 class="modal-title">Historial Laboral</h3></center>
+        </div>
+        <div class="modal-body">
+            <div class="form-group col-md-6">
+                <label>Nombres y Apellidos</label>
+                <input type='text' ng-model="trabajador.nombre1" class="form-control" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Cargo</label>
+                <input type="text" ng-model="trabajador.cargoobj.descripcion" class="form-control" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Número Documento</label>
+                <input type="text" ng-model="trabajador.nrodoc" class="form-control" readonly>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label  for="telefono">Departamento Residencia</label>
+                <input type="text" ng-model="trabajador.municipio.departamento.nombre"  class="form-control" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Número Celular</label>
+                <input type="text" ng-model="trabajador.celular" class="form-control" readonly>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label  for="telefono">Municipio Residencia</label>
+                <input type="text" ng-model="trabajador.municipio.nombre"  class="form-control" readonly>
+            </div>
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-body" ng-show="personas.length > 0">
+                        <div class="form-group col-md-12">
+                            <div class="table-responsive">
+                                <table class="width200">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre Prueba</th>
+                                            <th>Fecha</th>
+                                            <th>Evento</th>
+                                            <th>Departamento</th>
+                                            <th>Municipio</th>
+                                            <th>Código Sitio</th>
+                                            <th>Sede</th>
+                                            <th>Cargo</th>
+                                            <th>Salón </th>
+                                            <th>Asistió</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="historial.length === 0"><td colspan="10"><center>No tiene Registro de Historial</center></td></tr>
+                                    <tr dir-paginate="h in historial | itemsPerPage: pageSize2" current-page="currentPage2" pagination-id="pagHistorial">
+                                        <td>{{h.evento.prueba.nombre}}</td>
+                                        <td>{{h.evento.prueba.fechaaplicacion| date:'MM/dd/yyyy'}}</td>
+                                        <td>{{h.evento.nombre}}</td>
+                                        <td>{{h.municipio.departamento.nombre}}</td>
+                                        <td>{{h.municipio.nombre}}</td>
+                                        <td>{{h.puesto}}</td>
+                                        <td>{{h.ubicacion}}</td>
+                                        <td>{{h.cargo.descripcion}}</td>
+                                        <td>{{h.salon}}</td>
+                                        <td ><p ng-show="h.asistio === true">SI</p><p ng-show="h.asistio === false">NO</p></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <center>
+                                <dir-pagination-controls pagination-id="pagHistorial" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

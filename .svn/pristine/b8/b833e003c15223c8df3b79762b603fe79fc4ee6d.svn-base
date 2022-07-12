@@ -1,0 +1,169 @@
+<style type="text/css">
+    .popover-content {
+        padding: 2px 12px;
+    }
+</style>
+
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+    <a ng-show="opcion.mostrar" href="{{'#/'+opcion.operacion+'/'+opcion.id}}" >{{opcion.name}}</a>   
+    </li>
+    </ul>
+</script>
+<ul ng class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+        <a ng-show="opcion.mostrar" href="{{'#/' + opcion.operacion + '/' + opcion.id}}" >{{opcion.name}}</a>
+        <a ng-hide="opcion.mostrar"  ng-click="controller.show()">{{opcion.name}}h</a>
+    </li>
+</ul>
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h2>Nombramiento Por Cargo</h2></center>
+                </div>
+                <div class="panel-body"> 
+                    <form name="nombramientoForm" ng-submit="controller.buscarNombramientosSitio()" method="POST">
+                        <div class="col-md-12">
+                            <div class="form-group col-md-6">
+                                <label style="color: #f22">*</label>
+                                <label id="departamento" data-toggle="popover" data-content="El departamento es requerido">Departamento: </label>
+                                <select class="form-control" name="departamento" ng-model="controller.departamento" ng-change="controller.buscarMunicipios()" ng-required="true">
+                                    <option value="" selected="true">Seleccionar</option>
+                                    <option ng-repeat="dpto in controller.departamentos" value="{{dpto.codigo}}" >{{dpto.nombre}}</option> 
+                                </select> 
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Municipio: </label>
+                                <select class="form-control" name="municipio" title="El municipio obligatorio" ng-model="controller.municipio">
+                                    <option value="" selected="true">Seleccionar</option>
+                                    <option ng-repeat="muni in controller.municipios" value="{{muni.codigoMunicipio}}" >{{muni.nombre}}</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label style="color: #f22">*</label>
+                                <label id="cargo" data-toggle="popover" data-content="El Cargo es requerido">Cargo: </label>
+                                <select  class="form-control" name="estados" ng-model="controller.cargo" ng-required="true">
+                                    <option value="" selected="true">Seleccionar</option>
+                                    <option ng-repeat="cargo in controller.cargos track by $index" value="{{$index}}" >{{cargo.descripcion}}</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Zona: </label>
+                                <select  class="form-control" name="estados" ng-model="controller.zona">
+                                    <option value="" selected="true">Seleccionar</option>
+                                    <option ng-repeat="zona in controller.zonas" value="{{zona.idZona}}" >{{zona.nombre}}</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Salones: </label>
+                                <input numeric min="0" max="999" decimals="0" ng-model="controller.salones" class="form-control" >
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input class="btn btn-primary" type="submit" value ="Consultar" style="float: right; margin-right: 5px;">
+                                <input class="btn btn-primary" type="reset" value ="Limpiar" style="float: right; margin-right: 5px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="controller.nombramientos.length <= 0">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <span class="text-center text-success">No se encontro información</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="divBusqueda" ng-show="controller.nombramientos.length > 0">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="input-group col-md-12">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
+                    </div>
+                </div>
+                <div class="panel-body" ng-show="controller.nombramientos.length <= 0">
+                    <div class="">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="width200">
+                            <thead>
+                                <tr>
+                                    <th>Buscar</th>
+                                    <th>Municipio</th>
+                                    <th>Código Sitio</th>
+                                    <th>Nombre Sitio</th>
+                                    <th>Salones</th>
+                                    <th>Documento</th>
+                                    <th>Apellidos</th>
+                                    <th>Nombres</th>
+                                    <th>Zona</th>
+                                    <th>Opción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="nombramiento in controller.nombramientos | filter:search | orderBy: funcionOrdenar | itemsPerPage: pageSize track by $index" current-page="currentPage">
+                                    <td>
+                                        <a href="" ng-click="controller.buscarPersonas(nombramiento)" ng-show="nombramiento.estado.codigoEstado === 0">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </a>
+                                        <span ng-show="nombramiento.estado.codigoEstado === 1">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </span>
+                                    </td>
+                                    <td>{{nombramiento.divipol.municipio.nombre}}</td>
+                                    <td>{{nombramiento.divipol.codigoSitio}}</td>
+                                    <td>{{nombramiento.divipol.nombreSitio}}</td>
+                                    <td>{{nombramiento.divipol.cantidadSalones}}</td>
+                                    <td>
+                                        <label style="font-weight: normal; display:inline" ng-show="nombramiento.estado.codigoEstado === 1">
+                                            {{nombramiento.nrodocEmpleado}}
+                                        </label>
+                                        <input numeric min="0" decimals="0" class="form-control" ng-show="nombramiento.estado.codigoEstado === 0" ng-model="nombramiento.empleado.nrodoc">
+                                    </td>
+                                    <td>{{nombramiento.empleado.apellido1 + " " + nombramiento.empleado.apellido2}}</td>
+                                    <td>{{nombramiento.empleado.nombre1 + " " + nombramiento.empleado.nombre2}}</td>
+                                    <td>{{nombramiento.zonaIcfes.nombre}}</td>
+                                    <td>
+                                        <input class="btn btn-primary" ng-show="nombramiento.estado.codigoEstado === 0" type="button" value ="Asignar" ng-click="controller.asignarPrincipal(nombramiento)" style="float: right; margin-right: 5px;">
+                                        <input class="btn btn-danger" ng-show="nombramiento.estado.codigoEstado === 1" type="button" value ="Desasignar" ng-click="controller.desasignarPrincipal(nombramiento)" style="float: right; margin-right: 5px;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <center>
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalLoading" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Paris - Elecciones
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-info active" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

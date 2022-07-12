@@ -1,0 +1,81 @@
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+    <a ng-show="opcion.mostrar" href="{{'#/'+opcion.operacion+'/'+opcion.id}}" >{{opcion.name}}</a>   
+    </li>
+    </ul>
+</script>
+<ul ng class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+        <a ng-show="opcion.mostrar" href="{{'#/' + opcion.operacion + '/' + opcion.id}}" >{{opcion.name}}</a>
+        <a ng-hide="opcion.mostrar"  ng-click="controller.show()">{{opcion.name}}h</a>
+    </li>
+</ul>
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h4>Mostrar Fotos Sitio</h4></center>
+                </div>
+                <div class="panel-body">
+                    <form name="showForm"   ng-submit="controller.consultarFotosSitio()" method="post">
+                        <div class="col-md-12">
+                            <div class="form-group col-md-12" >
+                                <label>Sitio:</label>
+                                <select  class="form-control" name="sitio" title="El sitio es obligatorio" ng-model="controller.codigoSitio">
+                                    <option value="">Seleccione</option>
+                                    <option  ng-repeat="sitio in controller.sitios" value="{{sitio.codigoSitio}}" >{{sitio.nombreSitio}}</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input class="btn btn-primary" type="submit" value ="Buscar" style="float: right; margin-right: 5px;"> 
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Fotos Sitio</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="carousel slide" id="carousel3" ng-show="controller.listaFotos.length > 0">
+                                        <div class="carousel-inner">
+                                            <div class="item gallery active left">
+                                                <div class="row">
+                                                    <div class="col-sm-6" ng-repeat="foto in controller.listaFotos">
+                                                        <img alt="image"  class="img-responsive" src="/fotosSitio/{{foto.path}}/{{foto.name}}">
+                                                    </div>
+                                                </div>        
+                                            </div>
+                                            <div class="item gallery next left">
+                                                <div class="row">
+                                                    <div class="col-sm-6" ng-repeat="foto in controller.listaFotos">
+                                                        <img alt="image"  class="img-responsive" src="/fotosSitio/{{foto.path}}/{{foto.name}}">
+                                                    </div>
+                                                </div>        
+                                            </div>
+                                            <div class="item gallery">
+                                                <div class="row">
+                                                    <div class="col-sm-6" ng-repeat="foto in controller.listaFotos">
+                                                        <img alt="image"  class="img-responsive" src="/Paris/fotosSitio/{{foto.path}}/{{foto.name}}">
+                                                    </div>
+                                                </div>        
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center" ng-show="controller.listaFotos.length === 0">
+                                        No hay fotos.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

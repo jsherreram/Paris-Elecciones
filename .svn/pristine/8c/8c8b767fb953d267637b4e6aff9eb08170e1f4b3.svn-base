@@ -1,0 +1,169 @@
+(function () {
+    function NombramientoCargo(Departamento, Municipio, Empleado, Cargo, ZonaIcfes, NombramientoCargoService, $scope, sweet, $location, $routeParams) {
+        var self = this;
+        var idPrueba = 0;
+        var usuarioAcutaliza = 0;
+        this.departamento = 0;
+        this.municipio = 0;
+        this.cargo = 0;
+        this.zona = 0;
+        this.salones = 0;
+        $scope.onlyNumbers = /^\d+$/;
+
+        //Se obtiene el id de la prueba para enviarla en la consulta
+        Empleado.getEmpleadoPruebaSesion({}, function (data) {
+            idPrueba = data.pruebaActual;
+            usuarioAcutaliza = data.nrodoc;
+            //Si la peticion llega con valores de ruta significa que vino de un boton de volver
+            if ($routeParams.codDpto !== undefined) {
+                self.departamento = $routeParams.codDpto;
+                self.municipio = $routeParams.codMun;
+                self.cargo = $routeParams.cargo;
+                self.zona = $routeParams.codZona;
+                self.salones = $routeParams.sal;
+                var params = {
+                    idPrueba: idPrueba,
+                    codigoDepartamento: $routeParams.codDpto,
+                    codigoMunicipio: $routeParams.codMun,
+                    codigoCargo: $routeParams.cargo,
+                    idZona: $routeParams.codZona,
+                    cantidadSalones: $routeParams.sal
+                };
+                $('#modalLoading').modal('show');
+                self.nombramientos = NombramientoCargoService.getNombramientoCargoFiltros(params, function (response) {
+                    if ($routeParams.page !== undefined) {
+                        $scope.currentPage = $routeParams.page;
+                    } else {
+                        $scope.currentPage = 1;
+                    }
+                    $scope.pageSize = 5;
+                    $('#modalLoading').modal('hide');
+                    $(window).scrollTop($("#divBusqueda").offset().top());
+                });
+            }
+        });
+
+        //Se consultan los departamentos Dane
+        this.departamentos = Departamento.listar({}, function (data) {});
+
+        //Se consultan los cargos para el filtro
+        this.cargos = Cargo.listar({}, function (data) {});
+
+        //Se listan las zonas del sistema
+        this.zonas = ZonaIcfes.listar({}, function (data) {});
+
+        // busca municipios de acuerdo al departamento
+        this.buscarMunicipios = function () {
+            this.municipios = Municipio.getByDpto({idDpto: self.departamento}, function (data) {});
+        };
+
+        //funcion para buscar los Nombramientos del sitio segun los filtros enviados
+        this.buscarNombramientosSitio = function (pageIndex) {
+            var error = false;
+            console.log("filtros:", this.departamento, "-", this.cargo);
+            if (this.departamento === 0) {
+                error = true;
+                $('#departamento').popover('show');
+                $("#cargo").popover('hide');
+            } else if (this.cargo === 0) {
+                error = true;
+                $('#cargo').popover('show');
+                $("#departamento").popover('hide');
+            } else {
+                $("#departamento").popover('hide');
+                $("#cargo").popover('hide');
+            }
+
+            if (!error) {
+                $('#modalLoading').modal('show');
+                var params = {
+                    idPrueba: idPrueba,
+                    codigoDepartamento: this.departamento,
+                    codigoMunicipio: this.municipio,
+                    codigoCargo: this.cargos[this.cargo].codigoCargo,
+                    idZona: this.zona,
+                    cantidadSalones: this.salones
+                };
+                //Se invoca al servicio de nombramiento que realiza la busqueda de los nombramientos
+                this.nombramientos = NombramientoCargoService.getNombramientoCargoFiltros(params, function (response) {
+                    if (pageIndex !== undefined) {
+                        $scope.currentPage = pageIndex;
+                    } else {
+                        $scope.currentPage = 1;
+                    }
+                    $scope.pageSize = 5;
+                    $('#modalLoading').modal('hide');
+                    $(window).scrollTop($("#divBusqueda").offset().top());
+                });
+            }
+        };
+
+        //Funcion encargada de desasignar a la persona del nombramiento en la pagina principal
+        this.desasignarPrincipal = function (nombramientoModificar) {
+            $('#modalLoading').modal('show');
+            var nombramiento = nombramientoModificar;
+            nombramiento.empleado.nrodoc = 0;
+            nombramiento.estado.codigoEstado = 0;
+            nombramiento.usuario = usuarioAcutaliza;
+            nombramiento.idPrueba = idPrueba;
+            var currentPage = $scope.currentPage;
+            var self = this;
+            NombramientoCargoService.actualizarNombramiento(nombramiento, function (response) {
+                if (response.codigo === '200') {
+                    sweet.show('Felicidades', 'La informaci\u00F3n se guard\u00F3 correctamente', "success");
+                    self.buscarNombramientosSitio(currentPage);
+                    $('#modalLoading').modal('hide');
+                } else {
+
+                }
+            });
+        };
+
+        //Funcion para asignar un empleado al nombramiento
+        this.asignarPrincipal = function (nombramientoModificar) {
+            if (nombramientoModificar.empleado.nrodoc > 0) {
+                $('#modalLoading').modal('show');
+                var nombramiento = nombramientoModificar;
+                nombramiento.usuario = usuarioAcutaliza;
+                nombramiento.estado.codigoEstado = 1;
+                nombramiento.codigoDepartamento = this.departamento;
+                var cargoObj = {nivel_cargo: this.cargos[this.cargo].nivel_cargo};
+                nombramiento.empleado.cargoobj = cargoObj;
+                nombramiento.idPrueba = idPrueba;
+                var currentPage = $scope.currentPage;
+                var self = this;
+                NombramientoCargoService.actualizarNombramiento(nombramiento, function (response) {
+                    if (response.codigo === '200') {
+                        sweet.show('Felicidades', 'La informaci\u00F3n se guard\u00F3 correctamente', "success");
+                        self.buscarNombramientosSitio(currentPage);
+                    } else {
+                        sweet.show('Error', response.descripcion, "error");
+                        nombramiento.usuario = 0;
+                        nombramiento.estado.codigoEstado = 0;
+                    }
+                    $('#modalLoading').modal('hide');
+                });
+            } else {
+                sweet.show('Error', "Debe ingresar un documento para asignar!", "error");
+            }
+        };
+
+        //Funcion que busca las personas a asignar
+        this.buscarPersonas = function (nombramientoBuscar) {
+            var nombramiento = nombramientoBuscar;
+            var url = "/busquedaPersonas/" + nombramiento.divipol.id + "/" +
+                    this.departamento + "/" + this.municipio + "/" +
+                    this.zona + "/" + this.salones + "/" +
+                    this.cargos[this.cargo].nivel_cargo + "/" + nombramiento.id + "/" + $scope.currentPage + "/" + this.cargos[this.cargo].codigoCargo;
+            $location.path(url);
+        };
+
+        //Funcion para ordenar la tabla
+        $scope.funcionOrdenar = function (nombramiento) {
+            return parseInt(nombramiento.divipol.codigoSitio);
+        };
+
+    }
+    ;
+    angular.module("app").controller('NombramientoCargo', NombramientoCargo);
+})();

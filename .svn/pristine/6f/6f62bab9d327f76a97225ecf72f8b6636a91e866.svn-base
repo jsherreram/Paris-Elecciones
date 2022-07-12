@@ -1,0 +1,181 @@
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3> </h3>
+                </div>
+                <div class="ibox-content">
+                    <form class="wizard-big" id="form" name="formRegistrarSitio"  method="POST" >
+                        <h1>Cambiar Cargo</h1>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span> 
+                                    <h3 style="display: inline-block">Cambiar a:</h3> <br><br>
+                                    <label>Nombre:</label> {{controller.personaActual.empleado.nombre1}} {{controller.personaActual.empleado.apellido1}} {{controller.personaActual.empleado.apellido2}}<br>
+                                    <label>Cargo:</label> {{controller.personaActual.cargo.descripcion}} <br>
+                                </div>
+                                <div  style="margin-top: 15%">
+                                    <div class="col-md-12">
+                                        <span class="label label-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                                        <h3  style="display: inline-block">Cambiar Por:</h3>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <br>
+                                            <label>Cargo:</label> 
+                                            <select class="form-control" ng-model="controller.codigoCargo"  ng-change="controller.buscarPersonasAsignadasaCargo()" required> 
+                                                <option ng-repeat="c in controller.cargos"  value="{{c.cargo.codigoCargo}}">{{c.cargo.descripcion}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                         <br>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading col-md-12"> 
+                                                <input type="text" class="form-control" placeholder="Buscar" ng-model="search"></div>
+                                            <div class="panel-body">
+                                                <ul>
+                                                    <li style="list-style:none"  ng-repeat=" p in controller.personasAsignadasCargo | filter:search"> <input type="radio" style="display:inline-block;" ng-model="controller.seleccionado" ng-value="{{p}}"> &nbsp;{{ p.empleado.nombre1}} {{p.empleado.apellido1}} {{p.empleado.apellido2}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <a class='btn btn-primary' style="float:right; margin-top:5%"  ng-click="controller.guardarCambiosCargos()"> Guardar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <h1>Cambiar Salón</h1>
+                        <fieldset>
+                            <h2></h2>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span> 
+                                    <h3 style="display: inline-block">Cambiar a:</h3> <br><br>
+                                    <label>Nombre:</label> {{controller.personaActual.empleado.nombre1}} {{controller.personaActual.empleado.apellido1}} {{controller.personaActual.empleado.apellido2}}<br>
+                                    <label>Cargo:</label> {{controller.personaActual.cargo.descripcion}} <br>
+                                    <label>Salón: </label>{{controller.personaActual.salon}}
+                                </div>
+                                <div  style="margin-top: 15%">
+                                    <div class="col-md-12">
+                                        <span class="label label-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                                        <h3  style="display: inline-block">Cambiar Por:</h3>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <br>
+                                            <label>Salon:</label> 
+                                            <select class="form-control" ng-model="controller.salon"  ng-change="controller.buscarSalonesAsignados()" required> 
+                                                <option ng-repeat="s in controller.salones"  value="{{s.id}}">{{s.salon}} - {{s.cargo.descripcion}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <br>
+                                        <label>Persona Asignada:</label> 
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <p ng-show="controller.salon !== undefined">  <label> Nombre: </label> {{controller.personaAsignadaSalon.empleado.nombre1}} {{controller.personaAsignadaSalon.empleado.apellido1}}</p>
+                                                <p ng-show="controller.salon !== undefined">  <label> Cargo: </label> {{controller.personaAsignadaSalon.cargo.descripcion}}</p>
+                                                <p ng-show="controller.salon !== undefined">  <label> Salón: </label> {{controller.personaAsignadaSalon.salon}}</p>
+                                            </div>
+                                        </div>
+                                        <a class='btn btn-primary' style="float:right; margin-top:5%"  ng-click="controller.guardarCambiosSalon()"> Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#wizard").steps();
+        $("#form").steps({
+            bodyTag: "fieldset",
+            onStepChanging: function (event, currentIndex, newIndex)
+            {
+                // Always allow going backward even if the current step contains invalid fields!
+                if (currentIndex > newIndex)
+                {
+                    return true;
+                }
+
+                // Forbid suppressing "Warning" step if the user is to young
+                if (newIndex === 3 && Number($("#age").val()) < 18)
+                {
+                    return false;
+                }
+
+                var form = $(this);
+                // Clean up if user went backward before
+                if (currentIndex < newIndex)
+                {
+                    // To remove error styles
+                    $(".body:eq(" + newIndex + ") label.error", form).remove();
+                    $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                }
+
+                // Disable validation on fields that are disabled or hidden.
+                form.validate().settings.ignore = ":disabled,:hidden";
+                // Start validation; Prevent going forward if false
+                return form.valid();
+            },
+            onStepChanged: function (event, currentIndex, priorIndex)
+            {
+                // Suppress (skip) "Warning" step if the user is old enough.
+                if (currentIndex === 2 && Number($("#age").val()) >= 18)
+                {
+                    $(this).steps("next");
+                }
+
+                // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+                if (currentIndex === 2 && priorIndex === 3)
+                {
+                    $(this).steps("previous");
+                }
+            },
+            onFinishing: function (event, currentIndex)
+            {
+                var form = $(this);
+                // Disable validation on fields that are disabled.
+                // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+                form.validate().settings.ignore = ":disabled";
+                // Start validation; Prevent form submission if false
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex)
+            {
+                var form = $(this);
+                // Submit form input
+                form.submit();
+            }
+        }).validate({
+            errorPlacement: function (error, element)
+            {
+                element.before(error);
+            },
+            rules: {
+                confirm: {
+                    equalTo: "#password"
+                }
+            }
+        });
+    });
+    $('.clockpicker').clockpicker();
+    $('#datepicker').datepicker({
+        orientation: "bottom",
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: false
+    });
+
+
+</script>
+

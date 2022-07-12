@@ -1,0 +1,70 @@
+<div class="content animate-panel">
+    <div class="row ">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div>
+                        <h3 style="display: inline-block">Gestionar persona en la prueba</h3>
+                        <a style="display: inline-block; float: right" ng-click="controller.volver()" class="btn btn-default">Volver</a>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row"> 
+                        <div class="col-md-6 ">
+                            <div class="panel panel-primary no-border ">
+                                <div class="panel-body">
+                                    <dl class="dl-horizontal">
+                                        <dt >Cargo</dt>
+                                        <dd>{{ controller.empleado.cargoobj.descripcion}}</dd>
+                                        <dt>Nombres</dt>
+                                        <dd>{{ controller.empleado.nombre1}} {{ controller.empleado.nombre2}} {{ controller.empleado.apellido1}} {{ controller.empleado.apellido2}}</dd>
+                                        <dt>Tipo Documento</dt>
+                                        <dd>{{ controller.empleado.tipodoc}}</dd>
+                                        <dt>Documento</dt>
+                                        <dd>{{ controller.empleado.nrodoc}}</dd>
+                                        <dt>Celular</dt>
+                                        <dd>{{ controller.empleado.celular}}</dd>
+                                        <dt>Teléfono</dt>
+                                        <dd>{{ controller.empleado.telefono}}</dd>
+                                        <dt>Email</dt>
+                                        <dd>{{ controller.empleado.email}}</dd>
+                                    </dl>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="panel panel-primary no-border">
+                                <div class="panel-body">
+                                    <a class="btn btn-default col-md-12 bnt-GestionarPersona" ng-href="/Paris/panel/GestionPersonas/main.jsp#/EditarDetallado/{{controller.empleado.idEmpleado}}">Actualización detallada de la persona</a>
+                                    <a class="btn btn-default col-md-12 bnt-GestionarPersona" ng-href="main.jsp#/usuario/{{controller.empleado.idEmpleado}}">Usuario acceso PARIS persona</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div ng-repeat="evento in controller.eventos" class="col-md-12 ">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6 ">   
+                                            <prueba-detail evento="evento"> </prueba-detail>
+                                        </div>
+                                        <div class="col-md-6 ">   
+                                            <a class="btn btn-default col-md-12 bnt-GestionarPersona btn-xs" ng-href="../../panel/GestionPagos/main.jsp#/Asignacion/{{evento.idprueba}}/{{evento.cargo}}/{{controller.empleado.idEmpleado}}">Ver Asignación</a>
+                                            <a class="btn btn-default col-md-12 bnt-GestionarPersona btn-xs" ng-href="main.jsp#/estado-prueba/{{evento.id}}">Cambiar estado</a>
+                                            <a class="btn btn-default col-md-12 bnt-GestionarPersona btn-xs" ng-href="../../panel/GestionPagos/main.jsp#/Pagos/{{evento.idprueba}}/{{evento.cargo}}/{{controller.empleado.idEmpleado}}">Pagos</a>
+                                            <a class="btn btn-default col-md-12 bnt-GestionarPersona btn-xs" ng-click="controller.cancelarParticipacion(evento)">Cancelar participación</a>
+                                            <a class="btn btn-default col-md-12 bnt-GestionarPersona btn-xs" ng-href="../../panel/Convocatorias/main.jsp#/Convocatorias/{{controller.empleado.idEmpleado}}">Aplicar a convocatoria</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

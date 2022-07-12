@@ -1,0 +1,105 @@
+<div class="content animate-panel" data-ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-10 col-sm-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Editar Capacitación</h2>
+                </div>
+                <div class="panel-body">            
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nombre">Salón</label>
+                                <input type="text" ng-model="evento.nombre" title="Descripción del Evento" required name="nombre" id="nombre" class="form-control" maxlength="100">
+                            </div>
+
+                            <div class="form-group">
+                                <label  for="fecha">Fecha de Inicio</label>
+                                <input type="text" ng-model="evento.fecha" class="form-control datepicker" title="Fecha de Inicio de Capacitación" data-date-format="yyyy-mm-dd" id="fechapicker">
+                            </div>
+                            <div class="form-group">
+                                <label  for="hora_inicial">Hora Inicio</label>
+                                <div class="input-group clockpicker" data-autoclose="true">
+                                    <input type="text" name="hora_inicial" ng-model="evento.hora_inicial" id="horaInicial" title="Hora Inicio" class="form-control">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-clock-o"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  for="tprueba">Departamento</label>
+                                <select name="tipoSelect" ng-model="evento.coddepartamento" class="form-control" disabled="true">
+                                    <option ng-repeat="reg1 in lstdepartamentos" value="{{reg1.codigo}}" >{{reg1.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label  for="tprueba">Sitio</label>
+                                <select name="tipoSelect" ng-model="evento.iddivipol" class="form-control" disabled="true">
+                                    <option ng-repeat="reg1 in lstsitios" value="{{reg1.idDivipol}}" >{{reg1.puesto}}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label >Cantidad</label>
+                                <input type="text" ng-model="evento.cantidadcapacitados" disabled="true"  ng-change="validarSiNumero(evento.cantidadcapacitados)" title="Personal en Capacitación" required name="cantidadcapacitados" id="cantidadcapacitados" class="form-control" maxlength="4">
+                            </div>
+                            <div class="form-group">
+                                <label>Fecha Final</label>
+                                <input type="text" ng-model="evento.fecha_final" class="form-control datepicker" title="Fecha Final de Capacitación" data-date-format="yyyy-mm-dd" id="fechafinalpicker">
+                            </div>
+                            <div class="form-group">
+                                <label>Hora Fin</label>
+                                <div class="input-group clockpicker" data-autoclose="true">
+                                    <input type="text" name="hora_final" ng-model="evento.hora_final" id="horaFinal" title="Hora Final" class="form-control">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-clock-o"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Cargo</label>
+                                <select name="tipoSelect" ng-model="evento.codcargo" class="form-control" disabled="true">
+                                    <option ng-repeat="reg1 in cargos" value="{{reg1.codigoCargo}}" >{{reg1.descripcion}}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-8 col-md-offset-4">
+                                <button class="btn btn-primary "  ng-click="Save(evento)">Guardar</button>
+                                <button  class="btn btn-primary"  ng-click="atras()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+                      
+                        $('#fechapicker').datepicker({
+                            orientation: "bottom",
+                            autoclose: true,
+                            todayHighlight: true,
+                            clearBtn: false
+                        });
+                        $('#fechafinalpicker').datepicker({
+                            orientation: "bottom",
+                            autoclose: true,
+                            todayHighlight: true,
+                            clearBtn: false
+                        });
+                           
+
+                $('.clockpicker').clockpicker();
+
+    </script>
+
+
+

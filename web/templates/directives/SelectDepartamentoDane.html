@@ -1,0 +1,3 @@
+<select ng-model="departamento" class="form-control has-error" required
+        ng-options="DepartamentoObj.nombre for DepartamentoObj in departamentos track by DepartamentoObj.codigo" ng-change="cambio()">
+</select>

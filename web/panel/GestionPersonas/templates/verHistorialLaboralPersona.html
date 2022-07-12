@@ -1,0 +1,126 @@
+<style > 
+    table.width201,table.rwd_auto {border:1px solid #ccc;width:100%;margin:0 0 50px 0}
+    .width201 th,.rwd_auto th {background:#ccc;padding:5px;text-align:center;}
+    .width201 td,.rwd_auto td {border-bottom:1px solid #ccc;padding:5px;text-align:center}
+    .width201 tr:last-child td, .rwd_auto tr:last-child td{border:0}
+
+    .rwd {width:100%;overflow:auto;}
+    .rwd table.rwd_auto {width:auto;min-width:100%}
+    .rwd_auto th,.rwd_auto td {white-space: nowrap;}
+
+    @media only screen and (max-width: 760px), (min-width: 768px) and (max-width: 1024px)  
+    {
+
+        table.width201, .width201 thead, .width201 tbody, .width201 th, .width201 td, .width201 tr { display: block; }
+
+        .width201 thead tr { position: absolute;top: -9999px;left: -9999px; }
+
+        .width201 tr { border: 1px solid #ccc; }
+
+        .width201 td { border: none;border-bottom: 1px solid #ccc; position: relative;padding-left: 50%;text-align:left }
+
+        .width201 td:before {  position: absolute; top: 6px; left: 6px; width: 45%; padding-right: 10px; white-space: nowrap;}
+
+        .width201 td:nth-of-type(1):before { content: "Nombre Prueba"; }
+        .width201 td:nth-of-type(2):before { content: "Fecha"; }
+        .width201 td:nth-of-type(3):before { content: "Evento"; }
+        .width201 td:nth-of-type(4):before { content: "Departamento"; }
+        .width201 td:nth-of-type(5):before { content: "Municipio"; }
+        .width201 td:nth-of-type(6):before { content: "Código Sitio"; }
+        .width201 td:nth-of-type(7):before { content: "Sede"; }
+        .width201 td:nth-of-type(8):before { content: "Cargo"; }
+        .width201 td:nth-of-type(9):before { content: "Salón"; }
+        .width201 td:nth-of-type(10):before { content: "Asistió"; }
+  
+        .descarto {display:none;}
+        .fontsize {font-size:10px}
+    }
+
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <center><h3 class="modal-title">Historial Laboral</h3></center>
+</div>
+<div class="modal-body col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Nombres y Apellidos</label>
+                    <input type='text' ng-model="controller.persona.nombre1" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Cargo</label>
+                    <input type="text" ng-model="controller.persona.cargoobj.descripcion" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Número Documento</label>
+                    <input type="text" ng-model="controller.persona.nrodoc" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label  for="telefono">Departamento Residencia</label>
+                    <input type="text" ng-model="controller.persona.municipio.departamento.nombre"  class="form-control" readonly>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Número Celular</label>
+                    <input type="text" ng-model="controller.persona.celular" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label  for="telefono">Municipio Residencia</label>
+                    <input type="text" ng-model="controller.persona.municipio.nombre"  class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="width201" >
+                <thead>
+                    <tr>
+                        <th>Nombre Prueba</th>
+                        <th>Fecha</th>
+                        <th>Evento</th>
+                        <th>Departamento</th>
+                        <th>Municipio</th>
+                        <th>Código Sitio</th>
+                        <th>Sede</th>
+                        <th>Cargo</th>
+                        <th>Salón </th>
+                        <th>Asistió</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show="controller.historial.length == 0"><td colspan="10"><center>No tiene Registro de Historial</center></td></tr>
+                <tr dir-paginate="h in controller.historial | itemsPerPage: pageSize2" current-page="currentPage2">
+                    <td>{{h.evento.prueba.nombre}}</td>
+                    <td>{{h.evento.prueba.fechaaplicacion| date:'MM/dd/yyyy'}}</td>
+                    <td>{{h.evento.nombre}}</td>
+                    <td>{{h.municipio.departamento.nombre}}</td>
+                    <td>{{h.municipio.nombre}}</td>
+                    <td>{{h.puesto}}</td>
+                    <td>{{h.ubicacion}}</td>
+                    <td>{{h.cargo.descripcion}}</td>
+                    <td>{{h.salon}}</td>
+                    <td ><p ng-show="h.asistio == true">SI</p><p ng-show="h.asistio == false">NO</p></td>
+                </tr>
+                </tbody>
+            </table>
+            <center>
+                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+            </center>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="cancel()">Regresar</button>
+</div>
+

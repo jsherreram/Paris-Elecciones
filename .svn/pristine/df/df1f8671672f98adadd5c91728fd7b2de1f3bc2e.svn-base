@@ -1,0 +1,64 @@
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+    <a ng-show="opcion.mostrar" href="{{'#/'+opcion.operacion+'/'+opcion.id}}" >{{opcion.name}}</a>   
+    </li>
+    </ul>
+</script>
+<ul ng class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+        <a ng-show="opcion.mostrar" href="{{'#/' + opcion.operacion + '/' + opcion.id}}" >{{opcion.name}}</a>
+        <a ng-hide="opcion.mostrar"  ng-click="controller.show()">{{opcion.name}}h</a>
+    </li>
+</ul>
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h4>Carga de Campaña Diligenciamiento Encuesta</h4></center>
+                </div>
+                <div class="panel-body">
+                    <form name="showForm" ng-submit="controller.cargarCampagna()" method="POST" novalidate>
+                        <div class="col-md-12">
+                            <div class="form-group col-md-12">
+                                <label style="color: #f22">*</label>
+                                <label>Evento:</label>
+                                <select class="form-control" name="evento" title="El evento es obligatorio" ng-model="evento" required ng-change="error.evento = false">
+                                    <option value="0">Seleccione</option>
+                                    <option ng-repeat="evento in eventos" value="{{evento.codigoEvento}}" >{{evento.nombre}}</option> 
+                                </select>
+                                <span style="color: #f22" ng-show="error.evento">El evento es requerido.</span>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label style="color: #f22">*</label>
+                                <label>Progreso:</label>
+                                <select class="form-control" name="progreso" title="El Campo Progreso es obligatorio" ng-model="progreso" required ng-change="error.progreso = false">
+                                    <option value="0" selected="selected">Seleccione</option>
+                                    <option ng-repeat="progreso in progresos" value="{{progreso.id}}" >{{progreso.descripcion}}</option> 
+                                </select>
+                                <span style="color: #f22" ng-show="error.progreso">El campo progreso es requerido.</span>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label style="color: #f22">*</label>
+                                <label>Campaña:</label>
+                                <select class="form-control" id="campagna" title="La Campaña es obligatoria" ng-model="campagna" required ng-change="error.campagna = false">
+                                    <option value="0">Seleccione</option>
+                                    <option ng-repeat="campagna in campagnas" value="{{campagna.id}}" >{{campagna.name}}</option> 
+                                </select>
+                                <span style="color: #f22" ng-show="error.campagna">La Campaña es requerida.</span>
+                            </div>
+                            <br/>
+                            <div class="form-group col-md-6">
+                                <input class="btn btn-danger btn-block" type="reset" value="Cancelar">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input class="btn btn-primary btn-block" type="submit" value ="Cargar a campaña">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

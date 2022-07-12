@@ -1,0 +1,39 @@
+<div class="content animate-panel">
+    <div class="row ">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="panel-title">Buscar Persona</h3></div>
+                <div class="content">
+                    <div class="row"> 
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="panel panel-primary ">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" ng-submit="controller.searchEmpleado()">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-3 control-label">Tipo Identificación</label>
+                                            <div class="col-sm-8">
+                                                <select-tipo-documento tipodocumento="controller.tipoDocumento" ></select-tipo-documento>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword3" class="col-sm-3 control-label">Numero Identificación</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" ng-model="controller.empleado.nrodoc" pattern="^[1]{1}[0|1|2|3]{1}[0-9]{8}|[0-9]{1}[0-9]{5,9}$" required="" name="nrodoc" id="nrodoc"  maxlength="10">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-5 col-sm-10">
+                                                <button type="button" ng-click="controller.searchEmpleado()" class="btn btn-default">Consultar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

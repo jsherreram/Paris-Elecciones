@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
+<glassfish-web-app error-url="">
+  <context-root>/Paris</context-root>
+  <security-role-mapping>
+    <role-name>administrador</role-name>
+    <group-name>administrador</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>asesor</role-name>
+    <group-name>asesor</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>coordinador</role-name>
+    <group-name>coordinador</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>operador</role-name>
+    <group-name>operador</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>rector</role-name>
+    <group-name>rector</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>examinador</role-name>
+    <group-name>examinador</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>call</role-name>
+    <group-name>call</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>contabilidad</role-name>
+    <group-name>contabilidad</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>delegado</role-name>
+    <group-name>delegado</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>coordinador_icfes</role-name>
+    <group-name>coordinador_icfes</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>administrador_icfes</role-name>
+    <group-name>administrador_icfes</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>capacitador</role-name>
+    <group-name>capacitador</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>coordinador_pds</role-name>
+    <group-name>coordinador_pds</group-name>
+  </security-role-mapping>
+  <class-loader delegate="true"/>
+  <jsp-config>
+    <property name="keepgenerated" value="true">
+      <description>Keep a copy of the generated servlet class' java code.</description>
+    </property>
+  </jsp-config>
+  <session-config>
+    <session-manager persistence-type="replicated">
+      <manager-properties>
+        <property name="relaxCacheVersionSemantics" value="true"/>
+      </manager-properties>
+    </session-manager>
+  </session-config>
+</glassfish-web-app>

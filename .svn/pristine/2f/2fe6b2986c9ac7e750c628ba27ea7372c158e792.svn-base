@@ -1,0 +1,303 @@
+<style>
+    .dropzone {
+        min-height: 180px;
+    } 
+    .dropzone .dz-default.dz-message{
+        background-image: none;
+        opacity: 0.3;
+        width: 428px;
+        height: 123px;
+        text-align: center;
+    }
+    .dropzone .dz-default.dz-message span {
+        margin: auto;
+        display: table;
+        font-size: 35px;
+        font-style: italic;
+        width: 428px;
+        height: 123px;
+        margin: 0 auto;
+
+    }
+    .modal-backdrop.in{
+        opacity: 0.8;
+    }
+
+</style>
+
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3> {{controller.titulo}}</h3>
+                </div>
+                <div class="ibox-content">
+                    <form class="wizard-big" id="form" name="formEditarEmpleado" method="POST" >
+                        <h1>Datos Generales</h1>
+                        <fieldset>
+                            <h2></h2>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group" ng-hide="controller.persona.tipodoc != undefined">
+                                        <label for="tipoDoc">Tipo Identificación *</label>
+                                        <select id="tipoDoc" ng-model="controller.tipoDoc" name="tipoDoc" title="Tipo de Identificación obligatorio" ng-options="tipoIden.descripcion for tipoIden in controller.tipoIdentificacion track by tipoIden.codigo" class="form-control" required="required"></select>
+                                    </div>
+                                    <div class="form-group" ng-show="controller.persona.tipodoc != undefined">
+                                        <label for="tipoDoc">Tipo Identificación *</label>
+                                        <select ng-model="controller.tipoDoc"  class="form-control"  disabled>
+                                            <option ng-repeat="tipoIden in controller.tipoIdentificacion" value="{{tipoIden.codigo}}">{{tipoIden.descripcion}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group"  ng-hide="controller.persona.idEmpleado != undefined">
+                                        <label   for="nrodoc">Número Identificación *</label>
+                                        <input type="number" ng-model="controller.persona.nrodoc" title="Rango: 100.000-99.999.999 y 1.000.000.000 - 1.199.999.999" pattern="^[1]{1}[0|1|2|3]{1}[0-9]{8}|[0-9]{1}[0-9]{5,9}$" required="required" ng-blur="controller.ValidaExiste()" name="nrodoc" id="nrodoc" class="form-control" maxlength="10">
+                                        <span ng-show="!formCrear.$pristine && formCrear.nrodoc.$error.required">El Número de Documento es requerido.</span>
+                                        <span ng-show="!formCrear.$pristine && formCrear.nrodoc.$invalid">Número de Documento no válido.</span>
+
+                                    </div>
+                                    <div class="form-group"  ng-show="controller.persona.idEmpleado != undefined">
+                                        <label   for="nrodoc">Número Identificación *</label>
+                                        <input type="text" ng-model="controller.persona.nrodoc" readonly="readonly" name="nrodoc" id="nrodoc" class="form-control" maxlength="10">
+                                    </div>
+                                    <div class="form-group">
+                                        <label  for="apellido1">Primer Apellido *</label>
+                                        <input type="text" ng-model="controller.persona.apellido1" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" required="required" name="apellido1"  class="form-control" maxlength="50">
+                                        <span ng-show="!formCrear.$pristine && formCrear.apellido1.$error.required">El Apellido es requerido.</span>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label  for="apellido2">Segundo Apellido</label>
+                                        <input type="text" ng-model="controller.persona.apellido2" name="apellido2" id="apellido2" class="form-control" maxlength="50">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nombre1">Primer Nombre *</label>
+                                        <input type="text" ng-model="controller.persona.nombre1" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" required="required" name="nombre1"  class="form-control" maxlength="50">
+                                        <span ng-show="!formCrear.$pristine && formCrear.nombre1.$error.required">El Nombre es requerido.</span>                                               
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nombre2">Segundo Nombre</label>
+                                        <input type="text" ng-model="controller.persona.nombre2" name="nombre2" id="nombre2" class="form-control" maxlength="50">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label" for="sexo">Género  M ó F </label>
+                                        <input type="text" ng-model="controller.persona.genero" title="sexo M ó F" name="sexo" pattern="^[M|F]{1}$" id="sexo" class="form-control" maxlength="1">
+                                        <span ng-show="!formCrear.$pristine && formCrear.sexo.$invalid">No válido.</span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechanacimiento">Fecha Nacimiento AAAA-MM-DD</label>
+                                        <input type="text" ng-model="controller.persona.fechaNacimiento" name="fechanacimiento"  class="form-control datepicker" data-date-end-date="-216m"   ng-blur="controller.validarFecha()" data-date-format="yyyy-mm-dd" id="datepicker">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label  for="codigoActividad" >Código Actividad Económica *</label>
+                                        <select-actividad-economica actividadeconomica="controller.actividadeconomica"></select-actividad-economica>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group" ng-hide="controller.rol==='coordinador'">
+                                        <label  for="codigoDpto">Departamento de Residencia *</label>
+                                        <select  class="form-control" name="departamento" title="El departamento es obligatorio" ng-model="controller.departamento" required="required">
+                                            <option value="">Seleccione</option>
+                                            <option  ng-repeat="dpto in controller.departamentos" value="{{dpto.codigo}}" >{{dpto.nombre}}</option> 
+                                        </select> 
+                                        <span ng-show="!formCrear.$pristine && formCrear.departamento.$error.required">El Departamento es requerido.</span>
+                                    </div>
+                                    <div class="form-group" ng-show="controller.rol==='coordinador'">
+                                        <label  for="codigoDpto">Departamento de Residencia *</label>
+                                        <select  class="form-control" name="departamento" title="El departamento es obligatorio" ng-model="controller.departamento" required="required" disabled>
+                                            <option value="">Seleccione</option>
+                                            <option  ng-repeat="dpto in controller.departamentos" value="{{dpto.codigo}}" >{{dpto.nombre}}</option> 
+                                        </select> 
+                                        <span ng-show="!formCrear.$pristine && formCrear.departamento.$error.required">El Departamento es requerido.</span>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label >Municipio de Residencia *</label>
+                                        <select-municipio-dane municipio="controller.municipio" departamentocodigo="controller.departamento"></select-municipio-dane>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="celular">Celular *</label>
+                                        <input type="text" ng-model="controller.persona.celular" title="Número de 10 dígitos. " required pattern="^[3]{1}[0|1|2|5]{1}[0-9]{8}$" name="celular"  class="form-control" maxlength="10">
+                                        <span ng-show="!formCrear.$pristine && formCrear.celular.$error.required">El Celular es requerido.</span>
+                                        <span ng-show="!formCrear.$pristine && formCrear.celular.$invalid">Número de celular no válido.</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  for="direccion">Dirección registrada en el RUT *</label>
+                                        <input type="text" ng-model="controller.persona.direccion" title="direccion" required="required" name="direccion" id="direccion" class="form-control" maxlength="50">
+                                        <span ng-show="!formCrear.$pristine && formCrear.direccion.$error.required">La Dirección es requerida.</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label  for="telefono">Teléfono registrado en el RUT *</label>
+                                        <input type="text" ng-model="controller.persona.telefono" title="Número de 7 ó 10 dígitos"  value="" name="telefono"  class="form-control" maxlength="10" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label  for="email">Email *</label>
+                                        <input type="email" ng-model="controller.persona.email" required title="mail@ejemplo.com" name="email"  class="form-control" maxlength="50">
+                                        <span ng-show="!formCrear.$pristine && formCrear.email.$error.required">El email es requerido.</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Medio de Pago </label>
+                                        <select ng-model="controller.persona.idmediopago" class="form-control">
+                                            <option value="0">BBVA</option>
+                                            <option value="1">Ahorro a la Mano</option>
+                                            <option value="2">Efecty</option>
+                                        </select>
+                                    </div>
+                                    <div ng-show="controller.persona.idmediopago === '1'" class="form-group">
+                                        <label  for="email">Número de Cuenta: </label>
+                                        <input type="text" ng-model="controller.persona.idpuesto"  name="cuenta"  class="form-control" maxlength="11" minlength="11">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <h1>Anexos</h1>
+                        <fieldset>
+                            <h2></h2>
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3> Adjuntar o Actualizar Documentos</h3>
+                                        <div class="dropzone" style="min-height: 150px;" options="controller.dzOptions" callbacks="controller.dzCallbacks" methods="controller.dzMethods" ng-dropzone>
+                                        </div><br>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <ul>
+                            <li id="activar-save" style="display: none">
+                                <a ng-click="controller.save()">Guardar</a>
+                            </li>
+                        </ul>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+            $(document).ready(function () {
+                $("#wizard").steps();
+                $("#form").steps({
+                    bodyTag: "fieldset",
+                    onStepChanging: function (event, currentIndex, newIndex)
+                    {
+                        // Always allow going backward even if the current step contains invalid fields!
+                        if (currentIndex > newIndex)
+                        {
+                            return true;
+                        }
+
+                        // Forbid suppressing "Warning" step if the user is to young
+                        if (newIndex === 3 && Number($("#age").val()) < 18)
+                        {
+                            return false;
+                        }
+
+                        var form = $(this);
+                        // Clean up if user went backward before
+                        if (currentIndex < newIndex)
+                        {
+                            // To remove error styles
+                            $(".body:eq(" + newIndex + ") label.error", form).remove();
+                            $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                        }
+
+                        // Disable validation on fields that are disabled or hidden.
+                        form.validate().settings.ignore = ":disabled,:hidden";
+                        // Start validation; Prevent going forward if false
+                        return form.valid();
+                    },
+                    onStepChanged: function (event, currentIndex, priorIndex)
+                    {
+                        // Suppress (skip) "Warning" step if the user is old enough.
+                        if (currentIndex === 2 && Number($("#age").val()) >= 18)
+                        {
+                            $(this).steps("next");
+                        }
+
+                        // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+                        if (currentIndex === 2 && priorIndex === 3)
+                        {
+                            $(this).steps("previous");
+                        }
+                    },
+                    onFinishing: function (event, currentIndex)
+                    {
+                        var form = $(this);
+                        // Disable validation on fields that are disabled.
+                        // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+                        form.validate().settings.ignore = ":disabled";
+                        // Start validation; Prevent form submission if false
+                        return form.valid();
+                    },
+                    onFinished: function (event, currentIndex)
+                    {
+                        var form = $(this);
+                        // Submit form input
+                        form.submit();
+                    }
+                }).validate({
+                    errorPlacement: function (error, element)
+                    {
+                        element.before(error);
+                    },
+                    rules: {
+                        confirm: {
+                            equalTo: "#password"
+                        }
+                    }
+                });
+            });
+
+            $(".number").parent("a").click(function () {
+
+                if ($(this).parent("li").attr("class").indexOf("last") != -1) {
+
+                    if ($("#activar-save").parents("div").attr("class").indexOf("actions") == -1) {
+                        $(".actions ul").prepend($("#activar-save"));
+
+                        if ($("#activar-save a").attr("disabled") == "disabled") {
+                            $("#activar-save a").css("background", "#eee");
+                            $("#activar-save a").css("background", "#aaa");
+                        } else
+                            $("#activar-save a").removeAttr("style");
+                    }
+
+                    $("#activar-save").css("display", "inline-block");
+                } else {
+                    $("#activar-save").css("display", "none");
+
+                }
+            });
+
+            $('.clockpicker').clockpicker();
+            $('#datepicker').datepicker({
+                orientation: "bottom",
+                autoclose: true,
+                todayHighlight: true,
+                clearBtn: false
+            });
+</script>
+
+
+

@@ -1,0 +1,80 @@
+
+<div class="content animate-panel" >
+    <div class="row ">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="panel-title">Configuración de Medios Pago</h3></div>
+                <div class="content">
+                    <div class="row"> 
+                        <div class="col-lg-2 col-md-2">
+                            <button type="button" ng-click="controller.configurarCobertura()" class="btn btn-default">Cobertura de Medios</button>
+                        </div>
+                        <div class="col-lg-2 col-md-2">
+                            <button type="button" ng-click="controller.crearMedio()" class="btn btn-default">Crear Medio de Pago</button>
+                        </div>
+
+
+                    </div>    
+                    <div class="row"> 
+                        <div class="col-md-12 ">
+                            <div class="panel panel-primary no-border ">
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table tablaInfo table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Tipo Medio</th>
+                                                    <th>Entidad bancaria</th>
+                                                    <th>Nro. Cuenta</th>
+                                                    <th>Tipo Cuenta</th>
+                                                    <th>Incentivo Pago</th>
+                                                    <th>Costo de transacción</th>
+                                                    <th>Activo/ Inactivo</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr ng-repeat="medio in controller.listaMediosPago| filter : controller.paginate">
+                                                    <td>{{medio.nombre}}</td>
+                                                    <td>{{medio.descripcion}}</td>
+                                                    <td>{{medio.solicitarEntidadBancaria}}</td>
+                                                    <td>{{medio.solicitarNumeroCuenta}}</td>
+                                                    <td>{{medio.solicitarTipoCuenta}}</td>
+                                                    <td>{{medio.auxilioTransporte}}</td> <!--incentivo pago no existe-->
+
+                                                    <td ng-if="medio.costoTransaccionPorValor === true">{{medio.costoTransaccion}}</td>
+                                                    <td ng-if="medio.costoTransaccionPorValor === false">{{medio.porcentajeTransaccion}}</td>
+                                                    <td>{{medio.activo}}</td>
+                                                    <td>
+
+                                                        <div class="col-lg-2 col-md-2">
+                                                            <button type="button" ng-click="controller.editarMedioPago(medio.idmedio_pago)" class="btn btn-default">Editar</button>
+
+                                                            <button type="button" ng-click="controller.subirArchivo(medio.idmedio_pago)" class="btn btn-default">Subir archivo cobertura</button>
+                                                        </div> 
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <pagination total-items="controller.totalItems" ng-model="controller.currentPage"
+                                                    max-size="10" boundary-links="true"
+                                                    items-per-page="controller.numPerPage" class="pagination-sm">
+                                        </pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

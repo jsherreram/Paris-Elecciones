@@ -1,0 +1,193 @@
+<style>
+    #inside{
+
+        font-size:12px;     
+        border-color:#ff3366;
+        width: 300px;
+        height: 100px;
+    }
+
+    a[rel="popover"]{
+        display: inline-block;
+        margin: 20px;
+    }        
+
+</style>
+
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+    <a href="{{'#/'+opcion.operacion+'/'+opcion.id}}">{{opcion.name}}</a>
+    </li>
+    </ul>
+</script>
+
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    Estado General de Sitios
+                </div>
+                <div class="panel-body">  
+                    <form name="reviewForm"  class="form-horizontal" ng-submit="controller.buscarSitios()" method="post" enctype="multipart/form-data">
+
+                        <div class="col-md-12">
+                            <div class="form-group col-md-3" >
+                                <label class="control-label" for="prueba">Sitios registrados:</label>
+                            </div>
+                            <div class="form-group col-md-9" style="margin-left: 2px">
+                                <div class="progress" style="height: 30px">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%; line-height: 30px">
+                                        {{controller.totalSitios}} (100%)
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label" for="evento">Sitios Geolocalizados:</label>
+                            </div>
+                            <div class="form-group col-md-9" style="margin-left: 2px">
+                                <div class="progress" style="height: 30px">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{controller.totalGeolocalizados*100 / controller.totalSitios | number:0}}%; line-height: 30px">
+                                        {{controller.totalGeolocalizados}} ({{controller.totalGeolocalizados*100 / controller.totalSitios | number:1}}%)
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label" for="evento">Sitios Confirmados:</label>
+                            </div>
+                            <div class="form-group col-md-9" style="margin-left: 2px">
+                                <div class="progress" style="height: 30px">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{controller.totalConfirmados*100 / controller.totalSitios | number:1}}%; line-height: 30px">
+                                        {{controller.totalConfirmados}} ({{controller.totalConfirmados*100 / controller.totalSitios | number:1}}%)
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label" for="evento">Sitios No ubicados:</label>
+                            </div>
+                            <div class="form-group col-md-9" style="margin-left: 2px">
+                                <div class="progress" style="height: 30px">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{controller.totalNoUbicados*100 / controller.totalSitios | number:1}}%; line-height: 30px">
+                                        {{controller.totalNoUbicados}} ({{controller.totalNoUbicados*100 / controller.totalSitios | number:1}}%)
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+
+                    </form>  
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="col-md-12" style="margin-bottom: 3%; margin-top:3%;" >
+                        <a ng-click="controller.buscarSinGeolocalizacion()" ng-disabled="controller.geolocalizando" class="btn btn-success" style="display: inline-block; margin-right:1% " >No Geolocalizados</a>
+                        <a ng-click="controller.buscarSinConfirmar()" ng-disabled="controller.geolocalizando" class="btn btn-success" style=" display: inline-block; margin-right:1% ">No Confirmados</a>
+                        <a ng-click="controller.buscarSinUbicar()" ng-disabled="controller.geolocalizando" class="btn btn-success" style=" display: inline-block; margin-right:1% ">No Ubicados</a>
+                        <a ng-click="controller.geolocalizar()" ng-disabled="controller.geolocalizando" class="btn btn-info" style=" display: inline-block; margin-right:1% ">Geolocalizar Todos <img ng-show="controller.geolocalizando" src="../../images/loading.gif" /></a>
+                    </div>
+                    <div class="input-group col-md-12">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
+                    </div>
+                </div>                
+                
+                <div class="panel-body" ng-show="controller.sitios.length > 0">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Codigo Sitio</th>
+                            <th>Departamento</th>
+                            <th>Municipio </th>
+                            <th>Tipo Sitio</th>
+                            <th>Nombre</th>
+                            <th>Opciones</th>
+
+                        </tr>
+                        <tr dir-paginate="sitio in controller.sitios | filter:search | itemsPerPage: pageSize" current-page="currentPage">
+                            <td>{{sitio.codigoSitio}}</td>
+                            <td>{{sitio.departamento.nombre}}</td>
+                            <td>{{sitio.municipio.nombre}}</td>
+                            <td>{{sitio.tipoSitio.nombre}}</td>
+                            <td>{{sitio.nombreSitio}}</td>
+                            <td>
+                                <a class="btn btn-default" data-toggle="modal" ng-click="controller.DetallarSitio(sitio.id)" data-target=".bs-example-modal-lg">Detallar</a>
+                                <a class="btn btn-success" data-toggle="tooltip" data-placement="buttom" title="Editar Sitio" href="#/EditarSitio/{{sitio.id}}" target="_blank" >Editar</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <center>
+
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>     
+
+</div>
+
+<div class="modal fade  bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 2%;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Detalle del Sitio</h4>
+            </div>
+            <div class="modal-body" style="max-height:600px; overflow-y:auto">
+                <div class="col-md-6">
+                    <h3>Datos Generales</h3>
+                    <table class="table table-bordered table-striped col-md-6"> 
+                        <tr><td>Código de Sitio:</td><td>{{controller.sitio.codigoSitio}}</td></tr>
+                        <tr><td>Nombre:</td><td>{{controller.sitio.nombreSitio}}</td></tr>
+                        <tr><td>Departamento:</td><td>{{controller.sitio.departamento.nombre}}</td></tr>
+                        <tr><td>Municipio:</td><td>{{controller.sitio.municipio.nombre}}</td></tr>
+                        <tr><td>Dirección:</td><td>{{controller.sitio.direccionSitio}}</td></tr>
+                        <tr><td>Tipo de Sitio:</td><td>{{controller.sitio.tipoSitio}}</td></tr>
+                        <tr><td>Barrio:</td><td>{{controller.sitio.barrio}}</td></tr>
+                        <tr><td>Zona:</td><td>{{controller.sitio.idZona}}</td></tr>
+                        <tr><td>Categoría:</td><td>{{controller.sitio.categoriaSitio}}</td></tr>
+                        <tr><td>Instrucciones de Llegada:</td><td>{{controller.sitio.instruccionesLlegada}}</td></tr>
+                    </table>
+                    <h3>Contacto Sitio</h3>
+                    <table class="table table-bordered table-striped"> 
+                        <tr><td>Nombre del Rector:</td><td>{{controller.sitio.nombreRector}}</td></tr>
+                        <tr><td>Teléfono:</td><td>{{controller.sitio.telefonoRector}}</td></tr>
+                        <tr><td>Correo Electrónico:</td><td>{{controller.sitio.emailRector}}</td></tr>
+                        <tr><td>Fax:</td><td>{{controller.sitio.faxRector}}</td></tr>
+                    </table>
+
+
+                </div>
+                <div class="col-md-6">
+                    <h3>Sede</h3>
+                    <table class="table table-bordered table-striped"> 
+                        <tr><td>Código de Sede(DANE)</td><td>{{controller.sitio.codigoSede}}</td></tr>
+                        <tr><td>Nombre de la Sede:</td><td>{{controller.sitio.nombreSede}}</td></tr>
+                        <tr><td>Departamento Sede:</td><td>{{controller.sitio.departamentoSede.nombre}}</td></tr>
+                        <tr><td>Municipio Sede:</td><td>{{controller.sitio.municipioSede.nombre}}</td></tr>
+                        <tr><td>Dirección:</td><td>{{controller.sitio.direccionSede}}</td></tr>
+                        <tr><td>Correo Electrónico:</td><td>{{controller.sitio.emailSede}}</td></tr>
+                        <tr><td>Nombre de Coordinador del Sitio /Rector:</td><td>{{controller.sitio.rectorSede}}</td></tr>
+                        <tr><td>Teléfono</td><td>{{controller.sitio.telefonoSede}}</td></tr>
+                    </table>
+                    <h3>Datos Complementarios</h3>
+                    <table class="table table-bordered table-striped"> 
+                        <tr><td>Cantidad de Salones:</td><td>{{controller.sitio.cantidadSalones}}</td></tr>
+                        <tr><td>Número de examinandos:</td><td>{{controller.sitio.nExaminandos}}</td></tr>
+                        <tr><td>Fecha Reunión Previa:</td><td>{{controller.sitio.fechaReunionPrevia}}</td></tr>
+                        <tr><td>Hora Reunión Previa:</td><td>{{controller.sitio.horaReunionPrevia}}</td></tr> 
+                        <tr><td>Medio de Pago:</td><td>{{controller.sitio.medioPago}}</td></tr>
+                        <tr><td>Toma de Asistencia:</td><td>{{controller.sitio.tomaAsistencia}}</td></tr>
+                    </table>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+

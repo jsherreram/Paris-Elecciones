@@ -1,0 +1,238 @@
+<style >
+    #inside{
+
+        font-size:12px;     
+        border-color:#ff3366;
+        width: 300px;
+        height: 100px;
+    }
+
+    a[rel="popover"]{
+        display: inline-block;
+        margin: 20px;
+    }        
+
+    table.width200,table.rwd_auto {border:1px solid #ccc;width:100%;margin:0 0 50px 0}
+    .width200 th,.rwd_auto th {background:#ccc;padding:5px;text-align:center;}
+    .width200 td,.rwd_auto td {border-bottom:1px solid #ccc;padding:5px;text-align:center}
+    .width200 tr:last-child td, .rwd_auto tr:last-child td{border:0}
+
+    .rwd {width:100%;overflow:auto;}
+    .rwd table.rwd_auto {width:auto;min-width:100%}
+    .rwd_auto th,.rwd_auto td {white-space: nowrap;}
+
+    @media only screen and (max-width: 760px), (min-width: 768px) and (max-width: 1024px)  
+    {
+
+        table.width200, .width200 thead, .width200 tbody, .width200 th, .width200 td, .width200 tr { display: block; }
+
+        .width200 thead tr { position: absolute;top: -9999px;left: -9999px; }
+
+        .width200 tr { border: 1px solid #ccc; }
+
+        .width200 td { border: none;border-bottom: 1px solid #ccc; position: relative;padding-left: 50%;text-align:left }
+
+        .width200 td:before {  position: absolute; top: 6px; left: 6px; width: 45%; padding-right: 10px; white-space: nowrap;}
+
+        .width200 td:nth-of-type(1):before { content: "Tipo de Documento"; }
+        .width200 td:nth-of-type(2):before { content: "Documento"; }
+        .width200 td:nth-of-type(3):before { content: "Nombres"; }
+        .width200 td:nth-of-type(4):before { content: "Apellidos"; }
+        .width200 td:nth-of-type(5):before { content: "Celular"; }
+        .width200 td:nth-of-type(6):before { content: "Teléfono"; }
+        .width200 td:nth-of-type(7):before { content: "Cargo"; }
+        .width200 td:nth-of-type(8):before { content: "Estado"; }
+        .width200 td:nth-of-type(9):before { content: "Opciones"; }
+
+
+        .descarto {display:none;}
+        .fontsize {font-size:10px}
+    }
+
+    /* Smartphones (portrait and landscape) ----------- */
+    @media only screen and (min-width : 320px) and (max-width : 480px) 
+    {
+        body { width: 320px; }
+        .descarto {display:none;}
+        .btn{
+            width: 100%;
+        }
+    }
+
+    /* iPads (portrait and landscape) ----------- */
+    @media only screen and (min-width: 768px) and (max-width: 1024px) 
+    {
+        body { width: 495px; }
+        .descarto {display:none;}
+        .fontsize {font-size:10px}
+    }
+
+</style>
+
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+    <a ng-show="opcion.mostrar" href="{{'#/'+opcion.operacion+'/'+opcion.id}}" >{{opcion.name}}</a>   
+    </li>
+    </ul>
+</script>
+
+<ul ng class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+        <a ng-show="opcion.mostrar" href="{{'#/' + opcion.operacion + '/' + opcion.id}}" >{{opcion.name}}</a>
+        <a ng-hide="opcion.mostrar"  ng-click="controller.show()">{{opcion.name}}h</a>
+
+    </li>
+</ul>
+
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h4>Personas</h4></center>
+                </div>
+                <div class="panel-body">  
+                    <form name="reviewForm"   ng-submit="controller.buscarPersonaRapida()" method="post">
+                        <div class="col-md-12">
+
+                            <div class="form-group col-md-4">
+                                <label>Primer Nombre</label>
+                                <input type="text" ng-model="controller.nombre1" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Segundo Nombre</label>
+                                <input type="text" ng-model="controller.nombre2" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4" >
+                                <label>Número Documento</label>
+                                <input type="text" ng-model="controller.nrodoc" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Primer Apellido</label>
+                                <input type="text" ng-model="controller.apellido1" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Segundo Apellido</label>
+                                <input type="text" ng-model="controller.apellido2" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4" >
+                                <br>
+                                <input class="btn btn-primary" type="submit" value ="Buscar">
+                            </div>
+
+                            <div class="form-group col-md-8" style="float:right">
+                                <br>
+                                <div class="pull-right">
+                                    <a role="button" ng-href="#/RegistrarPersona" class="btn btn-primary" > Registrar</a>
+                                    <a role="button" href="#/SubirArchivoPersonas" class="btn btn-primary" > Subir Archivo</a>
+                                    <a role="button" href="templates/exportarPersonas.jsp?dpto={{controller.dpto}}" class="btn btn-primary" > Exportar</a>
+                                    <!--<a href="#/Geolocalizar" class="btn btn-primary">Geolocalizar</a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </form>  
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="input-group col-md-12">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
+
+                    </div>
+
+                </div>                
+
+                <div class="panel-body" style="margin-bottom:10%">
+
+                    <table class="width200" >
+                        <thead>
+                            <tr>
+                                <th>Tipo de Documento</th>
+                                <th>Documento</th>
+                                <th>Nombres </th>
+                                <th>Apellidos</th>
+                                <th>Celular</th>
+                                <th>Teléfono</th>
+                                <th>Opciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="persona in controller.personas | filter:search | itemsPerPage: pageSize" current-page="currentPage">
+                                <td><center>{{persona.tipodoc}}</center></td>
+                        <td>{{persona.nrodoc}}</td>
+                        <td>{{persona.nombre1}} {{persona.nombre2}}</td>
+                        <td>{{persona.apellido1}} {{persona.apellido2}}</td>
+                        <td>{{persona.celular}}</td>
+                        <td>{{persona.telefono}}</td>
+                        <td>
+
+                            <div class="btn-group"> 
+                                <a type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    <span class="sr-only">Toggle Dropdown</span> 
+                                </a>
+                                <ul class="dropdown-menu"> 
+                                    <li><a href="#/EditarDetallado/{{persona.idEmpleado}}">Editar Detallado</a></li>
+                                    <li><a href="" ng-click="controller.verDetallado(persona.idEmpleado)">Ver Detallado</a></li> 
+                                    <li><a href="" ng-click="controller.subirArchivoAhorroalaMano(persona.idEmpleado)">Ahorro a la mano</a></li> 
+                                </ul> 
+                            </div>
+
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <center>
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+                    </center>
+
+                    <div ng-show="controller.personas === undefined || controller.personas.length === 0">
+                        <center>{{controller.mensaje}} </center>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>         
+</div>
+<div class="modal fade" id="modalLoading" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Paris - Elecciones
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-info active" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="myModalBusquedaAvanzada.html">       
+    <busqueda-avanzada></busqueda-avanzada>
+</script>
+<script type="text/ng-template" id="myModalVerDetallado.html">       
+    <detalle-persona></detalle-persona>
+</script>
+<script type="text/ng-template" id="myModalVerHistorialLaboral.html">       
+    <historial-laboral></historial-laboral>
+</script>
+
+<script type="text/ng-template" id="myModalAhorroalaMano.html">       
+    <subir-ahorro></subir-ahorro>
+</script>
+
+
+
+

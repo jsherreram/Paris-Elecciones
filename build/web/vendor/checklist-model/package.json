@@ -1,0 +1,83 @@
+{
+  "name": "checklist-model",
+  "description": "AngularJS directive for list of checkboxes",
+  "license": "MIT",
+  "version": "0.9.0",
+  "homepage": "http://vitalets.github.io/checklist-model",
+  "author": {
+    "name": "Vitaliy Potapov",
+    "email": "noginsk@rambler.ru"
+  },
+  "contributors": [
+    {
+      "name": "Adrian Ber",
+      "email": "beradrian@yahoo.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vitalets/checklist-model.git"
+  },
+  "main": "checklist-model.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {
+    "angular": ">=1.0.8"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.9",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-compress": "~0.5.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-jshint": "~0.5.3",
+    "grunt-contrib-watch": "~0.4.3",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-replace": "~0.4.4",
+    "grunt-contrib-connect": "~0.4.0",
+    "grunt-contrib-jade": "~0.8.0",
+    "grunt-contrib-cssmin": "~0.6.1",
+    "marked": "~0.2.9",
+    "grunt-jsdoc": "~0.4.1",
+    "grunt-shell": "~0.5.0",
+    "grunt-bump": "0.0.13"
+  },
+  "gitHead": "04225033a641bcf8f6d227d62d34b913404bba4a",
+  "bugs": {
+    "url": "https://github.com/vitalets/checklist-model/issues"
+  },
+  "_id": "checklist-model@0.9.0",
+  "scripts": {},
+  "_shasum": "629ee5a11eeca76cee3d17d8fc897acb4fbae76b",
+  "_from": "checklist-model",
+  "_npmVersion": "2.11.3",
+  "_nodeVersion": "0.12.7",
+  "_npmUser": {
+    "name": "beradrian",
+    "email": "beradrian@yahoo.com"
+  },
+  "dist": {
+    "shasum": "5544d00ee2fcb315e2e8dd3b392c9229c0b0423e",
+    "tarball": "https://registry.npmjs.org/checklist-model/-/checklist-model-0.9.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "aaronroberson",
+      "email": "aaronaroberson@gmail.com"
+    },
+    {
+      "name": "beradrian",
+      "email": "beradrian@yahoo.com"
+    },
+    {
+      "name": "vitalets",
+      "email": "noginsk@rambler.ru"
+    }
+  ],
+  "directories": {},
+  "_resolved": "file:checklist-model",
+  "readme": "![Bower](https://img.shields.io/bower/v/checklist-model.svg) [![NPM](https://img.shields.io/npm/v/checklist-model.svg)](https://www.npmjs.com/package/checklist-model) ![License](https://img.shields.io/npm/l/checklist-model.svg)\r\n\r\n[![NPM](https://nodei.co/npm/checklist-model.png)](https://nodei.co/npm/checklist-model/)\r\n\r\n# checklist-model\r\nAngularJS directive for list of checkboxes\r\n\r\n## Why this is needed?  \r\nIn Angular one checkbox `<input type=\"checkbox\" ng-model=\"...\">` is linked \r\nwith one model.  \r\nBut in practice we usually want one model to store array of checked values \r\nfrom several checkboxes.  \r\n**Checklist-model** solves that task without additional code in controller.   \r\n\r\n## Usage\r\nYou should play with attributes of `<input>` tag:\r\n  \r\n| Attribute                 | Mandatory | Description                                   |\r\n| :-----------------------: | :-------: | --------------------------------------------- |\r\n| `checklist-model`         | Yes       | Use instead of `ng-model`                     |\r\n| `checklist-value`         | No        | What should be picked as array item           |\r\n| `value`                   | No        | What should be picked as item, but unlike `checklist-value`, this does not evaluate as an angular expression, but rather a static value |\r\n| `ng-model`                | No        | Every checkbok will span a new scope and define a variable named `checked` to hold its state. You can modify this name by using this attribute. |\r\n| `checklist-comparator`    | No   | A custom comparator. If it starts with dot(`.`) then it will be an expression applied to the array item. Otherwise it should evaluate to a function as an angular expression. The function return true if the first two arguments are equal and false otherwise. |\r\n| `checklist-before-change` | No       | An angular expression evaluated each time before the `checklist-model` has changed. If it evaluates to 'false' then the model will not change anymore. |\r\n| `checklist-change`        | No       | An angular expression evaluated each time the `checklist-model` has changed. |\r\n\r\n* If you modify directly the value of the `checklist-model`, it is possible that the UI won't be updated. This is because this directive looks for the model in the parent, not in the current scope. Instead of doing `checklistModelList = []` it is better to do `checklistModelList.splice(0, checklistModelList.length)` or wrap it in another object.\r\n* If you're using `track by` you must specify the same thing for `checklist-value` too. See [#46](https://github.com/vitalets/checklist-model/issues/46).\r\n* If you're also using `ngModel`, please keep in mind that the state of the checkbok is initialized with the value from `checklistModel`, not with the one from `ngModel`. Afterwards the two will be kept in sync, but initially, these two can be conflicting, so only `checklistModel` is used. See the entire discussion at [#104](https://github.com/vitalets/checklist-model/issues/104).\r\n\r\nPlease, try out\r\n* Live demo: http://vitalets.github.io/checklist-model\r\n* JsFiddle basic example (use this to report any issue): http://jsfiddle.net/beradrian/fjoLy5sq/\r\n* JSFiddle required example: http://jsfiddle.net/beradrian/7wt9q1ev/  \r\n* Plunkr example: http://plnkr.co/edit/pZLF0KesMDnIap0eCfSG?p=preview\r\n* Plunkr example for [tree list](http://plnkr.co/edit/QPLk98pCljp8dFtptSYz?p=preview)\r\n\r\n## Installation\r\n1. Download [latest release](https://github.com/vitalets/checklist-model/releases) or use bower `bower install checklist-model` or install from npm `npm install checklist-model`\r\n2. Add to app dependencies:\r\n````js\r\nvar app = angular.module(\"app\", [\"checklist-model\"]);\r\n````\r\n\r\n## How to get support\r\n* Ask a question on StackOverflow and tag it with [checklist-model](http://stackoverflow.com/questions/tagged/checklist-model).\r\n* [Fill in](https://github.com/vitalets/checklist-model/issues/new) an issue.\r\n\r\nPlease keep in mind to also add a Plunkr or JSFiddle example. This will greatly help us in assisting you and you can use one of the existing examples and fork it.\r\n\r\n## Development\r\nWe're using grunt as the build system. `grunt jade` generates the demo file and `grunt server` starts the demo server that can be access at `http://localhost:8000`. Tests can be ran by accessing `http://localhost:8000/test`.\r\n\r\nThe best way to involve is to report an issue/enhancement and then provide a pull request for it using Github usual features.\r\n\r\n### How to add a new test case\r\n1. Create a new folder under `docs/blocks` named `your-test`.\r\n2. Create under that folder `ctrl.js` to describe the test Angular controller, `view.html` to describe the view part in HTML and `test.js` for the Angular scenario test. You can use an existing test as an example.\r\n3. Add a line like `- items.push({id: 'your-test', text: 'Your test, ctrlName: 'CtrlTestName', testValue: 'selectedItems'})` to `docs/index.jade`\r\n4. Add a line like `<script src=\"../docs/blocks/your-test/test.js\"></script>` to `test\\index.html`\r\n5. Run `grunt jade` to generate `index.html` from `docs/index.jade`\r\n6. Run `grunt server`\r\n7. Access `http://localhost:8000` for samples and `http://localhost:8000/test` for running the tests.\r\n\r\n### How to make a new release\r\n1. Change the version number in `bower.json` and `package.json`\r\n2. Create a new [release](https://github.com/vitalets/checklist-model/releases) in github with the same name for tag and title as the version number (e.g. `1.0.0`). Do not forget to include the changelog in the release description.\r\n3. Run `npm publish` to publish the new version to npm\r\n\r\n## License\r\nMIT \r\n",
+  "readmeFilename": "readme.md"
+}

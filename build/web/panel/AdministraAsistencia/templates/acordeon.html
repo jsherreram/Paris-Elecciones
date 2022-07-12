@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <style>
+        .accordion-test {
+          padding: 20px;
+          width: 780px;
+        }        
+    </style>   
+  </head>
+  <body>
+
+<div class="accordion-test" ng-controller="appController">
+  
+  <label class="checkbox">
+    <input type="checkbox" ng-model="oneAtATime">
+    Open only one at a time
+  </label>
+
+  <accordion close-others="oneAtATime">
+    
+    <accordion-group is-open="true">
+      
+        <accordion-heading>
+            header 1 <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+        </accordion-heading>
+    
+        <p>
+           <strong>This</strong> content is straight in the template, and is initially expanded.
+        </p>
+
+    </accordion-group>
+    
+    <accordion-group>
+      <accordion-heading>
+            header 1 <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+        </accordion-heading>
+       <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ornare lobortis ipsum, vel dictum diam. Cras consectetur lorem non laoreet gravida. Aenean magna magna, accumsan et urna at, pellentesque ultrices nisi. 
+      </p>
+      
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ornare lobortis ipsum, vel dictum diam. Cras consectetur lorem non laoreet gravida. Aenean magna magna, accumsan et urna at, pellentesque ultrices nisi. 
+      </p>
+      
+    </accordion-group>
+
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+      {{group.content}}
+    </accordion-group>
+    <accordion-group heading="Dynamic Body Content">
+      <p>The body of the accordion group grows to fit the contents</p>
+        <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+        <div ng-repeat="item in items">{{item}}</div>
+    </accordion-group>
+    <accordion-group is-open="isopen">
+        <accordion-heading>
+            I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+        </accordion-heading>
+        <div ng-switch on="isopen">
+          <div ng-switch-when="true">
+            {{callMeWhenCompiled()}}
+          </div>
+        </div>
+    </accordion-group>
+  </accordion>
+</div>
+  </body>
+</html>

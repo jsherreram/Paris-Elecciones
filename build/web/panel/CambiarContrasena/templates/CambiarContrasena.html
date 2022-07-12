@@ -1,0 +1,34 @@
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h2>Cambiar Contraseña</h2></center>
+                </div>
+                <div class="panel-body">                        
+                    <form>
+                        <div class="col-md-12">
+                            <div class="form-group col-md-12">
+                                <label style="color: #f22">*</label>
+                                <label class="control-label" for="newPassword">Contrase&ntilde;a nueva</label>
+                                <input type="{{inputType ? 'text' : 'password'}}" ng-model="empleado.clave" placeholder="Ingrese una nueva contrase&ntilde;a" title="Ingrese una nueva contrase&ntilde;a" value="" name="nuevaPassword" id="nuevaPassword" class="form-control password1" maxlength="50">
+                                <span class="showPassword" ng-click="showPassword()" style="float: right; position: relative; margin: -25px 10px 0 0; cursor: pointer;">
+                                    <i class="fa fa-eye" id="showPassword"> {{inputType ? 'Ocultar' : 'Mostrar'}}</i>
+                                </span>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label style="color: #f22">*</label>
+                                <label class="control-label" for="newPasswordConfirm">Confirme la contrase&ntilde;a</label>
+                                <input type="{{inputType ? 'text' : 'password'}}" ng-model="empleado.clave2" placeholder="Confirme la nueva contrase&ntilde;a" title="Confirme la nueva contrase&ntilde;a" value="" name="nuevaPasswordConfirma" id="nuevaPasswordConfirma" class="form-control password2" maxlength="50">
+                                <small id="emailHelp" class="form-text text-muted">Las claves deben coincidir</small>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-primary btn-sm" ng-click="Save(empleado)" style="float: right; margin-right: 5px;">Actualizar Contrase&ntilde;a</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

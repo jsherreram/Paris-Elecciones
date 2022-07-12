@@ -1,0 +1,198 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package co.com.grupoasd.nomina.dao;
+
+import co.com.grupoasd.nomina.common.util.SqlUtil;
+import co.com.grupoasd.nomina.conexion.Operaciones;
+import co.com.grupoasd.nomina.modelo.Cargo;
+import co.com.grupoasd.nomina.modelo.DetalleCargoPuestoEvento;
+import co.com.grupoasd.nomina.modelo.Empleado;
+import co.com.grupoasd.nomina.modelo.Prueba;
+import co.com.grupoasd.nomina.modelo.Sitio;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author Administrador
+ */
+public class DetalleCargoPuestoEventoDao {
+
+    private Operaciones conex = new Operaciones();
+
+    /**
+     * Registra una persona en un evento y para un sitio determinado
+     *
+     * @param nroDoc
+     * @param codEvento
+     * @param idDivipol
+     * @return
+     */
+    public boolean realizarRegistroAsistencia(int nroDoc, int codEvento, int idDivipol, boolean asistenciaXBiometria) {
+        try {
+
+            String sql = "update  detalle_cargo_x_puesto_x_evento det   "
+                    + "set asistio=1, "
+                    + "asistenciaBiometrica=?, "
+                    + "fechaAsistencia= current_timestamp "
+                    + "where nrodoc = ? and idDivipol= ? and codigoEvento=?";
+
+            return conex.ejecutar(sql, asistenciaXBiometria ? 1 : 0, nroDoc, idDivipol, codEvento);
+
+        } catch (Exception e) {
+            Logger.getLogger(EmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
+
+        }
+        return false;
+    }
+
+    /**
+     * Metodo Dao encargado de obtener la informacion de la tabla
+     * detalle_cargo_x_puesto_x_evento
+     *
+     * @param documento
+     * @param idDcpe
+     * @param idPrueba
+     * @return
+     */
+    public DetalleCargoPuestoEvento getByDocumentoAndEvento(long documento, long idDcpe, int idPrueba) {
+        final DetalleCargoPuestoEvento detalleCargoPuestoEvento = new DetalleCargoPuestoEvento();
+        StringBuilder consulta = new StringBuilder("select ");
+        consulta.append("dcpe.id as id, dp.idDivipol as idSitio, dp.codigoPuesto as codigoPuesto, ");
+        consulta.append("dp.nombrePuesto as nombrePuesto, dcpe.idPrueba as idPrueba, cg.codigoCargo as codigoCargo, ");
+        consulta.append("cg.descripcion as nombreCargo, cg.nivel_cargo as nivelCargo, ");
+        consulta.append("em.nrodoc as nroDocEmpleado, em.nombre1 as nombre1, em.nombre2 as nombre2, ");
+        consulta.append("em.apellido1 as apellido1, em.apellido2 as apellido2, em.idEmpleado as idEmpleado ");
+        consulta.append("from detalle_cargo_x_puesto_x_evento dcpe ");
+        consulta.append("inner join cargos cg on dcpe.codigoCargo = cg.codigoCargo ");
+        consulta.append("inner join divipol dp on dcpe.idDivipol = dp.idDivipol ");
+        consulta.append("inner join empleado em on dcpe.nrodoc = em.nrodoc ");
+        consulta.append("where dcpe.codigoEvento = (select codigoEvento from detalle_cargo_x_puesto_x_evento where id = ").append(idDcpe).append(")");
+        consulta.append(" and dcpe.nrodoc = ").append(documento);
+        SqlUtil.appendParameterWithAnd(consulta, "dcpe.idPrueba", idPrueba);
+        Logger.getLogger(EmpleadoDao.class.getName()).log(Level.INFO, consulta.toString());
+        try {
+            conex.consultar(consulta.toString(), new Operaciones.OperacionConsulta() {
+                @Override
+                public void respuestaConsulta(ResultSet resultado) {
+                    try {
+                        while (resultado.next()) {
+                            detalleCargoPuestoEvento.setId(resultado.getLong("id"));
+                            Sitio divipol = new Sitio();
+                            divipol.setId(resultado.getInt("idSitio"));
+                            divipol.setCodigoSitio(resultado.getString("codigoPuesto"));
+                            divipol.setNombreSitio(resultado.getString("nombrePuesto"));
+                            detalleCargoPuestoEvento.setDivipol(divipol);
+                            Prueba prueba = new Prueba();
+                            prueba.setIdprueba(resultado.getInt("idPrueba"));
+                            detalleCargoPuestoEvento.setPrueba(prueba);
+                            Cargo cargo = new Cargo();
+                            cargo.setCodigoCargo(resultado.getString("codigoCargo"));
+                            cargo.setDescripcion(resultado.getString("nombreCargo"));
+                            cargo.setNivel_cargo(resultado.getInt("nivelCargo"));
+                            detalleCargoPuestoEvento.setCargo(cargo);
+                            Empleado empleado = new Empleado();
+                            empleado.setIdEmpleado(resultado.getInt("idEmpleado"));
+                            empleado.setNrodoc(resultado.getLong("nroDocEmpleado"));
+                            empleado.setNombre1(resultado.getString("nombre1"));
+                            empleado.setNombre2(resultado.getString("nombre2"));
+                            empleado.setApellido1(resultado.getString("apellido1"));
+                            empleado.setApellido2(resultado.getString("apellido2"));
+                            detalleCargoPuestoEvento.setEmpleado(empleado);
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(DetalleCargoPuestoEventoDao.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Logger.getLogger(EmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return detalleCargoPuestoEvento;
+    }
+
+    /**
+     * Metodo encargado de consultar la informacion de la tabla segun el id y el
+     * id de la prueba
+     *
+     * @param idDcpe
+     * @param idPrueba (opcional)
+     * @return
+     */
+    public DetalleCargoPuestoEvento getById(long idDcpe, int idPrueba) {
+        final DetalleCargoPuestoEvento detalleCargoPuestoEvento = new DetalleCargoPuestoEvento();
+        StringBuilder consulta = new StringBuilder("select ");
+        consulta.append("dcpe.id as id, dp.idDivipol as idSitio, dp.codigoPuesto as codigoPuesto, ");
+        consulta.append("dp.nombrePuesto as nombrePuesto, dcpe.idPrueba as idPrueba, cg.codigoCargo as codigoCargo, ");
+        consulta.append("cg.descripcion as nombreCargo, cg.nivel_cargo as nivelCargo, ");
+        consulta.append("em.nrodoc as nroDocEmpleado, em.nombre1 as nombre1, em.nombre2 as nombre2, ");
+        consulta.append("em.apellido1 as apellido1, em.apellido2 as apellido2, em.idEmpleado as idEmpleado ");
+        consulta.append("from detalle_cargo_x_puesto_x_evento dcpe ");
+        consulta.append("inner join cargos cg on dcpe.codigoCargo = cg.codigoCargo ");
+        consulta.append("inner join divipol dp on dcpe.idDivipol = dp.idDivipol ");
+        consulta.append("left join empleado em on dcpe.nrodoc = em.nrodoc ");
+        consulta.append("where dcpe.id = ").append(idDcpe);
+        SqlUtil.appendParameterWithAnd(consulta, "dcpe.idPrueba", idPrueba);
+        Logger.getLogger(EmpleadoDao.class.getName()).log(Level.INFO, consulta.toString());
+        try {
+            conex.consultar(consulta.toString(), new Operaciones.OperacionConsulta() {
+                @Override
+                public void respuestaConsulta(ResultSet resultado) {
+                    try {
+                        while (resultado.next()) {
+                            detalleCargoPuestoEvento.setId(resultado.getLong("id"));
+                            Sitio divipol = new Sitio();
+                            divipol.setId(resultado.getInt("idSitio"));
+                            divipol.setCodigoSitio(resultado.getString("codigoPuesto"));
+                            divipol.setNombreSitio(resultado.getString("nombrePuesto"));
+                            detalleCargoPuestoEvento.setDivipol(divipol);
+                            Prueba prueba = new Prueba();
+                            prueba.setIdprueba(resultado.getInt("idPrueba"));
+                            detalleCargoPuestoEvento.setPrueba(prueba);
+                            Cargo cargo = new Cargo();
+                            cargo.setCodigoCargo(resultado.getString("codigoCargo"));
+                            cargo.setDescripcion(resultado.getString("nombreCargo"));
+                            cargo.setNivel_cargo(resultado.getInt("nivelCargo"));
+                            detalleCargoPuestoEvento.setCargo(cargo);
+                            Empleado empleado = new Empleado();
+                            empleado.setIdEmpleado(resultado.getInt("idEmpleado"));
+                            empleado.setNrodoc(resultado.getLong("nroDocEmpleado"));
+                            empleado.setNombre1(resultado.getString("nombre1"));
+                            empleado.setNombre2(resultado.getString("nombre2"));
+                            empleado.setApellido1(resultado.getString("apellido1"));
+                            empleado.setApellido2(resultado.getString("apellido2"));
+                            detalleCargoPuestoEvento.setEmpleado(empleado);
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(DetalleCargoPuestoEventoDao.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Logger.getLogger(EmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return detalleCargoPuestoEvento;
+    }
+
+    /**
+     * Metodo Dao encargao de asignar a un empleado por nrodoc a una
+     * detalle_cargo_x_puesto_x_evento
+     *
+     * @param documento
+     * @param idDcpe
+     * @return
+     */
+    public boolean asignarDetalleCargoEvento(long documento, long idDcpe) {
+        StringBuilder update = new StringBuilder();
+        update.append("update detalle_cargo_x_puesto_x_evento ");
+        update.append("set nrodoc = ").append(documento);
+        update.append(" where id = ").append(idDcpe);
+        Logger.getLogger(EmpleadoDao.class.getName()).log(Level.INFO, update.toString());
+        return conex.ejecutar(update.toString());
+    }
+}

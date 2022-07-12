@@ -1,0 +1,54 @@
+    <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>Consulta de Pagos</h5>
+                            </div>
+                            <div class="hpanel">
+                                <div class="panel-body">
+                                    <button  class="btn btn-primary btn-sm"  ng-click="atras()">Volver</button>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                              <div class="panel-body"> 
+                                <div class=""ng-repeat="reg in mipruebacargo | orderBy:'-fechanumero'">
+                                     <strong>Nombre de la Prueba:</strong>{{reg.idprueba}} {{reg.nombre_prueba}}<br/>
+                                     <strong>Cargo:</strong> {{reg.cargonombre}}<br/>                    
+                                     <strong>Nombres:</strong> {{reg.nombres}}<br/>
+                                     <strong>Número de Identificación:</strong> {{reg.nrodoc}}<br/>
+                                     <strong>Tipo de Documento:</strong> {{reg.nombredocumento}}<br/>
+                                     <strong>Medio de Pago:</strong> {{reg.medionombre}}<br/><br/>
+                                     <!--<a href="../../panel/MedioPago/main.jsp#/{{reg.idempleado}}/{{reg.idprueba}}/{{reg.codigocargo}}" class="btn btn-sm btn-primary  ">Seleccionar Medio Pago</a>-->
+                                     <a href="#/Viaticos/{{reg.idprueba}}/{{reg.cargonombre}}/{{idPersona}}" class="btn btn-sm btn-primary  width300">Consultar Viaticos</a>
+				     <a href="#/CuentaCobro/{{reg.idempleado}}/{{reg.idprueba}}/{{reg.codigocargo}}/{{reg.cargonombre}}/clic" class="btn btn-sm btn-primary  width300">Ver Cuenta de Cobro Sesiones</a>
+                                     <a href="#/Asistencia/{{reg.idprueba}}/{{reg.cargonombre}}/{{idPersona}}" class="btn btn-sm btn-primary  width300">Consultar Asistencia</a><br/>
+                                   </div>
+                                <div class="ibox-title">
+                                    <h5>Pagos Realizados</h5>
+                                </div>
+
+                                <div class="hpanel"    ng-repeat="reg in mispagos | orderBy:'-fechanumero'">  
+                                    <div  class="panel-body">
+                                       
+                                        <strong>Concepto:</strong> {{reg.concepto}}<br/>
+                                        <strong>Medio de Pago:</strong> {{reg.mediopago}}<br/>
+                                        <strong>Código referencía Pago:</strong> {{reg.referencia_pago}}<br/>
+                                        <strong>Valor pagado:</strong> {{reg.valor_pagado | number:2 }}<br/>
+                                        <strong>Fecha y hora de Transacción:</strong> {{reg.fecha_pago}}<br/>
+                                        <strong>Observaciones:</strong> {{reg.observaciones}}<br/>
+                                        <strong>Pago realizado por:</strong>{{reg.nombre}}
+                                        <div ng-if="reg.pagado == 0">
+                                           <a ng-click="aceptar(reg)"   class="btn btn-sm btn-primary ">Confirmar Recepción de Pago</a><br/></div>
+                                        <div ng-if="reg.pagado == 1">
+                                            <strong>Pago Confirmado</strong>
+                                    </div>
+                                </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+

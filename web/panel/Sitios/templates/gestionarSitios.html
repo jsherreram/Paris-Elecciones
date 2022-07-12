@@ -1,0 +1,233 @@
+<style>
+    #inside{
+
+        font-size:12px;     
+        border-color:#ff3366;
+        width: 300px;
+        height: 100px;
+    }
+
+    a[rel="popover"]{
+        display: inline-block;
+        margin: 20px;
+    }     
+
+
+    table.width200,table.rwd_auto {border:1px solid #ccc;width:100%;margin:0 0 50px 0}
+    .width200 th,.rwd_auto th {background:#ccc;padding:5px;text-align:center;}
+    .width200 td,.rwd_auto td {border-bottom:1px solid #ccc;padding:5px;text-align:center}
+    .width200 tr:last-child td, .rwd_auto tr:last-child td{border:0}
+
+    .rwd {width:100%;overflow:auto;}
+    .rwd table.rwd_auto {width:auto;min-width:100%}
+    .rwd_auto th,.rwd_auto td {white-space: nowrap;}
+
+    @media only screen and (max-width: 760px), (min-width: 768px) and (max-width: 1024px)  
+    {
+
+        table.width200, .width200 thead, .width200 tbody, .width200 th, .width200 td, .width200 tr { display: block; }
+
+        .width200 thead tr { position: absolute;top: -9999px;left: -9999px; }
+
+        .width200 tr { border: 1px solid #ccc; }
+
+        .width200 td { border: none;border-bottom: 1px solid #ccc; position: relative;padding-left: 50%;text-align:left }
+
+        .width200 td:before {  position: absolute; top: 6px; left: 6px; width: 45%; padding-right: 10px; white-space: nowrap;}
+
+        .width200 td:nth-of-type(1):before { content: "Codigo Sitio"; }
+        .width200 td:nth-of-type(1):before { content: "Departamento"; }
+        .width200 td:nth-of-type(2):before { content: "Municipio"; }
+        .width200 td:nth-of-type(3):before { content: "Tipo de Sitio"; }
+        .width200 td:nth-of-type(4):before { content: "Nombre del Sitio"; }
+        .width200 td:nth-of-type(5):before { content: "Opciones"; }
+
+        .descarto {display:none;}
+        .fontsize {font-size:10px}
+       
+    }
+
+    /* Smartphones (portrait and landscape) ----------- */
+    @media only screen and (min-width : 320px) and (max-width : 480px) 
+    {
+        body { width: 320px; }
+        .descarto {display:none;}
+        .btn{
+            width: 100%;
+        }
+    }
+
+    /* iPads (portrait and landscape) ----------- */
+    @media only screen and (min-width: 768px) and (max-width: 1024px) 
+    {
+        body { width: 495px; }
+        .descarto {display:none;}
+        .fontsize {font-size:10px}
+     
+    }
+
+</style>
+
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+    <a href="{{'#/'+opcion.operacion+'/'+opcion.id}}">{{opcion.name}}</a>
+    </li>
+    </ul>
+</script>
+
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Consulta de Sitios
+                </div>
+                <div class="panel-body">  
+                    <form name="reviewForm"  class="form-horizontal" ng-submit="controller.buscarSitios()" >
+
+                        <div class="col-md-12">
+                            <div class="form-group col-md-6" >
+                                <label class="control-label" for="prueba">Código de Sitio:</label>
+                                <input type="text" ng-model="controller.codigoSitio" class="form-control" >
+                            </div>
+                           <div class="form-group col-md-6" style="margin-left: 2px" ng-hide="controller.rol==='coordinador'">
+                                <label class="control-label" for="departamento">Departamento:</label>
+                                <select  class="form-control"  ng-model="controller.departamento" ng-change="controller.buscarMunicipios()">
+                                    <option value="0"></option>
+                                    <option  ng-repeat="dpto in controller.departamentos"  value="{{dpto.codigo}}" >{{dpto.nombre}}</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6" style="margin-left: 2px" ng-show="controller.rol==='coordinador'">
+                                <label class="control-label" for="departamento">Departamento:</label>
+                                <select  class="form-control"  ng-model="controller.departamento" disabled>
+                                    <option  ng-repeat="dpto in controller.departamentos"  value="{{dpto.codigo}}">{{dpto.nombre}}</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="evento">Tipo de Sitio:</label>
+                                <select ng-model="controller.tipoSitio" name="tipoSitio" class="form-control" >
+                                    <option value="0"></option>
+                                    <option ng-repeat="tipo in controller.tiposSitio" value="{{tipo.idTipoSitio}}">{{tipo.nombre}}</option>
+                                </select>
+
+                            </div>
+                            <div class="form-group col-md-6" style="margin-left: 2px">
+                                <label class="control-label" for="departamento">Municipio:</label>
+                                <select ng-model="controller.municipio" class="form-control has-error" title="El municipio es obligatorio"
+                                        ng-options="municipioObj.nombre for municipioObj in controller.municipios track by municipioObj.codigoMunicipio" >
+                                    <option style="display:none" value="">Seleccione</option>
+                                </select>                            </div>
+                            <div class="form-group col-md-12">
+                                <a href="" ng-click="controller.reset()" class="btn btn-primary" style="float:right"> Reset</a>
+                                <input class="btn btn-primary" style="float:right; margin-right: 5px;" type="submit" value ="Buscar">
+
+                            </div>
+                        </div>
+
+                    </form>  
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="col-md-12" style="float:right; margin-bottom: 3%; margin-top:3%;" >
+                        <a href="#/RegistrarSitio" class="btn btn-primary" style="float: right; display: inline-block" >Registrar Sitio</a>
+                        <a ng-show="controller.rol==='administrador'" href="#/GeolocalizarSitios" class="btn btn-primary" style=" display: inline-block; margin-right:1% ">Geolocalizar Sitios</a>
+                    </div>
+                    <div class="input-group col-md-12">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
+
+                    </div>
+
+                </div>                
+
+                <div class="panel-body" ng-show="controller.sitios.length > 0">
+                    <table class="width200" >
+                        <thead>
+                            <tr>
+                                <th>Codigo Sitio</th>
+                                <th>Departamento</th>
+                                <th>Municipio </th>
+                                <th>Tipo de Sitio</th>
+                                <th>Nombre del Sitio</th>
+                                <th>Opciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="sitio in controller.sitios | filter:search | itemsPerPage: pageSize" current-page="currentPage">
+                                <td>{{sitio.codigoSitio}}</td>
+                                <td>{{sitio.departamento.nombre}}</td>
+                                <td>{{sitio.municipio.nombre}}</td>
+                                <td>{{sitio.tipoSitio.nombre}}</td>
+                                <td>{{sitio.nombreSitio}}</td>
+                                <td>
+                                    <a class="btn btn-default" data-toggle="modal" ng-click="controller.DetallarSitio(sitio.id)" data-target=".bs-example-modal-lg">Detallar</a>
+                                    <a class="btn btn-primary" data-toggle="tooltip" data-placement="buttom" title="Editar Sitio" href="#/EditarSitio/{{sitio.id}}">Editar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <center>
+
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>     
+
+</div>
+
+
+<div class="modal fade" id="modalLoading" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Paris - Elecciones
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-info active" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade  bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 2%;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <center> <h4 class="modal-title">Detalle del Sitio</h4></center>
+            </div>
+            <div class="modal-body" style="max-height:600px; overflow-y:auto">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3>Datos Generales</h3>
+                    <table class="table table-bordered table-striped col-md-8"> 
+                        <tr><td>Código de Sitio:</td><td>{{controller.sitio.codigoSitio}}</td></tr>
+                        <tr><td>Nombre:</td><td>{{controller.sitio.nombreSitio}}</td></tr>
+                        <tr><td>Departamento:</td><td>{{controller.sitio.departamento.nombre}}</td></tr>
+                        <tr><td>Municipio:</td><td>{{controller.sitio.municipio.nombre}}</td></tr>
+                        <tr><td>Dirección:</td><td>{{controller.sitio.direccionSitio}}</td></tr>
+                        <tr><td>Tipo de Sitio:</td><td>{{controller.sitio.tipoSitio.nombre}}</td></tr>
+                        <tr><td>Barrio:</td><td>{{controller.sitio.barrio}}</td></tr>
+                        <tr><td>Instrucciones de Llegada:</td><td>{{controller.sitio.instruccionesLlegada}}</td></tr>
+                    </table>
+                </div>
+            </div> 
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

@@ -1,0 +1,71 @@
+
+<div class="content animate-panel" >
+    <div class="row ">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="panel-title">Cobertura por municipios</h3>
+                    <div class="row"> 
+                        <div  class="col-lg-2 col-md-2 " style="float: left">
+                            <a  href="templates/descargarCobertura.jsp?prueba={{controller.idPrueba}}">
+                                <img src="../../images/excell.png" alt="Logo Excel" width="60" height="40" />
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-md-2 " style="float: right">
+                            <button type="button" ng-click="controller.regresar()" class="btn btn-default right">Regresar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row"> 
+                    <div class="col-md-12 ">
+                        <div class="panel panel-primary no-border ">
+                            <div class="panel-body">
+                                <form name="crearMedioForm" ng-submit="crearMedioForm.$valid && controller.registrarCobertura()" >
+
+                                    <div class="row"> 
+                                        <label class="control-label col-md-2" for="idDepartamento">*Departamento:</label>
+                                        <div class="col-md-6">
+
+                                            <select id="idDepartamento"  ng-model="controller.filtros.idDepartamento"  ng-options="dep.nombre for dep in controller.listaDepartamentos" ng-change="controller.buscarMunicipios();" required></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row"> 
+                                        <label class="control-label col-md-2" for="idMunicipio">*Municipio</label>
+                                        <div class="col-md-6">                                            
+
+                                            <select id="idMunicipio"  ng-model="controller.filtros.idMunicipio"  ng-options="mun.nombre for mun in controller.listaMunicipios" ng-change="controller.buscarMediosPagos();" required></select>
+                                        </div>
+                                    </div>
+                                    <div  class="row" > 
+                                        <label class="control-label col-md-2" >*Medio de Pago</label>
+                                    </div>
+                                    <div  class="ibox-content-horizontal">   
+                                        <div  class="row"  >
+
+                                            <label ng-repeat="lista in controller.listado" class="col-md-6"> 
+
+                                                <input class="form-group col-md-20"  type="checkbox" checklist-model="controller.modoPagosSeleccionados" checklist-value="lista.idmedio_pago" >  {{lista.nombre}}
+
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+                                    <div  class="row" > 
+                                        <div  class="col-md-6" >
+                                            <input type="submit" class="btn btn-primary " value="Guardar"/>
+                                        </div>
+                                    </div>
+                                </form>  
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+

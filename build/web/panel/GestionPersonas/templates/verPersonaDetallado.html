@@ -1,0 +1,41 @@
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <center><h3 class="modal-title">Detalle de la Persona</h3></center>
+</div>
+
+<div class="modal-body col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-6">
+                <h3>Datos Generales</h3>
+                <table class="table table-bordered table-striped col-md-6"> 
+                    <tr><td>Tipo de Documento:</td><td>{{controller.persona.tipodoc}}</td></tr>
+                    <tr><td>Número de Documento:</td><td>{{controller.persona.nrodoc}}</td></tr>
+                    <tr><td>Nombres:</td><td>{{controller.persona.nombre1}} {{controller.persona.nombre2}}</td></tr>
+                    <tr><td>Apellidos:</td><td>{{controller.persona.apellido1}} {{controller.persona.apellido2}}</td></tr>
+                    <tr><td>Dirección:</td><td>{{controller.persona.direccion}}</td></tr>
+                    <tr><td>Fecha de Nacimiento:</td><td>{{controller.persona.fechaNacimiento|date:'yyyy-MM-dd'}}</td></tr>
+                    <tr><td>Municipio de Residencia:</td><td>{{controller.persona.municipioDane.nombre}}</td></tr>
+                    <tr><td>Departamento de Residencia:</td><td>{{controller.persona.municipioDane.departamento.nombre}}</td></tr>
+                    <tr><td>Código de Actividad:</td><td>{{controller.persona.codigoActividad}}</td></tr>
+                    <tr><td>Género:</td><td>{{controller.persona.genero}}</td></tr>
+                </table>
+
+            </div>
+            <div class="col-md-6">
+                <h3>Datos de Contacto</h3>
+                <table class="table table-bordered table-striped"> 
+                    <tr><td>Teléfono:</td><td>{{controller.persona.telefono}}</td></tr>
+                    <tr><td>Celular:</td><td>{{controller.persona.celular}}</td></tr>
+                    <tr><td>Email:</td><td>{{controller.persona.email}}</td></tr>
+                </table>
+       
+            </div>
+        </div> 
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="cancel()">Regresar</button>
+</div>
+

@@ -1,0 +1,110 @@
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="col-md-2"><h5>Edición Evento</h5></div>
+                        <div class="col-md-4"><button class="btn btn-primary btn-sm"  ng-click="Save(evento)">Guardar</button></div>
+                        <div class="col-md-4"><a class="btn btn-primary btn-sm"  href="#/">Atras</a></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="ibox-title">
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <label class="control-label col-md-3" for="nombre">Nombre</label>
+                                    <div class="col-md-8">
+                                        <input type="text" ng-model="evento.nombre" title="Descripción del Evento" required name="nombre" id="nombre" class="form-control" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <label class="control-label col-md-3" for="tipoSesion">Tipo Sesion</label>
+                                    <div class="col-md-4">
+                                        <input type="text" ng-model="evento.tipoSesion" title="Tipo de Sesión" required name="tipoSesion" id="tipoSesion" class="form-control" maxlength="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ibox-title">
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <label class="control-label col-md-3" for="dias">Días de Aplicación (AAAA-MM-DD)</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <label class="control-label col-md-3" for="fecha">Fecha Inicio</label>
+                                    <div class="col-md-3">
+                                        <input type="text" ng-model="evento.fecha" class="form-control datepicker" title="Fecha de Inicio" required data-date-format="yyyy-mm-dd" id="fecha">
+                                    </div>
+                                </div>
+                                <div class="form-horizontal">
+                                    <label class="control-label col-md-3">Hora Inicio</label>
+                                    <div class="input-group col-md-2 clockpicker" data-autoclose="true">
+                                        <input type="text" name="hora_inicial" ng-model="evento.hora_inicial" id="hora_inicial" title="Hora Inicial" required class="form-control">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-clock-o"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <label class="control-label col-md-3" for="fecha_final">Fecha Final</label>
+                                    <div class="col-md-3">
+                                        <input type="text" ng-model="evento.fecha_final" class="form-control datepicker" title="Fecha Fin" required data-date-format="yyyy-mm-dd" id="fecha_final">
+                                    </div>
+                                </div>
+                                <div class="form-horizontal">
+                                    <label class="control-label col-md-3">Hora Fin</label>
+                                    <div class="input-group col-md-2 clockpicker" data-autoclose="true">
+                                        <input type="text" name="hora_final" ng-model="evento.hora_final" id="hora_final" title="Hora Final" required class="form-control">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-clock-o"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ibox-title">
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <label class="control-label col-md-3" for="esEleccion">Es Elección</label>
+                                    <form name="esEleccion">
+                                        <label>
+                                            <input type="radio" ng-model="evento.esEleccion" ng-value="1" required>Sí</label>
+                                        <label>
+                                            <input type="radio" ng-model="evento.esEleccion" ng-value="0" required>No</label>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#fecha').datepicker({
+    orientation: "bottom",
+            autoclose: true,
+            todayHighlight: true,
+            clearBtn: false
+    });
+    $('#fecha_final').datepicker({
+    orientation: "bottom",
+            autoclose: true,
+            todayHighlight: true,
+            clearBtn: false
+    });
+    $('.clockpicker').clockpicker();
+</script>

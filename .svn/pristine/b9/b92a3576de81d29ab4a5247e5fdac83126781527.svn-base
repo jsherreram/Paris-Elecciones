@@ -1,0 +1,266 @@
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3> Registrar o Editar Sitio</h3>
+                </div>
+                <div class="ibox-content">
+                    <form class="wizard-big" id="form" name="formRegistrarSitio" ng-submit="controller.save()"  method="POST" >
+                        <h1>Datos Generales</h1>
+                        <fieldset>
+                            <h2></h2>
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group" ng-hide="controller.sitio.id != undefined">
+                                        <label for="codigoSitio">*Código de Sitio:</label>
+                                        <input type="text" ng-model="controller.sitio.codigoSitio" title="El código es obligatorio" required="required" name="codigoSitio"  class="form-control" minlength="8" maxlength="12"  ng-blur="controller.validarSitio()">
+                                        <span ng-show="!formRegistrarSitio.$pristine && formRegistrarSitio.codigoSitio.$error.required">El código de sitio es requerido.</span>
+                                    </div>
+                                      <div class="form-group"  ng-show="controller.sitio.id != undefined">
+                                        <label   for="nrodoc">Número Identificación *</label>
+                                        <input type="text" ng-model="controller.sitio.codigoSitio" readonly="readonly" name="nrodoc" id="nrodoc" class="form-control" maxlength="10">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="departamento">*Departamento:</label>
+                                        <select  class="form-control has-error" name="departamento" title="El departamento obligatorio" ng-model="controller.departamento" required="required">
+                                            <option value="">Seleccione</option>
+                                            <option  ng-repeat="dpto in controller.departamentos" value="{{dpto.codigo}}" >{{dpto.nombre}}</option> 
+                                        </select>
+                                        <span ng-show="!formRegistrarSitio.$pristine && formRegistrarSitio.departamento.$error.required">El Departamento es requerido.</span>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label  for="tipoSitio">*Tipo de Sitio:</label>
+                                        <select ng-model="controller.tipoSitio" title="El tipo es obligatorio" required="required" name="tipoSitio"  class="form-control">
+                                            <option value="">Seleccione</option>
+                                            <option ng-repeat="tipo in controller.tiposSitios"  value="{{tipo.idTipoSitio}}">{{tipo.nombre}}</option>
+                                        </select>
+                                        <span ng-show="!formRegistrarSitio.$pristine && formRegistrarSitio.tipoSitio.$error.required">El tipo de sitio es requerido.</span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label  for="barrio">Barrio:</label>
+                                        <input type="text" ng-model="controller.sitio.barrio" title="barrio"  name="barrio"  class="form-control" maxlength="100">
+                                    </div>
+                        
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="nombre">*Nombre del Sitio:</label>
+                                        <input type="text" ng-model="controller.sitio.nombreSitio" title="El Nombre es Obligatorio" required="required" name="nombre"  class="form-control" maxlength="100">
+                                        <span ng-show="!formRegistrarSitio.$pristine && formRegistrarSitio.nombre.$error.required">El nombre de sitio es requerido.</span>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label  for="municipio">*Municipio:</label>
+                                        <select-municipio municipio="controller.municipio" departamentocodigo="controller.departamento" requerido="true"></select-municipio>
+                                        <span ng-show="!formRegistrarSitio.$pristine && formRegistrarSitio.municipio.$error.required">El municipio es requerido.</span>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label  for="direccion">*Dirección:</label>
+                                        <input type="text" ng-model="controller.sitio.direccionSitio" title="La dirección es obligatoria" required="required" name="direccion"  class="form-control" maxlength="150">
+                                        <span ng-show="!formRegistrarSitio.$pristine && formRegistrarSitio.direccion.$error.required">La dirección es requerida.</span>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label  for="instrucciones">Instrucciones de LLegada:</label>
+                                        <textarea maxlength="250" ng-model="controller.sitio.instruccionesLlegada" title="instrucciones" name="instrucciones" cols="40" rows="5" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+  
+                        <h1>Ubicación en Mapa</h1>
+                        <fieldset class="map" >
+                            <div class="row">
+                                <div class="col-lg-12">
+
+                                    <div id="map"><h1>Clic en el bot&oacute;n para activar el mapa</h1></div>
+                                    <!-- "Join Team" (Post) Form -->
+                                    <input type="hidden" class="form-control" id="latitude" ng-model="controller.sitio.latitud" name="latitude" >
+                                    <input type="hidden" class="form-control" id="longitude" ng-model="controller.sitio.longitud" name="longitude">
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <ul>
+                            <li id="activar-mapa" style="display: none">
+                                <a ng-click="controller.ubicarDireccion()">Ubicar en Mapa</a>
+                            </li>
+                            <li id="activar-save" style="display: none">
+                                <a ng-click="controller.save()" ng-disabled="!controller.mapaActivo" >Guardar</a>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade  bs-example-modal-lg" id="myModalHistorial" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 2%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><center>Historial de Contactos</center></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="controller.historial.length > 0">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Nombre Contacto</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Fax</th>
+                                    <th>Nombre Prueba</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  dir-paginate="h in controller.historial| itemsPerPage: pageSize" current-page="currentPage">
+                                    <td>{{h.nombreRector}}</td>
+                                    <td>{{h.telefonoRector}}</td>
+                                    <td>{{h.emailRector}}</td>
+                                    <td>{{h.faxRector}}</td>
+                                    <td>{{h.nombreSede}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <center>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+                        </center>
+
+                    </div>
+                    <div ng-show="controller.historial.length == 0">
+                        <center> <p> No hay registros de contactos para este sitio</p></center><br><br>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" style="float: right" class="btn btn-default" data-dismiss="modal">Cancelar</button><br>
+                    </div>
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+<script>
+    $(document).ready(function () {
+        $("#wizard").steps();
+        $("#form").steps({
+            bodyTag: "fieldset",
+                onStepChanging: function (event, currentIndex, newIndex){
+                    // Always allow going backward even if the current step contains invalid fields!
+                    if (currentIndex > newIndex){
+                        return true;
+                    }
+
+                    // Forbid suppressing "Warning" step if the user is to young
+                    if (newIndex === 3 && Number($("#age").val()) < 18){
+                        return false;
+                    }
+
+                    var form = $(this);
+                    // Clean up if user went backward before
+                    if (currentIndex < newIndex){
+                        // To remove error styles
+                        $(".body:eq(" + newIndex + ") label.error", form).remove();
+                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                    }
+
+                    // Disable validation on fields that are disabled or hidden.
+                    form.validate().settings.ignore = ":disabled,:hidden";
+                    // Start validation; Prevent going forward if false
+                    return form.valid();
+                },
+            
+                onStepChanged: function (event, currentIndex, priorIndex){
+                    // Suppress (skip) "Warning" step if the user is old enough.
+                    if (currentIndex === 2 && Number($("#age").val()) >= 18){
+                        $(this).steps("next");
+                    }
+
+                    // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+                    if (currentIndex === 2 && priorIndex === 3){
+                        $(this).steps("previous");
+                    }
+                },
+                onFinishing: function (event, currentIndex){
+                    var form = $(this);
+                    // Disable validation on fields that are disabled.
+                    // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+                    form.validate().settings.ignore = ":disabled";
+                    // Start validation; Prevent form submission if false
+                    return form.valid();
+                },
+                onFinished: function (event, currentIndex){
+                    var form = $(this);
+                    // Submit form input
+                    form.submit();
+                }
+        }).validate({
+            errorPlacement: function (error, element){
+                element.before(error);
+            },
+            rules: {
+                confirm: {
+                    equalTo: "#password"
+                }
+            }
+        });
+        
+        
+        /**
+         * Codigo que permite capturar el boton angular de mostrar mapa
+         * y lo muestra cuando el tab de mapa se encuentra activo, en caso
+         * contrario lo oculta.                 
+         */                                
+        $("#activar-mapa").click(function () {
+            $("#activar-mapa a").html("Reiniciar Ubicación");
+            $("#activar-save a").removeAttr("style");
+        });
+        
+        $(".number").parent("a").click(function() {
+            
+            if($(this).parent("li").attr("class").indexOf("last") != -1){
+                
+                if($("#activar-save").parents("div").attr("class").indexOf("actions") == -1){
+                    $(".actions ul").prepend($("#activar-save"));
+                    $(".actions ul").prepend($("#activar-mapa"));
+                            
+                    if($("#activar-save a").attr("disabled") == "disabled"){
+                        $("#activar-save a").css("background", "#eee");
+                        $("#activar-save a").css("background", "#aaa");
+                    }
+                    else
+                        $("#activar-save a").removeAttr("style");
+                }
+                
+                $("#activar-mapa").css("display", "inline-block");
+                $("#activar-save").css("display", "inline-block");
+            }
+            else {
+                $("#activar-save").css("display", "none");
+                $("#activar-mapa").css("display", "none");
+            }
+        });
+    });
+    
+    $('.clockpicker').clockpicker();
+    $('#datepicker').datepicker({
+    orientation: "bottom",
+            autoclose: true,
+            todayHighlight: true,
+            clearBtn: false
+    });</script>
+

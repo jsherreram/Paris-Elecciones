@@ -1,0 +1,173 @@
+<div class="content animate-panel" data-ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-10 col-sm-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Asignar Persona</h2>
+                </div>
+
+                <div class="panel-body">
+                    <form ng-submit="ValidarYGuardar()"  method="POST" id="frmCreateTercero">
+                        
+                        <div class="row">
+                            <div class="col-md-6"> 
+                                <div ng-show="personaAsignada.empleado.nrodoc !== undefined && personaAsignada.empleado.nrodoc > 0 && editar === undefined" class="form-group">
+                                    <label> Desasignar a: {{personaAsignada.empleado.apellido1 + " "+ personaAsignada.empleado.apellido2+ " " + personaAsignada.empleado.nombre1 + " " + personaAsignada.empleado.nombre2}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6"> 
+                                <div ng-show ="editar === undefined" class="form-group">
+                                    <label>Con Asistencia</label>
+                                    <input type="checkbox" id="conAsistencia" name="conAsistencia" ng-model="conAsistencia">
+                                </div>
+                            </div>
+                                                        
+                            <div class="col-md-6"> 
+                                <div class="form-group" >
+                                    <label>Sin lector de Huella</label>
+                                    <input type="checkbox" id="sinBiometrico" name="sinBiometrico" ng-model="sinBiometrico">
+                                </div>
+                                
+                                <div ng-show="sinBiometrico===true" class="form-group">
+                                    <label class="control-label" for="causaNoBiometrico">Observación:</label>
+                                    <select id="tipoDoc" ng-model="causaNoBiometrico" ng-options="causa.name for causa in causasBiometrico" class="form-control" ></select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" ng-hide="editar === true">
+                                    <label class="control-label" for="tipoDoc">Tipo Identificación</label>
+                                    <select id="tipoDoc" ng-model="empleado.tipodoc" class="form-control" >
+                                        <option   ng-repeat="tipoIden in tipoIdentificacion" value="{{tipoIden.id}}">{{tipoIden.name}}</option>
+                                    </select>
+                                </div>
+                                  <div class="form-group" ng-show="editar === true"> 
+                                    <label class="control-label" for="tipoDoc">Tipo Identificación</label>
+                                    <select id="tipoDoc" ng-model="empleado.tipodoc" class="form-control" disabled>
+                                        <option   ng-repeat="tipoIden in tipoIdentificacion" value="{{tipoIden.id}}">{{tipoIden.name}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" ng-hide="editar === true">
+                                    <label class="control-label" for="nrodoc">Numero Identificación</label>
+                                    <input type="text" ng-model="empleado.nrodoc" title="Rango: 100.000-99.999.999 y 1.000.000.000 - 1.199.999.999" pattern="^[1]{1}[0|1|2|3]{1}[0-9]{8}|[0-9]{1}[0-9]{5,9}$" required="" ng-blur="ValidaExiste()" name="nrodoc" id="nrodoc" class="form-control" maxlength="20">
+                                </div>
+                                 <div class="form-group" ng-show="editar === true">
+                                    <label class="control-label" for="nrodoc">Numero Identificación</label>
+                                    <input type="text" ng-model="empleado.nrodoc"   readonly="readonly"  name="nrodoc" id="nrodoc" class="form-control" maxlength="10">
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label class="control-label" for="apellido1">Primer Apellido</label>
+                                    <input type="text" ng-model="empleado.apellido1" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" required name="apellido1" id="apellido1" class="form-control" maxlength="20">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="apellido2">Segundo Apellido</label>
+                                    <input type="text" ng-model="empleado.apellido2" name="apellido2" id="apellido2" class="form-control" maxlength="20">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label" for="nombre1">Primer Nombre</label>
+                                    <input type="text" ng-model="empleado.nombre1" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" required name="nombre1" id="nombre1" class="form-control" maxlength="20">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="nombre2">Segundo Nombre</label>
+                                    <input type="text" ng-model="empleado.nombre2" name="nombre2" id="nombre2" class="form-control" maxlength="20">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="genero">Sexo  M ó F </label>
+                                    <input type="text" ng-model="empleado.genero" title="sexo M ó F" name="genero" pattern="^[MF-mf\s]{1}$" id="genero" class="form-control" maxlength="100">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label for="fechanacimiento">Fecha Nacimiento AAAA-MM-DD</label>
+                                    <input type="text" ng-model="fechanac" name="fechanacimiento"  class="form-control datepicker" data-date-end-date="-216m" data-date-format="yyyy-mm-dd" id="datepicker">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label" for="celular">Celular</label>
+                                    <input type="text" ng-model="empleado.celular" title="Número de 10 dígitos. " pattern="^[3]{1}[0|1|2|5]{1}[0-9]{8}$" required name="celular" id="celular" class="form-control" maxlength="10">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="direccion">Direccion de Residencia</label>
+                                    <input type="text" ng-model="empleado.direccion" title="direccion" name="direccion" id="direccion" class="form-control" maxlength="100">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" for="email">Email</label>
+                                    <input type="email" ng-model="empleado.email" title="mail@ejemplo.com" name="email"  id="email" ng-blur="enrollar()" class="form-control" maxlength="100">
+                                </div>
+
+                                <table style="border:1px; width:100%;">
+                                    <tr>
+                                        <td style="width:30%;"><DIV  id="inside"></DIV></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           <!-- <a class="btn btn-success"  ng-click="enrollar()">Enrolar</a>-->
+                                        </td>
+                                    </tr>
+                                </table>                    
+
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2"> 
+                                <center>
+                                    <input type ="submit" class="btn btn-primary" value="Guardar">
+                                    <button class="btn btn-primary"  ng-click="atras()">Cancelar</button>
+                                </center>
+                            </div>
+                        </div>    
+
+                        <div class="form-group">
+                            <p class="text-danger">{{error}}</p>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+                        $('#datepicker').datepicker({
+                            orientation: "bottom",
+                            autoclose: true,
+                            todayHighlight: true,
+                            clearBtn: false
+                        });
+                        
+                    $(function(){
+                            $("#datepicker").datepicker().bind("change",function(){
+                                var fechaValue = $(this).val();
+                                if (fechaValue.length === 8)
+                                {
+                                    var elem = fechaValue.split('-');
+                                    if(elem.length === 1)
+                                    {
+                                        var fecha = fechaValue.substring(0, 4) +"-" +  fechaValue.substring(4, 6) + "-"+ fechaValue.substring(6, 8);
+                                        $("#datepicker").datepicker("setDate", fecha);
+                                    }
+                                }
+                            })
+                    });
+                        
+    </script>
+</div> 

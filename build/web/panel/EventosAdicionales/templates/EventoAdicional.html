@@ -1,0 +1,49 @@
+<div class="content animate-panel" data-ng-init="toListAll()">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h2>Eventos Adicionales</h2></center>
+                </div>
+                <div class="panel-body">  
+                    <form>
+                        <div class="col-md-12">
+                            <div class="form-group col-md-6">
+                                <label style="color: #f22">*</label>
+                                <label id="evento">Evento: </label>
+                                <select class="form-control" ng-model="detalleCargoPuestoEvento.evento" name="selectEvento" id="selectEvento" ng-required="true" >
+                                    <option value="" selected="true">Seleccionar</option>
+                                    <option ng-repeat="reg in eventos" value="{{reg.codigoEvento}}">{{reg.nombre}}</option>
+                                </select>     
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label style="color: #f22">*</label>
+                                <label id="sitio">Sitio: </label>
+                                <select class="form-control" ng-model="detalleCargoPuestoEvento.divipol" name="selectSitio" id="selectSitio" ng-required="true" >
+                                    <option value="" selected="true">Seleccionar</option>
+                                    <option ng-repeat="reg in sitios" value="{{reg.id}}">{{reg.nombreSitio}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label style="color: #f22">*</label>
+                                <label id="cargo">Cargo: </label>
+                                <select class="form-control" ng-model="detalleCargoPuestoEvento.cargo" name="selectCargo" id="selectCargo" ng-required="true" >
+                                    <option value="" selected="true">Seleccionar</option>
+                                    <option ng-repeat="reg in cargos" value="{{reg.codigoCargo}}">{{reg.descripcion}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label style="color: #f22">*</label>
+                                <label id="cantidad">Cantidad: </label>
+                                <input type="number" ng-model="detalleCargoPuestoEvento.ubicacion" id="ubicacion" name="ubicacion" title="Cantidad de registros a insertar" class="form-control" ng-required="true" >
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button class="btn btn-primary" ng-click="Insert(detalleCargoPuestoEvento)" style="float: right; margin-right: 5px;">Crear</button>
+                            </div>
+                        </div>
+                    </form>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

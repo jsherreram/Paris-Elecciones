@@ -1,0 +1,243 @@
+
+<style>
+    #inside{
+
+        font-size:12px;     
+        border-color:#ff3366;
+        width: 300px;
+        height: 100px;
+    }
+
+    a[rel="popover"]{
+        display: inline-block;
+        margin: 20px;
+    }        
+
+</style>
+
+<div class="accordion-test" ng-controller="appController">
+
+    <div class="content animate-panel" data-ng-init="listar()">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hpanel">
+                    <div class="panel-body">  
+                        <form class="form-inline">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="nombrePuesto">Nombre del Puesto: {{puestoNombre}}</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-4" for="idSitio">Código Sitio</label>
+                                <div class="col-md-2">
+                                    <input type="text" ng-model="codigoSitio" id="idSitio" class="form-control" readonly="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-4" for="idSitio">nombreEvento</label>
+                                <div class="col-md-2">
+                                    <input type="text" ng-model="nombreEvento" id="nombreEvento" class="form-control" readonly="true">
+                                </div>
+                            </div>
+                            <div>
+                                <a data-toggle="modal" data-target="#myModalS" ng-click="CalcularParaCerrar()" class="btn btn-sm btn-primary">Cerrar Asistencia Evento</a>
+                            </div>
+                            
+                        </form>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <accordion close-others="TwoAtATime">
+        <accordion-group is-open="true">
+            <accordion-heading>
+                Tomar Asistencia <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+            </accordion-heading>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="hpanel">
+                        <div class="panel-body">    
+                            <form id="reviewForm" name="reviewForm" class="form-inline" ng-model="empleado"  ng-controller="appController as ctrl" >
+                                <table style="border:1px; width:100%;">
+                                    <tr>
+                                        <td style="width:40%;" > <label>Documento <input type="number" ng-bind="documento" id="identificacion" name="input" ng-model="documento" ng-keydown="key($event)" ></label></td>
+                                        <td style="width:30%;"><DIV  id="inside"></DIV></td>
+                                        <td style="width:30%;"><img   ng-src={{ctrl.imagen}}></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span ng-bind="empleado.nombre1 + ' ' + empleado.nombre2 + ' ' + empleado.apellido1 + ' ' + empleado.apellido2"></span>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <!--<input  type="button"  class="btn btn-primary"  ng-click="reviewForm.$valid && validarForm() && aceptar()" value="Guardar" name="Aceptar"/>-->
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
+                                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{{totalAsistentes * 100 / totalRegistros}}%">
+                                                    {{((totalAsistentes * 100 / totalRegistros) + "").substring(0, 4)}}%
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </accordion-group>
+
+
+        <accordion-group is-open="true">
+
+            <accordion-heading>
+                Listado de Personal <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i> 
+            </accordion-heading>
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table  WIDTH="600" class="table table-bordered table-hover" >
+                                    <thead>
+                                        <tr>
+                                            <th>Cargo</th>
+                                            <th>Identificación</th>
+                                            <th>Apellido1</th>
+                                            <th>Apellido2</th>
+                                            <th>Nombre1</th>
+                                            <td>Nombre2</td>
+                                            <td>Celular</td>
+                                            <td>Telefono</td>
+                                            <td>Acción</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr ng-style="ubica.biometrico === 1 ? {'background-color': '#FFFFFF'} : {'background-color': 'red'}" ng-repeat="ubica in ubicaciones| orderBy:'descripcion' ">
+
+                              <tr ng-style="ubica.biometrico === 1 ? { 'background-color':'#FFFFFF'} : {'background-color':'red'}" ng-repeat="ubica in ubicaciones | orderBy:'descripcion' ">
+                              
+                              <td >{{ubica.descripcion}}</td>
+                              <td>{{ubica.nrodoc}}</td>
+                              <td>{{ubica.apellido1}}</td>
+                              <td>{{ubica.apellido2}}</td>
+                              <td>{{ubica.nombre1}}</td>
+                              <td>{{ubica.nombre2}}</td>
+                              <td>
+                                  {{ubica.celular}}
+                              </td>
+                              <td>{{ubica.telefono}}</td>
+                              <td>
+                                 <a href="#/" pop-over data-trigger="focus" opciones="[{'name':'Asignar','operacion':'Asignar','id': ubica.id},{'name':'Cambiar Cargo ó Salón','operacion':'CambiarCargo','id': ubica.id},{'name':'Asignar Suplencia','operacion':'AsignaSuplente','id': ubica.id},{'name':'Des-asignar','operacion':'Desasignar','id': ubica.id}]" title="Opciones">+</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                       </div>
+                              
+                      </div>
+                    </div>
+                </div>
+            </div>
+    </accordion-group>
+  </accordion>
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+                <div ng-show="validarModal===true" class="modal-header" style="padding: 2%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <center><h4 class="modal-title">ADVERTENCIA</h4></center>
+                </div>
+
+                <div ng-show="validarModal===false" class="modal-header" style="padding: 2%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <center><h4 class="modal-title">INFORMACIÓN</h4></center>
+                </div>
+                
+                
+                <div class="modal-body">
+                    <form  method="post" enctype="multipart/form-data" >
+                        
+                        <div ng-show="validarModal===true">
+                            <div class="form-group">
+                                <label class="control-label" for="file">Falta(n) {{faltante}} Persona(s) por marcar asistencia, si finaliza el proceso quedará como inasistente. si confirma Ingrese el Código de Seguridad y Selecione Aceptar</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <center><h4 class="col-lg-6 center center">{{aleatorio}}</h4></center>
+                                    <center><input type="text"  ng-model="verificador" title="Ingresar el Número, Que Observa a la Izquierda de esta Línea" required name="Verificador" id="verificador" maxlength="6"></center>
+                                </div>
+                                <div class="row"><br></div>
+                                <input  class="btn btn-primary col-lg-6" type="submit" value ="Aceptar" ng-click="Cerrar()">
+                                <button class="btn btn-default col-lg-6" type="button"  data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                        
+
+                        <div  ng-show="validarModal===false">
+                            <div class="form-group">
+                                <label class="control-label center center" for="file">El proceso fue terminado con exito</label>
+                            </div>
+    
+  <div class="modal fade" id="myModalS" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                        </div>
+                        
+                        
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</div>
+
+
+
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+        <li ng-repeat='opcion in opciones'>
+            <a href="{{'#/'+opcion.operacion+'/'+opcion.id}}">{{opcion.name}}</a>
+        </li>
+    </ul>
+
+    $(function(){
+            $("#identificacion").datepicker().bind("change",function(){
+                var fechaValue = $(this).val();
+                if (fechaValue.length === 8)
+                {
+                    var elem = fechaValue.split('-');
+                    if(elem.length === 1)
+                    {
+                        var fecha = fechaValue.substring(0, 4) +"-" +  fechaValue.substring(4, 6) + "-"+ fechaValue.substring(6, 8);
+                        $("#datepicker").datepicker("setDate", fecha);
+                    }
+                }
+            })
+    });
+    
+
+    $('identificacion').keydown(function(e) {
+        var code = e.keyCode || e.which;
+
+        if (code === 9) {
+            alert('it works!');
+            e.preventDefault();
+            myFunction();
+            
+        }
+    });
+
+</script>
+

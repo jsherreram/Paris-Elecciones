@@ -1,0 +1,124 @@
+<div class="content animate-panel">
+    <div class="hpanel">
+        <div class="panel-body">
+            <form class="form-horizontal" ng-submit="Save()"  method="" id="frmCreateTercero">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="codigoDpto">Departamento</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="codigoDpto" title="Departamento" name="codigoDpto" id="codigoDpto" class="form-control" readonly="true" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="tipoDoc">Tipo Identificación</label>
+                    <div class="col-md-6">
+                       <select id="tipoDoc" ng-model="tipoDoc" ng-options="tipoIden.name for tipoIden in tipoIdentificacion"></select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="nrodoc">Numero Identificación</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="nrodoc" title="Rango: 100.000-99.999.999 y 1.000.000.000 - 1.199.999.999" pattern="^[1]{1}[0|1|2|3]{1}[0-9]{8}|[0-9]{1}[0-9]{5,9}$" required="" name="nrodoc" id="nrodoc" class="form-control" maxlength="10">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="apellido1">Primer Apellido</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="apellido1" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" required name="apellido1" id="nombre1" class="form-control" maxlength="20">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="apellido2">Segundo Apellido</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="apellido2" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" name="apellido2" id="apellido2" class="form-control" maxlength="20">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="nombre1">Primer Nombre</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="nombre1" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" required name="nombre1" id="nombre1" class="form-control" maxlength="20">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="nombre2">Segundo Nombre</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="nombre2" title="Mínimo 3 letras" pattern="^[A-ZÑa-zñ\s]{3,30}$" name="nombre2" id="nombre2" class="form-control" maxlength="20">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="sexo">Sexo F ó M (Opcional)</label>
+                    <div class="col-md-6">
+                        <input type="text" title="" name="sexo" id="sexo" class="form-control" maxlength="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="fechaEx">Fecha Expedición AAAAMMDD (Opcional)</label>
+                    <div class="col-md-6">
+                        <input type="text" title="" name="fechaEx" id="fechaEx" class="form-control" maxlength="8">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="codigoMunicipio">Municipio</label>
+                    <div class="col-md-6">
+                       <select id="codigoMunicipio" ng-model="codigoMunicipio" required="required" ng-options="mun.nombre for mun in municipios"></select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="direccion">Direccion de Residencia</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="direccion" title="direccion" required="required" name="direccion" id="direccion" class="form-control" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="celular">Celular</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="celular" title="Número de 10 dígitos. " pattern="^[3]{1}[0|1|2|5]{1}[0-9]{8}$" required name="celular" id="celular" class="form-control" maxlength="10">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="telefono">Telefono</label>
+                    <div class="col-md-6">
+                        <input type="text" ng-model="telefono" title="Número de 7 ó 10 dígitos" pattern="^[2-9]{1}[0-9]{6}|[3]{1}[0|1|2|5]{1}[0-9]{8}$" value="" name="telefono" id="telefono" class="form-control" maxlength="10">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="email">Email</label>
+                    <div class="col-md-6">
+                        <input type="email" ng-model="email"  required title="mail@ejemplo.com" name="email" id="email" class="form-control" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="codigoActividad">codigo Actividad</label>
+                    <div class="col-md-6">
+                        <select id="codigoActividad" ng-model="codigoActividad" required="required" ng-options="act.codigo for act in actividades"></select>
+                    </div>
+                </div>
+                
+
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-2">
+                        <input type ="submit" class="btn btn-primary" value="Guardar">
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <p class="text-danger">{{error}}</p>
+                </div>
+                
+            </form>
+        </div>
+    </div>        
+</div>

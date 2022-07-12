@@ -1,0 +1,10 @@
+
+<select ng-show="requerido===true" ng-model="municipio" class="form-control has-error" title="El municipio es obligatorio"
+        ng-options="municipioObj.nombre for municipioObj in municipios track by municipioObj.codigoMunicipio" required="">
+     <option style="display:none" value="">Seleccione</option>
+</select>
+
+<select ng-show="requerido===false" ng-model="municipio" class="form-control has-error" title="El municipio es obligatorio"
+        ng-options="municipioObj.nombre for municipioObj in municipios track by municipioObj.codigoMunicipio" >
+     <option style="display:none" value="">Seleccione</option>
+</select>

@@ -1,0 +1,35 @@
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hpanel">
+            <div class="panel-body">   
+
+                <div class="col-lg-2"></div>
+                <div class="table-responsive col-lg-8" >
+                    <h2 class="font-light m-b-xs">
+                        Monitoreo de Encuesta
+                    </h2> 
+                    <br>
+                    Seleccione una prueba y posterior un evento
+                    <br><br>
+                    <label for="pruebaSelect"> Pruebas: </label><br>
+                    <select name="pruebaSelect" ng-model="pruebaSelect"  ng-change='pruebaSelected()' multiple>
+                        <option  ng-repeat="prueba in pruebas" value="{{prueba.idprueba}}" >{{prueba.nombre}}</option>                                                    
+                    </select> 
+                   
+                    <br><br>
+                    <label for="pruebaSelect"> Eventos: </label><br>
+                     <select ng-model="somethingHere"                             
+                            ng-options="evento.codigoEvento as evento.nombre for evento in eventos" >
+                    </select>
+                    <br><br>
+                    <div class="aligncenter"> 
+                        <a href="templates/verArchivo_1.jsp?idEvento={{somethingHere}}" class="btn btn-primary">Descargar Detalle de la Encuesta</a>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

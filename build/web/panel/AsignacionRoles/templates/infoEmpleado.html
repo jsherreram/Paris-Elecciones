@@ -1,0 +1,69 @@
+<div class="row"> 
+    <div class="col-md-12 ">
+        <div class="panel panel-primary no-border ">
+            <div class="panel-body">
+
+                <div  ng-repeat="emp in  controller.listEmpleado"> 
+
+                     <div class="row" >
+                        <label class="control-label col-md-2" >Nombres:</label>
+                        <div class="col-md-4"> 
+                            {{emp.nombre1}} {{emp.nombre2}} {{emp.apellido1}} {{emp.apellido2}}
+                        </div>
+
+                        <label class="control-label col-md-2" >Correo Electrónico:</label>
+                        <div class="col-md-4"> 
+                            {{emp.email}}
+                        </div>
+                    </div>
+                  <div class="row" >
+                       <label class="control-label col-md-2" >Identificación:</label>
+                        <div class="col-md-4"> 
+                            {{emp.tipodoc}} {{emp.nrodoc}}
+                        </div>
+                        
+                         <label class="control-label col-md-2" >Estado:</label>
+                        <div class="col-md-4"> 
+                            {{emp.descripcion}}
+                        </div>
+                    </div>
+
+                </div>
+
+                <form name="actualizarForm" ng-submit="actualizarForm.$valid && controller.actualizarFuncionario()" >
+                    <div  ng-if="controller.listEmpleado!==undefined && controller.listEmpleado[0]!==undefined ">
+                        <div class="ibox-content-horizontal" >   
+                            <label  >Roles:</label>
+                            <div  class="row"  > 
+
+                                <label ng-repeat="listaRol in controller.listadoRoles" class="col-md-4" ng-if="controller.mostrarRoles"> 
+
+                                    <input class="form-group col-md-20"  type="checkbox" checklist-model="controller.rolesSeleccionados" checklist-value="listaRol.codigoGrupo" checklist-change="controller.cambioRoles();" > {{listaRol.descripcionGrupo}}
+
+                                </label>
+                            </div>
+                        </div>
+                        <div class="ibox-content-horizontal" > 
+                            <label  >Nodos</label>
+                            <div  class="row" > 
+                                <label ng-repeat="lista in controller.listadoNodos" class="col-md-4" ng-if="controller.habilitarNodo" > 
+
+                                    <input class="form-group col-md-20"  type="checkbox" checklist-model="controller.nodosSeleccionados" checklist-value="lista.codigo" >  {{lista.nombre}}
+
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4 col-md-4 " style="float: right">
+                            <input type="submit" class="btn btn-primary right" value="Guardar" />
+                            <button type="button" ng-click="controller.regresar()" class="btn btn-primary right">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

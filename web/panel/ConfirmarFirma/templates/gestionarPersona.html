@@ -1,0 +1,66 @@
+<div class="content animate-panel">
+    <div class="row ">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="panel-title">Gestionar persona en la prueba</h3></div>
+                <div class="content">
+                    <div class="row"> 
+                        <div class="col-md-6 ">
+                            <div class="panel panel-primary no-border ">
+                                <div class="panel-body">
+                                    <dl class="dl-horizontal">
+                                        <dt >Cargo</dt>
+                                        <dd>{{ controller.empleado.cargoobj.descripcion}}</dd>
+                                        <dt>Nombres</dt>
+                                        <dd>{{ controller.empleado.nombre1}} {{ controller.empleado.nombre2}} {{ controller.empleado.apellido1}} {{ controller.empleado.apellido2}}</dd>
+                                        <dt>Tipo Documento</dt>
+                                        <dd>{{ controller.empleado.tipodoc}}</dd>
+                                        <dt>Documento</dt>
+                                        <dd>{{ controller.empleado.nrodoc}}</dd>
+                                        <dt>Celular</dt>
+                                        <dd>{{ controller.empleado.celular}}</dd>
+                                        <dt>Telefono</dt>
+                                        <dd>{{ controller.empleado.telefono}}</dd>
+                                        <dt>Email</dt>
+                                        <dd>{{ controller.empleado.email}}</dd>
+                                       
+                                        <dt>Enrolado</dt>
+                                        <dd ng-show="controller.empleado.huella===undefined">No</dd>
+                                        <dd ng-show="controller.empleado.huella!=undefined">Sí</dd>    
+                                    </dl>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="panel panel-primary no-border">
+                                <div class="panel-body">
+                                    <a class="btn btn-default col-md-12 bnt-GestionarPersona" ng-href="/Paris/panel/GestionPersonas/main.jsp#/EditarDetallado/{{controller.empleado.idEmpleado}}">Actualización rápida de la persona</a>
+                                    <a ng-click="controller.enrolar(controller.empleado.idEmpleado)" class="btn btn-default col-md-12 bnt-GestionarPersona" value="Enrolar">Enrolar</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div ng-repeat="evento in controller.eventos" class="col-md-12 ">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6 ">   
+                                            <prueba-detail evento="evento"> </prueba-detail>
+                                        </div>
+                                        <div class="col-md-6 ">   
+                                           <!-- <a class="btn btn-default col-md-12 bnt-GestionarPersona btn-xs" ng-href="../../panel/GestionPagos/main.jsp#/CuentaCobro/{{controller.empleado.idEmpleado}}/{{evento.idprueba}}/{{evento.codigoCargo}}/{{evento.descripcion}}/huella">Ver Cuenta de Cobro</a>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

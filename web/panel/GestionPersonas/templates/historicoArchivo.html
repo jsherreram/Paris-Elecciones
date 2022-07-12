@@ -1,0 +1,33 @@
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <center><h3 class="modal-title">Historial De Archivos: Documento de Identificación y Rut</h3></center>
+</div>
+
+<div class="modal-body col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-10 col-md-offset-1">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Fecha de Registro</th>
+                        <th>Opciones</th>
+                    </tr>
+                    <tr dir-paginate="pe in controller.archivos| orderBy:'-fecha' | itemsPerPage: pageSize" current-page="currentPage">
+
+                        <td> {{pe.fecha|date:'dd/MM/yyyy  h:mma'}}</td>
+                        <td><a nombre ="vercertest" href="templates/descargarArchivoHistorial.jsp?idEmpleado={{controller.idEmpleado}}&archivo={{pe.nombre}}&tipoDocumental={{controller.tipoDocumento}}"  target="_blank" class="btn btn-primary">Ver</a></td>
+                    </tr>
+                </table>
+                <center>
+                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html"></dir-pagination-controls>
+                </center>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="cancel()">Regresar</button>
+</div>
+

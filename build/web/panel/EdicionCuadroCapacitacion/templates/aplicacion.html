@@ -1,0 +1,111 @@
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3>Edición Plazas Capacitación/Evento</h3>
+                        </div>
+                    </div>
+                </div>
+                <!--               
+                <div class="panel-body">
+                                    <label class="control-label col-md-9">Sabana de Información</label>
+                                    <a href="templates/generaSabana.jsp?idprueba={{idprueba}}" class="btn btn-sm btn-primary  col-md-3">Generar</a>
+                                </div>-->
+            </div>
+        </div>
+    </div>
+    <div class="row" id="divBusqueda">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="input-group col-md-12">
+                            <div class="form-group col-md-2">
+                                <label>Departamento: </label>
+                                <div ng-dropdown-multiselect="" options="controller.departamentos" events="controller.departamentoEvents" selected-model="controller.departamentoSelect" extra-settings="controller.departamentosettings"></div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Municipio: </label>
+                                <div ng-dropdown-multiselect="" options="controller.municipios" events="controller.municipioEvents" selected-model="controller.municipioSelect" extra-settings="controller.municipiosettings"></div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Sitio: </label>
+                                <div ng-dropdown-multiselect="" options="controller.sitios" events="controller.sitioEvents" selected-model="controller.sitioSelect" extra-settings="controller.sitiosettings"></div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Evento: </label>
+                                <div ng-dropdown-multiselect="" options="controller.eventos" events="controller.eventoEvents" selected-model="controller.eventoSelect" extra-settings="controller.eventosettings"></div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Cargo: </label>
+                                <div ng-dropdown-multiselect="" options="controller.cargos" events="controller.cargoEvents" selected-model="controller.cargoSelect" extra-settings="controller.cargosettings"></div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Zona: </label>
+                                <div ng-dropdown-multiselect="" options="controller.zonas" events="controller.zonaEvents" selected-model="controller.zonaSelect" extra-settings="controller.zonasettings"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <input class="btn btn-primary"  value="Buscar" style="float: right; margin-right: 5px;" ng-click="controller.Consultar()"> 
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <table ng-init="items.totales = {}" WIDTH="600" class="table table-bordered table-hover" >
+                            <thead>
+                                <tr>
+                                    <th>Cargo</th>
+                                    <th>Descripcion</th>
+                                    <th>Evento</th>
+                                    <th>Nombre Puesto</th>
+                                    <th>Solicitados</th>
+                                    <th>Asginados</th>
+                                    <th>Aplicar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="color:#111" ng-repeat="reg in controller.aplicacion| filter:buscar ">
+                                    <td>{{reg.codigocargo}}</td>
+                                    <td>{{reg.descripcion}}</td>
+                                    <td>{{reg.nombre}}</td>
+                                    <td>{{reg.nombrepuesto}}</td>
+                                    <td>
+                                        <input type="number" ng-model="reg.puestos" min="0" max="1500" id="Puestos" class="form-control">
+                                    </td>
+                                    <td>{{reg.asignados}}</td>
+                                    <td>
+                                        <a  ng-click="controller.Aplicar(reg)" class="btn btn-primary">Cambiar</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalLoading" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Paris - Elecciones
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-info active" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

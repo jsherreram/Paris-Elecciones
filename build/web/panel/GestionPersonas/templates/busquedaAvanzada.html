@@ -1,0 +1,122 @@
+   
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <center><h3 class="modal-title">Búsqueda Avanzada</h3></center>
+</div>
+<div class="modal-body col-md-12">
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="codigoDpto">Departamento de Residencia</label>
+            <select  class="form-control has-error"  ng-model="controller.persona.departamento">
+                <option value="">TODOS</option>
+                <option  ng-repeat="dpto in controller.departamentos" value="{{dpto.codigo}}" >{{dpto.nombre}}</option> 
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="codigoDpto">Nodo</label>
+            <select  class="form-control has-error"  ng-model="controller.persona.nodo">
+                <option value="">TODOS</option>
+                <option  ng-repeat="n in controller.nodos" value="{{n.codigo}}" >{{n.nombre}}</option> 
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="codigoDpto">Tipo Cargo</label>
+            <select  ng-model="controller.persona.cargo" class="form-control">
+                <option  value="">TODOS</option>
+                <option ng-repeat="cargoObj in controller.cargos" value="{{cargoObj.codigoCargo}}">{{cargoObj.descripcion}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label  for="bilingue">Bilingue</label>
+            <select name="bilingue" ng-model="controller.persona.bilingue" SIZE="1" class="form-control"> 
+                <option value="">TODOS</option>
+                <option value="0">NO</option>
+                <option value="1">SI</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label  for="intepretacionsenas">Intepretacion Lenguaje de Señas</label>
+            <select name="intepretacionsenas" ng-model="controller.persona.intepretacionsenas" SIZE="1" class="form-control"> 
+                <option value="">TODOS</option>
+                <option value="0">NO</option>
+                <option value="1">SI</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fechaInicial">Fecha Inicial de ultima Aplicación AAAA-MM-DD</label>
+            <input type="date" ng-model="controller.prueba.fechaInicial" name="fechainicial"  class="form-control ">
+        </div>
+        <div class="form-group">
+            <label>Nota de Evaluación desde</label>
+            <input class="form-control" ng-model="controller.persona.notaEvaluacionDesde">
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="sexo">Género </label>
+            <select name="genero" ng-model="controller.persona.genero" SIZE="1" class="form-control"> 
+                <option value="">TODOS</option>
+                <option value="F">FEMENINO</option>
+                <option value="M">MASCULINO</option>
+            </select>          
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">      
+            <label >Municipio de Residencia</label>                             
+            <select-municipio-dane municipio="controller.municipio" departamentocodigo="controller.persona.departamento" requerido="false"></select-municipio-dane>                            
+        </div>
+        <div class="form-group">
+            <label  for="nivelacademico">Nivel Academico</label>
+            <select name="nivelacademico" ng-model="controller.persona.nivelacademico" SIZE="1" class="form-control">
+                <option value="">TODOS</option>
+                <option value="1">BACHILLER</option>
+                <option value="2">ESTUDIANTE</option>
+                <option value="3">PROFESIONAL</option>
+                <option value="4">TÉCNICO</option>
+                <option value="5">TECNÓLOGO</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tipo de Prueba</label>
+            <select class="form-control" ng-model="controller.prueba.tipoPrueba">
+                <option value="">TODOS</option>
+                <option ng-repeat="tprueba in controller.tiposPrueba" value="{{tprueba.tprueba}}">{{tprueba.tipo}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label >Dactiloscopista</label>
+            <select name="manejodiscapacidad" ng-model="controller.persona.experienciahuellas" SIZE="1" class="form-control"> 
+                <option value="">TODOS</option>
+                <option value="0">NO</option>
+                <option value="1">SI</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label  for="manejodiscapacidad">Manejo de población con discapacidad cognitiva</label>
+            <select name="manejodiscapacidad" ng-model="controller.persona.manejodiscapacidad" SIZE="1" class="form-control"> 
+                <option value="">TODOS</option>
+                <option value="0">NO</option>
+                <option value="1">SI</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fechaInicial">Fecha Final de ultima Aplicación AAAA-MM-DD</label>
+            <input type="date" ng-model="controller.prueba.fechaFinal" name="fechainicial"  class="form-control" >
+        </div>
+        <div class="form-group">
+            <label>Nota de Evaluación hasta</label>
+            <input class="form-control" ng-model="controller.persona.notaEvaluacionHasta">
+        </div>
+        <div class='form-group' ng-show="controller.cargando">
+            <center> <img  src='/Paris/images/cargando1.gif' height="200"></center>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="limpiar()">Limpiar</button>
+    <button class="btn btn-primary" type="button" ng-click="ok()">Buscar</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Regresar</button>
+</div>
+

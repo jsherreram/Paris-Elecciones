@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hpanel">
+            <div class="panel-body">   
+
+                <div class="col-lg-2"></div>
+                <div class="table-responsive col-lg-8" >
+                    
+                    <div ng-if="tipoReporte=='N' || tipoReporte=='A'">
+                        <h2 class="font-light m-b-xs">
+                                {{tipoReporte==='N'?'Monitoreo de Nombramiento Por Cargo y Sitio':'Monitoreo de Asistencia por Cargo y Sitio'}}
+                        </h2>
+                    </div>
+
+                    <div ng-if="tipoReporte=='NT' || tipoReporte=='AT'">
+                        <h2 class="font-light m-b-xs">
+                                {{tipoReporte==='N'?'Monitoreo de Nombramiento Por Sitio':'Monitoreo de Asistencia por Sitio'}}
+                        </h2>
+                    </div>
+                    
+                    <div ng-if="tipoReporte=='S' "><h2 class="font-light m-b-xs">Confirmación Disponibilidad Sitios</h2>
+                    </div>
+                    
+                    <div ng-if="tipoReporte!='S' ">
+                        <br>
+                        Seleccione una Prueba y posterior un evento
+                        <br>
+                    </div>
+                    <div ng-if="tipoReporte=='S' ">
+                        <br>
+                        Seleccione una Prueba
+                        <br>
+                    </div>
+                    <br>
+                    <label for="pruebaSelect"> Pruebas: </label><br>
+                    <select name="pruebaSelect" ng-model="pruebaSelect"  ng-change='pruebaSelected()' multiple>
+                        <option  ng-repeat="prueba in pruebas" value="{{prueba.idprueba}}" >{{prueba.nombre}}</option>                                                    
+                    </select> 
+                   
+                    <br><br>
+                    <div ng-show="tipoReporte!='S' ">
+                        <label for="pruebaSelect"> Eventos: </label><br>
+                        <select ng-model="somethingHere"                             
+                                ng-options="evento.codigoEvento as evento.nombre for evento in eventos" >
+                        </select>
+                    </div>
+                    <br><br>
+                    
+                    <div ng-if="tipoReporte == 'N' || tipoReporte == 'A' " class="aligncenter"> 
+                        <a href="#/ConsolidadoCargos/{{tipoReporte}}/1/{{somethingHere}}/{{pruebaSelect}}" class="btn btn-sm btn-primary">Consultar</a>
+                        <br><br>
+                    </div>
+
+                    <div ng-if="tipoReporte == 'NT' || tipoReporte == 'AT' || tipoReporte == 'CA'" class="aligncenter"> 
+                        <a href="#/Nacional/{{tipoReporte}}/2/{{somethingHere}}/TODOS/{{pruebaSelect}}" class="btn btn-sm btn-primary">Consultar</a>
+                        <br><br>
+                    </div>
+                    <div ng-if="tipoReporte == 'S'" class="aligncenter"> 
+                        <a href="#/Nacional/{{tipoReporte}}/2/0/TODOS/{{pruebaSelect[0]}}" class="btn btn-sm btn-primary">Consultar</a>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-body">                   
+                    <div class="pull-right m-t-lg">
+                        <a href="{{global.formEngine}}/{{global.app}}/{{tipoForma}}/new" class="btn btn-sm btn-default" onclick="loadingStart();">Registrar </a>
+                    </div>
+                    <h2 class="font-light m-b-xs">
+                        Registros
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div ng-show="!formularios.length" class="panel-body">
+                    No existen registros disponibles
+                </div>
+                <div ng-show="formularios.length" class="panel-body">
+                    <div class="table-responsive">
+                    <table cellpadding="1" cellspacing="1" class="table">
+                        <thead>
+                        <tr>
+                            <th>Formulario</th>
+                            <th>Identificacion</th>
+                            <th>Apellidos</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Acci&oacute;n</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="formulario in formularios">
+                            <td>{{formulario.consecutivo}}</td>
+                            <td>{{formulario.entidad.identificacion}}</td>
+                            <td>{{formulario.entidad.apellidos}}</td>
+                            <td>{{formulario.entidad.nombre}}</td>
+                            <td>{{formulario.estado.estadoId}}</td>
+                            <td>
+                                <div ng-if="formulario.estado.estadoId === global.estadoForma.ASESOR_BORRADOR && !formulario.validadoMalla">
+                                    <a href="{{global.formEngine}}/{{formulario.tipoForma.app}}/{{formulario.tipoForma.form}}/edit/{{formulario.formaId}}?draft=true" class="btn btn-sm btn-default" onclick="loadingStart();">Editar </a>
+                                </div>
+                                <div ng-if="formulario.estado.estadoId === global.estadoForma.ASESOR_BORRADOR && formulario.validadoMalla">
+                                    <a href="{{global.formEngine}}/{{formulario.tipoForma.app}}/{{formulario.tipoForma.form}}/view/{{formulario.formaId}}" class="btn btn-sm btn-default" onclick="loadingStart();">Ver </a>
+                                    <a href="{{global.formEngine}}/{{formulario.tipoForma.app}}/{{formulario.tipoForma.form}}/edit/{{formulario.formaId}}" class="btn btn-sm btn-default" onclick="loadingStart();">Editar </a>
+                                    <!--
+                                    <a href="{{global.api}}/forma/pdf/{{formulario.formaId}}" class="btn btn-sm btn-default" target="_BLANK">PDF NEW </a>
+                                    -->
+                                    <a href="{{global.formEngine}}/{{formulario.tipoForma.app}}/{{formulario.tipoForma.form}}/pdf/{{formulario.formaId}}?GeneraPdf=1" class="btn btn-sm btn-default" target="_BLANK">PDF </a>
+                                    <a class="btn btn-sm btn-default" ng-click="onclickSuscribir(formulario.formaId)" >Suscribir</a>
+                                </div>                                
+                                <div ng-if="formulario.estado.estadoId !== global.estadoForma.ASESOR_BORRADOR">
+                                    <a href="{{global.formEngine}}/{{formulario.tipoForma.app}}/{{formulario.tipoForma.form}}/view/{{formulario.formaId}}" class="btn btn-sm btn-default" onclick="loadingStart();">Ver </a>                                    
+                                    <!--
+                                    <a href="{{global.api}}/forma/pdf/{{formulario.formaId}}" class="btn btn-sm btn-default" target="_BLANK">PDF NEW</a>
+                                    -->
+                                    <a href="{{global.formEngine}}/{{formulario.tipoForma.app}}/{{formulario.tipoForma.form}}/pdf/{{formulario.formaId}}?GeneraPdf=1" class="btn btn-sm btn-default" target="_BLANK">PDF </a>                                    
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

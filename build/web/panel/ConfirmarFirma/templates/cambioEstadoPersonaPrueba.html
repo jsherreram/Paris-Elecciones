@@ -1,0 +1,47 @@
+<div class="content animate-panel">
+    <div class="row ">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="panel-title">Cambio de estado de la persona en la prueba</h3></div>
+                <div class="content">
+                    <div class="row"> 
+                        <div class="col-md-12 ">
+                            <div class="panel panel-primary  ">
+                                <div class="panel-body">
+                                    <div class="">
+                                        <button class="btn btn-default bnt-GestionarPersona" type="button" ng-click="controller.back()">Volver</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">   
+                            <prueba-detail evento="controller.ep"> </prueba-detail>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="panel panel-primary  ">
+                                <div class="panel-body">
+                                    <div class="">
+                                        <form name="estadoForm" ng-submit="estadoForm.$valid && controller.change()" novalidate>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <select ng-model="controller.estado" class="form-control has-error" 
+                                                            required ng-options="estadoObj.codigo for estadoObj in controller.estados track by estadoObj.id">
+                                                    </select>
+                                                </div>
+                                                <input type="submit" class="btn bnt-GestionarPersona" value="Cambiar Estado"/>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3>Seguimiento Personal en Capacitacion</h3>
+                </div>
+
+                <div class="panel-body">
+                    <label class="control-label col-md-9">Sabana de Información</label>
+                    <a href="templates/generaSabana.jsp?idPrueba={{idPrueba}}&usuario={{usuario}}" class="btn btn-sm btn-primary  col-md-3">Generar</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row" id="divBusqueda">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover width200">
+                            <thead>
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Personal</th>
+                                    <th>Telefono</th>
+                                    <th>Reside</th>
+                                    <th>Sitio</th>
+                                    <th>Salon</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Asistencia</th>
+                                    <th>Hora</th>
+                                    <th>Simulacro Asignado</th>
+                                    <th>Eleccion Asignado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="reg in registros | filter:search | itemsPerPage: pageSize" current-page="currentPage" pagination-id="pagStatus">
+                                    <td>{{reg.nrodoc}}</td>
+                                    <td>{{reg.nombrePersonal}}</td>
+                                    <td>{{reg.telefono}}</td>
+                                    <td>{{reg.residencia}}</td>
+                                    <td>{{reg.secapacitoen}}</td>
+                                    <td>{{reg.Salon}}</td>
+                                    <td>{{reg.fecha}}</td>
+                                    <td>{{reg.hora_inicial}}</td>
+                                    <td>{{reg.MedioAsistencia}}</td>
+                                    <td>{{reg.fecha_asistencia}}</td>
+                                    <td>{{reg.AsignadoEnsimulacro}}</td>
+                                    <td>{{reg.AsignadoEleccion}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <center>
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html" pagination-id="pagStatus"></dir-pagination-controls>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalLoading" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Paris - Elecciones
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-info active" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

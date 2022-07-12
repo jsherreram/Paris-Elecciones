@@ -1,0 +1,34 @@
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Asignar Suplente</h2>
+                </div>
+                <div class="panel-body">
+                    <br><br>
+                    <div class="col-md-6">
+                        <p>{{falton.nombrePersonal}}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <select name="id" ng-model="idReemplazo" SIZE="8" ng-show="suplentes.length>0"> 
+                            <option ng-repeat="reg in suplentes" value="{{reg.id}}">{{reg.nombrePersonal}}</option>
+                        </select>
+                        <p ng-show="suplentes.length==0">No hay Suplentes registrados</p>
+                    </div>
+
+                    <div class="col-md-12">
+                          <br><br>
+                        <center>
+                        <button ng-hide="suplentes.length==0" class="btn btn-primary"  ng-click="Save()">Cambiar</button>
+                        <button class="btn btn-primary"  ng-click="atras()">Cancelar</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

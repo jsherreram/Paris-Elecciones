@@ -1,0 +1,179 @@
+<script type="text/ng-template" id="popover_template.html">
+    <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+    <a ng-show="opcion.mostrar" href="{{'#/'+opcion.operacion+'/'+opcion.id}}" >{{opcion.name}}</a>   
+    </li>
+    </ul>
+</script>
+<ul ng class="nav nav-pills nav-stacked">
+    <li ng-repeat='opcion in opciones'>
+        <a ng-show="opcion.mostrar" href="{{'#/' + opcion.operacion + '/' + opcion.id}}" >{{opcion.name}}</a>
+        <a ng-hide="opcion.mostrar"  ng-click="controller.show()">{{opcion.name}}h</a>
+    </li>
+</ul>
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h3>Asignación por sitio y cargo</h3></center>
+                </div>
+                <div class="panel-body"> 
+                    <div class="form-view-data col-md-12">
+                        <div class="form-group col-md-3">
+                            <label>Código Sitio: </label>
+                            {{sitio.codigoSitio}}
+                        </div>
+                        <div class="form-group col-md-9">
+                            <label>Nombre Sitio: </label>
+                            {{sitio.nombreSitio}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Salones: </label>
+                            {{sitio.cantidadSalones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Municipio: </label>
+                            {{sitio.municipio.nombre}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Dirección Sitio: </label>
+                            {{sitio.direccionSitio}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><h3>Personas sin asignación</h3></center>
+                </div>
+                <div class="panel-body">
+                    <form name="personasForm" ng-submit="controller.buscarPersonas()" method="GET" novalidate>
+                        <div class="col-md-12">
+                            <div class="form-group col-md-6">
+                                <label id="labelDep" data-toggle="popover" data-content="El departamento es requerido">Departamento de Residencia: </label>
+                                <select class="form-control" id="departamento" name="departamento" title="El departamento obligatorio" ng-model="departamentoDane" ng-change="controller.buscarMunicipios()" required>
+                                    <option value="" ng-selected="selected">Seleccionar</option>
+                                    <option ng-repeat="dpto in departamentos" value="{{dpto.codigo}}" ng-selected="dpto.selected">{{dpto.nombre}}</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label id="labelMun" data-toggle="popover" data-content="El municipio es requerido">Municipio de Residencia: </label>
+                                <select class="form-control" name="municipio" id="municipio" title="El municipio obligatorio" ng-model="municipioDane" required>
+                                    <option value="" ng-selected="selected">Seleccionar</option>
+                                    <option ng-repeat="muni in municipios" value="{{muni.codigoMunicipio}}" ng-selected="muni.selected">{{muni.nombre}}</option> 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Salones Mayor a: </label>
+                                <input type="text" numeric min="0" max="99" decimals="0" ng-model="salones" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Distancia menor a: </label>
+                                <input type="text" numeric min="0" max="999" decimals="1" ng-model="distancia" placeholder="Km" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Posibilidad de Viajar: </label>
+                                <select  class="form-control" ng-model="viaja" ng-required="true">
+                                    <option value="-1">Seleccione</option>
+                                    <option value="1">SI</option>
+                                    <option value="0">NO</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input class="btn btn-primary" type="submit" value="Consultar" style="float: right; margin-right: 5px;">
+                                <input class="btn btn-primary" type="reset" value="Limpiar" style="float: right; margin-right: 5px;">
+                                <input class="btn btn-primary" type="button" value="Volver" ng-click="controller.volver()" style="float: right; margin-right: 5px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="personas.length <= 0">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <span class="text-center text-success">No se encontro información</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="divBusqueda" ng-show="personas.length > 0">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="input-group col-md-12">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Buscar" ng-model="search">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="width200">
+                            <thead>
+                                <tr>
+                                    <th>Opcion</th>
+                                    <th>Número de Identificación</th>
+                                    <th>Apellidos</th>
+                                    <th>Nombres</th>
+                                    <th>Salones</th>
+                                    <th>Distancia Km</th>
+                                    <th>Posibilidad de viajar</th>
+                                    <th>Dirección de residencia</th>
+                                    <th>Detallar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="persona in personas | filter:search | orderBy: funcionOrdenar | itemsPerPage: pageSize track by $index" current-page="currentPage" pagination-id="pagPersonas">
+                                    <td><input class="btn btn-primary" type="button" value ="Asignar" ng-click="controller.asignarPersona(persona)" style="float: right; margin-right: 5px;"></td>
+                                    <td>{{persona.empleado.nrodoc}}</td>
+                                    <td>{{persona.empleado.apellido1 + " " + persona.empleado.apellido2}}</td>
+                                    <td>{{persona.empleado.nombre1 + " " + persona.empleado.nombre2}}</td>
+                                    <td>{{persona.salones}}</td>
+                                    <td>{{persona.distancia.toFixed(1)}}</td>
+                                    <td>{{persona.empleado.viajar === 0 ? "NO" : "SI"}}</td>
+                                    <td>{{persona.empleado.direccion}}</td>
+                                    <td><a href="" ng-click="controller.verHistorialLaboral(persona)">Ver</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <center>
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/Paris/templates/directives/dirPagination.tpl.html" pagination-id="pagPersonas"></dir-pagination-controls>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalLoading" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+               Paris - Elecciones
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-info active" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalHistorial" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div ng-include="'templates/historialLaboral.html'"></div>
+</div>
+<script>
+            $(document).ready(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+</script>
